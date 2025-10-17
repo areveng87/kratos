@@ -1,0 +1,16 @@
+version: "3"
+agent:
+    authtoken: 2xvGlJMjvPjSjJrRDtMKc5RPLEG_6VRpd9SgQhXti5WWZHMxW
+tunnels:
+  flask_app:
+    addr: 127.0.0.1:5000
+    proto: http
+    domain: goshawk-mutual-phoenix.ngrok-free.app
+    request_header:
+      add:
+        - "ngrok-skip-browser-warning: true"
+    response_header:
+      add:
+        - "Access-Control-Allow-Origin: *"
+        - "Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS"
+        - "Access-Control-Allow-Headers: *"

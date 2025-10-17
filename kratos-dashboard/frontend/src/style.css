@@ -1,0 +1,412 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* Added light and dark theme variables */
+:root {
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-secondary: #10b981;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+  --color-success: #10b981;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Dark theme (default) */
+:root,
+.dark {
+  --color-bg-primary: #0f0f23;
+  --color-bg-secondary: #1a1a2e;
+  --color-bg-tertiary: #16213e;
+  --color-bg-card: #1e1e3f;
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted: #71717a;
+
+  --color-border: #27272a;
+  --color-border-light: #3f3f46;
+}
+
+/* Light theme */
+.light {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+  --color-bg-card: #ffffff;
+
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+
+  --color-border: #e2e8f0;
+  --color-border-light: #cbd5e1;
+}
+
+/* Updated body to use CSS variables for theme support */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Added comprehensive theme-responsive classes */
+
+/* Header styles */
+.app-header {
+  @apply px-6 py-4 border-b transition-colors duration-200;
+}
+
+.dark .app-header {
+  @apply bg-gray-800 border-gray-700;
+}
+
+.light .app-header {
+  @apply bg-white border-gray-200;
+}
+
+.header-title {
+  @apply text-2xl font-bold transition-colors duration-200;
+}
+
+.dark .header-title {
+  @apply text-white;
+}
+
+.light .header-title {
+  @apply text-gray-900;
+}
+
+.header-subtitle {
+  @apply transition-colors duration-200;
+}
+
+.dark .header-subtitle {
+  @apply text-gray-400;
+}
+
+.light .header-subtitle {
+  @apply text-gray-600;
+}
+
+/* Main content area */
+.main-content {
+  @apply flex-1 overflow-y-auto p-6 transition-colors duration-200;
+}
+
+.dark .main-content {
+  @apply bg-gray-900;
+}
+
+.light .main-content {
+  @apply bg-gray-50;
+}
+
+/* Table styles */
+.table-header {
+  @apply border-b transition-colors duration-200;
+}
+
+.dark .table-header {
+  @apply bg-gray-800 border-gray-700;
+}
+
+.light .table-header {
+  @apply bg-gray-50 border-gray-200;
+}
+
+.table-header-cell {
+  @apply px-6 py-3 text-left text-xs font-medium uppercase tracking-wider transition-colors duration-200;
+}
+
+.dark .table-header-cell {
+  @apply text-gray-300;
+}
+
+.light .table-header-cell {
+  @apply text-gray-500;
+}
+
+.table-body {
+  @apply transition-colors duration-200;
+}
+
+.dark .table-body {
+  @apply divide-y divide-gray-700;
+}
+
+.light .table-body {
+  @apply divide-y divide-gray-200;
+}
+
+.table-row {
+  @apply transition-colors duration-200 cursor-pointer;
+}
+
+.dark .table-row {
+  @apply hover:bg-gray-800;
+}
+
+.light .table-row {
+  @apply hover:bg-gray-50;
+}
+
+.table-cell-primary {
+  @apply text-sm font-medium transition-colors duration-200;
+}
+
+.dark .table-cell-primary {
+  @apply text-white;
+}
+
+.light .table-cell-primary {
+  @apply text-gray-900;
+}
+
+.table-cell-secondary {
+  @apply text-sm transition-colors duration-200;
+}
+
+.dark .table-cell-secondary {
+  @apply text-gray-400;
+}
+
+.light .table-cell-secondary {
+  @apply text-gray-600;
+}
+
+.table-cell-muted {
+  @apply text-sm transition-colors duration-200;
+}
+
+.dark .table-cell-muted {
+  @apply text-gray-300;
+}
+
+.light .table-cell-muted {
+  @apply text-gray-500;
+}
+
+/* Pagination styles */
+.pagination-container {
+  @apply px-6 py-3 border-t flex items-center justify-between transition-colors duration-200;
+}
+
+.dark .pagination-container {
+  @apply bg-gray-800 border-gray-700;
+}
+
+.light .pagination-container {
+  @apply bg-white border-gray-200;
+}
+
+.pagination-select {
+  @apply text-sm rounded px-2 py-1 border transition-colors duration-200;
+}
+
+.dark .pagination-select {
+  @apply bg-gray-700 border-gray-600 text-white;
+}
+
+.light .pagination-select {
+  @apply bg-white border-gray-300 text-gray-900;
+}
+
+.pagination-button {
+  @apply px-2 py-1 text-sm rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200;
+}
+
+.dark .pagination-button {
+  @apply bg-gray-700 text-white hover:bg-gray-600;
+}
+
+.light .pagination-button {
+  @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
+}
+
+.pagination-text {
+  @apply text-sm transition-colors duration-200;
+}
+
+.dark .pagination-text {
+  @apply text-gray-400;
+}
+
+.light .pagination-text {
+  @apply text-gray-600;
+}
+
+/* Modal styles */
+.modal-backdrop {
+  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+}
+
+.modal-container {
+  @apply rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto transition-colors duration-200;
+}
+
+.dark .modal-container {
+  @apply bg-gray-800;
+}
+
+.light .modal-container {
+  @apply bg-white;
+}
+
+.modal-title {
+  @apply text-lg font-semibold mb-4 transition-colors duration-200;
+}
+
+.dark .modal-title {
+  @apply text-white;
+}
+
+.light .modal-title {
+  @apply text-gray-900;
+}
+
+.form-label {
+  @apply block text-sm font-medium mb-2 transition-colors duration-200;
+}
+
+.dark .form-label {
+  @apply text-gray-300;
+}
+
+.light .form-label {
+  @apply text-gray-700;
+}
+
+/* Updated component classes to support both themes */
+.btn-primary {
+  @apply bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+}
+
+.light .btn-primary {
+  @apply focus:ring-offset-white;
+}
+
+.dark .btn-primary {
+  @apply focus:ring-offset-gray-900;
+}
+
+.btn-secondary {
+  @apply font-medium py-2.5 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.dark .btn-secondary {
+  @apply bg-gray-700 hover:bg-gray-600 text-white focus:ring-gray-500 focus:ring-offset-gray-900;
+}
+
+.light .btn-secondary {
+  @apply bg-gray-200 hover:bg-gray-300 text-gray-900 focus:ring-gray-400 focus:ring-offset-white;
+}
+
+.input-field {
+  @apply w-full px-3 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors duration-200;
+}
+
+.dark .input-field {
+  @apply bg-gray-800 border border-gray-700 text-white placeholder-gray-400;
+}
+
+.light .input-field {
+  @apply bg-white border border-gray-300 text-gray-900 placeholder-gray-500;
+}
+
+.card {
+  @apply rounded-xl shadow-lg transition-colors duration-200;
+}
+
+.dark .card {
+  @apply bg-gray-800 border border-gray-700;
+}
+
+.light .card {
+  @apply bg-white border border-gray-200;
+}
+
+.sidebar-item {
+  @apply flex items-center px-4 py-3 rounded-lg transition-colors duration-200 cursor-pointer;
+}
+
+.dark .sidebar-item {
+  @apply text-gray-300 hover:text-white hover:bg-gray-700;
+}
+
+.light .sidebar-item {
+  @apply text-gray-600 hover:text-gray-900 hover:bg-gray-100;
+}
+
+.sidebar-item.active {
+  @apply text-white bg-indigo-600 hover:bg-indigo-700;
+}
+
+.metric-card {
+  @apply rounded-xl p-6 hover:border-gray-600 transition-colors duration-200;
+}
+
+.dark .metric-card {
+  @apply bg-gray-800 border border-gray-700;
+}
+
+.light .metric-card {
+  @apply bg-white border border-gray-200;
+}
+
+.status-badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.status-pending {
+  @apply bg-yellow-900 text-yellow-300;
+}
+
+.light .status-pending {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+.status-completed {
+  @apply bg-green-900 text-green-300;
+}
+
+.light .status-completed {
+  @apply bg-green-100 text-green-800;
+}
+
+.status-processing {
+  @apply bg-blue-900 text-blue-300;
+}
+
+.light .status-processing {
+  @apply bg-blue-100 text-blue-800;
+}
+
+.status-cancelled {
+  @apply bg-red-900 text-red-300;
+}
+
+.light .status-cancelled {
+  @apply bg-red-100 text-red-800;
+}
+
+.modal-bg {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+}
+

@@ -1,0 +1,867 @@
+b'
+
+<!DOCTYPE html>
+<html lang="es-es">
+<head>
+    <meta charset="utf-8" />
+    <title>Gobierno de Navarra / Nafarroako gobernua</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link href="/ConsultaDeclaracionesNavarra/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet" />
+    <link href="/ConsultaDeclaracionesNavarra/bundles/Estilos/Spinner?v=PvwTes9v7cz0j-9-MEk8lVKbWB1IB8dMa0E8U8xDVks1" rel="stylesheet"/>
+
+    
+    <link href="/ConsultaDeclaracionesNavarra/bundles/Estilos_Externos_Comunes?v=fjMrRPPlag6GuoeKgVpxst0A7f4HmKWfw9cdVCvE2Tw1" rel="stylesheet"/>
+
+    <link href="/ConsultaDeclaracionesNavarra/bundles/Estilos/Aplicacion?v=E6ycGIcuVK7EbHjbjs1lB23vAlJ13GaKge0cFgLAA4U1" rel="stylesheet"/>
+
+
+    
+    
+    <link href="/ConsultaDeclaracionesNavarra/bundles/Estilos/Calendario?v=jBa8-e3JvOROOsbwNzF_T1bFUNBSkO1jEGGX-5_7I7k1" rel="stylesheet"/>
+
+    <link href="/ConsultaDeclaracionesNavarra/bundles/Estilos/Select2?v=F2hGZF3awKwywF-MdwsucW3lWtmqqAnBiSNkbIyBkWg1" rel="stylesheet"/>
+
+    <link href="/ConsultaDeclaracionesNavarra/bundles/Estilos/Grid?v=OlZFXzkG7RsDMvqhCTLQ1NVsoLG59_IlftFaaDPGtYM1" rel="stylesheet"/>
+
+
+
+    
+    <script src="/ConsultaDeclaracionesNavarra/bundles/Scripts/Plugins?v=shc7xC5B-EryZQhTBEhaAoP-EwG8GQlcmQjSi3sFcxs1"></script>
+
+
+    
+    
+</head>
+<body>
+    <nav tabindex="0">
+        <p>
+            <a id="skip-to-content" href="#main">
+                Saltar al contenido
+                <img src="/ConsultaDeclaracionesNavarra/Images/feather/arrow-down.svg" alt="" />
+            </a>
+        </p>
+    </nav>
+    <script>
+        var urls = {};
+        urls.getTodosModelos = \'/ConsultaDeclaracionesNavarra/Home/JsonGetTodosModelos\';
+        urls.getModelos = \'/ConsultaDeclaracionesNavarra/Home/JsonGetModelos\';
+        urls.getFamilia = \'/ConsultaDeclaracionesNavarra/Home/GetFamilia\';
+        urls.imprimirDeclaracion = \'/ConsultaDeclaracionesNavarra/Home/ImprimirDeclaracion\';
+        urls.verDeclaracion = \'/ConsultaDeclaracionesNavarra/Home/VerDeclaracion\';
+        urls.descargarExcelDeclaraciones = \'/ConsultaDeclaracionesNavarra/Home/DescargarExcelDeclaraciones\';
+        urls.descargarExcelLotes = \'/ConsultaDeclaracionesNavarra/Home/DescargarExcelLotes\';
+        urls.descargarExcel = \'/ConsultaDeclaracionesNavarra/Home/DownloadExcel\';
+        urls.descargarTodas = \'/ConsultaDeclaracionesNavarra/Home/DescargarTodas\';
+        urls.descargarPdf = \'/ConsultaDeclaracionesNavarra/Home/DescargarPdf\';
+        urls.pdfDeclaracion = \'/ConsultaDeclaracionesNavarra/Home/PdfDeclaracion\';
+        urls.descargarDatosFiscales = \'/ConsultaDeclaracionesNavarra/Home/DescargarDatosFiscales\';
+        urls.descargarXML = \'/ConsultaDeclaracionesNavarra/Home/DescargarXML\';
+        urls.descargarXMLResult = \'/ConsultaDeclaracionesNavarra/Home/DescargarXMLResult\';
+        urls.categoriasSuperiorModelo = \'/ConsultaDeclaracionesNavarra/Home/CategoriasSuperiorModelo\';
+        var nifSP = \'B31589161\';
+        var rol = \'RepresentanteApoderado\';
+        var buscandoLoteExcel = false;
+        var busquedaUltimosLotes = false;
+    </script>
+    <div id="loaderGlobal" class="modal show loader" style="display: block; background-color: #686D6E;">
+        <div class="hm-spinner"></div>
+    </div>
+    <header>
+
+<div id="cabecera" class="col-12 m-0 p-0">
+    <nav class="container-fluid m-0 p-0" aria-labelledby="nombrePaginaTituloEtc">
+
+
+<div class="row bg-white align-items-center header-secundario">
+    <div>
+        <a href="/ConsultaDeclaracionesNavarra/"><img id="imgLogNavarraRojo" class="logo-cabecera" src="/ConsultaDeclaracionesNavarra/images/logo_navarra.png" alt="LLeva a la pagina del gobierno de Navarra" /></a>
+    </div>
+
+    <div class="flex-row-reverse">
+        <ul class="nav align-center align-self-baseline d-inline-flex align-items-center">
+            <li class="nav-item align-self-center d-none d-lg-inline-flex">
+                <a href="https://www.navarra.es/es/hacienda/tramites-tras-presentar-una-declaracion" target="_blank" class="no-decorado d-inline-flex gap-8 align-content-center">
+                    <img alt="" class="align-self-baseline" src="/ConsultaDeclaracionesNavarra/Images/feather/external-link.svg" />
+                    <p class="small underline" id="rgtGnrl">Registro general electr&#243;nico</p>
+                </a>
+                <img class="mx-3 d-none d-lg-block" src="/ConsultaDeclaracionesNavarra/Images/separador.svg" alt="" />
+            </li>
+
+            <li class="nav-item align-self-center d-none d-lg-inline-flex p-0">
+                <div>
+                    <a class="nav-link bold letra-roja" href="/ConsultaDeclaracionesNavarra/Idiomas/CambiarIdioma/es-ES" lang="es-ES" aria-label="ES, Cambiar el idioma a espa&#241;ol">
+                        ES&nbsp;
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item align-self-center d-none d-lg-inline-flex p-0">
+                <div>
+                    <a class="nav-link bold letra-roja" href="/ConsultaDeclaracionesNavarra/Idiomas/CambiarIdioma/eu-ES" lang="es-ES" aria-label="Enlace para cambiar el idioma a euskera">
+                        | EU
+                    </a>
+                </div>
+                <img class="mx-3 d-none d-lg-block" src="/ConsultaDeclaracionesNavarra/Images/separador.svg" alt="" />
+            </li>
+          
+            <li class="nav-item align-self-center p-0">
+                <button class="btn-danger btn-circle rounded-circle dropdown m-0 p-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Men\xc3\xba usuario">
+                    <img id="imagenUsuarioPortada" src="/ConsultaDeclaracionesNavarra/Images/user.svg" alt="" />
+                </button>
+
+                <nav class="dropdown-menu dropdown-menu-right p-3" aria-labelledby="dropdownMenuButton" style="background-color:white">
+                    <div class="row justify-content-end mr-2 mb-1">
+                        <button type="button" class="close" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <h3 class="dropdown-item font-weight-bold m-0 mt-2 mb-3 p-0 header-menu" style="color:#333">
+                        Representante o Sucesor
+                    </h3>
+                    <p class="dropdown-item" style="color:#333">DELGADO IRABURU ASESORES SL</p>
+                    <p class="dropdown-item" style="color:#333">B31589161</p>
+
+                    <div class="d-lg-none d-block">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" style="color:#333" href="https://www.navarra.es/es/hacienda/tramites-tras-presentar-una-declaracion"> <img alt="" class="align-self-baseline p-1" src="/ConsultaDeclaracionesNavarra/Images/external-link.svg" /> Registro general electr&#243;nico</a>
+                        <ul>
+                            <li class="nav-item align-self-center d-inline">
+                                <div class="d-inline">
+                                    <img alt="" src="/ConsultaDeclaracionesNavarra/Images/Globe.svg" />
+                                </div>
+                            </li>
+                            <li class="nav-item align-self-center d-inline">
+                                <div class="d-inline">
+                                    <a class="mx-1" style="color:red" href="/ConsultaDeclaracionesNavarra/Idiomas/CambiarIdioma/es-ES" lang="es-ES" aria-label="ES, Cambiar el idioma a espa&#241;ol">
+                                        ES
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item align-self-center d-inline">
+                                <div class="d-inline">
+                                    <a class="mx-1" href="/ConsultaDeclaracionesNavarra/Idiomas/CambiarIdioma/eu-ES" lang="es-ES" aria-label="Enlace para cambiar el idioma a euskera">
+                                        EU
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <ul>
+
+                            <li>
+                                <a class="dropdown-item" style="color:#333" href="https://hacienda.navarra.es/HTN.Autorizacion.WebPerfil/index.html?idAplicacion=SDT.WebConsulta&amp;tokenATK=0A6282EDC37CC677F650B156CA45911C2467985DF678E819D0DF6BDBCF54BF35-1&amp;idCorrelacion=c065de1a-bd76-4b9c-950d-0bb2a09f16e5&amp;urlRetorno=https://hacienda.navarra.es/ConsultaDeclaracionesNavarra/Home?idioma=es-ES">
+                                    <img src="/ConsultaDeclaracionesNavarra/Images/user.svg" alt="" />Cambio de rol
+                                </a>
+                            </li>
+
+                        <li>
+                            <a class="dropdown-item" style="color:#333" href="/ConsultaDeclaracionesNavarra/LogOff">
+                                <img src="/ConsultaDeclaracionesNavarra/Images/logout.svg" alt="" /> Cerrar sesi&#243;n
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="bg-menu"></div>
+
+                </nav>
+            </li>
+
+            <li>
+                        <span class="claseDeNombreRol small alinearLetra02">Representante o Sucesor</span>
+                
+            </li>
+
+            <li class="nav-item align-self-center p-0">
+
+                    <span class="claseDeNombreRol small alinearLetra02">\xc3\x9altimo acceso: 08/10/2025 15:55:17</span>
+            </li>
+        </ul>
+       
+    </div>
+</div>    </nav>
+    <div class="row m-0">
+        <div class="align-self-center fondo-rojo text-white w-100">
+            <h1 id="nombrePaginaTituloEtc" class="large header-principal">Consulta de Declaraciones y notificaciones practicadas</h1>
+        </div>
+
+    </div>
+
+</div>  
+    </header>
+
+
+    <div id="cuerpo" class="container-fluid">
+        <div class="container-fluid">
+
+
+
+
+        </div>
+        <div class="row d-flex flex-column">
+            <main id="main" class="container-fluid col-12">
+                
+
+<div class="col-12 mb-3 px-0">
+    <h2 class="h2 bold">
+        Consulta de declaraciones y notificaciones
+    </h2>
+    <p class="">
+        Declaraciones, notificaciones o lotes
+    </p>
+</div>
+
+\xef\xbb\xbf
+<form action="/ConsultaDeclaracionesNavarra/Home/Buscar" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#divResultadoBusquedaDeclaraciones" id="form0" method="post">    <div class="card w-100 row align-content-lg-center">
+        <div class="card-body p-6 col-12">
+            <div class="d-flex flex-column gap-48">
+                <div class="align-content-lg-center d-flex flex-column flex-lg-row row">
+                    <div class="col-lg-4 flex-column my-3 my-lg-0 gap-12 d-flex col-12">
+                        <div class="d-inline oneliner">
+                            <label class="large p-0 m-0 weight-medium" for="Sujeto_Pasivo">Sujeto Pasivo</label>
+                        </div>
+                        <div class="row d-flex">
+                            <div class="d-flex flex-column col-12 gap-8">
+                                <select class="medium select-custom" id="SujetoPasivo" name="SujetoPasivo"><option value=""></option>
+<option value="B71323109">B71323109 | DOCTORA ALICIA ECHEVERRIA MEDICINA ESTETICA SLP</option>
+<option value="B71350284">B71350284 | GET OREKA S.L.U.</option>
+<option value="B71179113">B71179113 | TRANSPORTES DE GANADO SALAZAR 2014 SL</option>
+<option value="B71218150">B71218150 | IRU&#209;A DIESEL SL</option>
+<option value="B71519763">B71519763 | MATERIALES DE CONSTRUCCION ASURMENDI SL</option>
+<option value="73618414Z">73618414Z | MARTHA ERICA SANCHEZ SANCHEZ</option>
+<option value="73479638C">73479638C | ADONIS EMILIO S&#193;NCHEZ CARRIEL</option>
+<option value="18201332Y">18201332Y | EDUARDO ARROYO MENDIA</option>
+<option value="E71503528">E71503528 | ITURRI URTASUN C,LATORRE LOPEZ M E,ORDO&#209;EZ ARANGUREN P Y ROBERT RODRIGUEZ CARLOS</option>
+<option value="E31966302">E31966302 | CHEN GUI Y CHEN WEIFANG</option>
+<option value="44163065Y">44163065Y | MIKEL ODRIOZOLA AZCUE</option>
+<option value="B71467096">B71467096 | AGENTES FINANCIEROS SANTESTEBAN SL</option>
+<option value="B71363717">B71363717 | ORGI JATETXEA SL</option>
+<option value="B71440168">B71440168 | MOKKA ZIZUR SL</option>
+<option value="B31923972">B31923972 | LA MARMITA DE DOMINGO SL</option>
+<option value="B71283162">B71283162 | AREA DE SERVICIO CAPARROSO SL</option>
+<option value="E71060164">E71060164 | ABETE SOBEJANO JOSE MANUEL,LESACA LASARTE JOS E DO</option>
+<option value="B31694243">B31694243 | LA PERLA PAMPLONA SL</option>
+<option value="E31404148">E31404148 | ASTIZ GOLDARAZ ANTONIO FRANCISCO Y JOSE R</option>
+<option value="73122643P">73122643P | JAIME OTALIO SOLORZANO QUEZADA</option>
+<option value="B71187496">B71187496 | CONSTRUCCIONES Y REFORMAS TANGORRI SL</option>
+<option value="B71476501">B71476501 | ASURMENDI-TAF S.L.</option>
+<option value="B31234172">B31234172 | CERRAJERIA ONECA BRU&#209;O SL</option>
+<option value="14594942Q">14594942Q | VICENTE GARRIDO ELUSTONDO</option>
+<option value="B31690621">B31690621 | CUBIERTAS Y MONTAJES IRU&#209;A SL</option>
+<option value="B87482691">B87482691 | CORSEDRIVER SL</option>
+<option value="B31827314">B31827314 | VENITICE SL</option>
+<option value="A31132319">A31132319 | CONSTRUCCIONES LUIS FERNANDEZ SA</option>
+<option value="B71304117">B71304117 | CENTRO MUSICAL MAEVAL SL</option>
+<option value="B71397566">B71397566 | SELOPIN SL</option>
+<option value="B71024418">B71024418 | TE ESPERAMOS SL</option>
+<option value="B71344865">B71344865 | FIESFINDE SL</option>
+<option value="B26204537">B26204537 | CARPINTERIA VIGUERA ALUMINIO SL</option>
+<option value="B71425797">B71425797 | IRU&#209;A BIKES SL</option>
+<option value="B31833155">B31833155 | BUSSINES CONSULTING PROINFIN SL</option>
+<option value="B71334015">B71334015 | INMATEC SUPPLY SPAIN SL</option>
+<option value="B31926298">B31926298 | TANATORIO CREMATORIO DE ANIMALES SL</option>
+<option value="B31819220">B31819220 | CREMATORIO DE ANIMALES DUIN SL</option>
+<option value="B31275837">B31275837 | RECUPERACIONES VALDIZARBE SL</option>
+<option value="18203291X">18203291X | JOSE IRABURU ALLEGUE</option>
+<option value="B31090517">B31090517 | CAMERA SL</option>
+<option value="B71034516">B71034516 | CAMERA TRADE SL</option>
+<option value="E71426498">E71426498 | BUTINI ECHARTE CARMELO Y CAICEDO FERNANDEZ VEGA NURIA</option>
+<option value="E31644255">E31644255 | BUTINI ECHARTE CARMELO JAVIER Y FERMIN</option>
+<option value="B31684632">B31684632 | GUILLERMO MUERZA,SL</option>
+<option value="17218988S">17218988S | MARIA DEL CARMEN NAVARRETE LOZANO</option>
+<option value="B71080188">B71080188 | EL DUENDE DE LA LOTERIA DE BARA&#209;AIN SL</option>
+<option value="B71366066">B71366066 | TALLERES ARMENDARIZ SL</option>
+<option value="18198816C">18198816C | PABLO JAVIER FLORES DOMINGUEZ</option>
+</select>
+<script type="text/javascript">
+    (function() {
+        window.Aplicacion.Plugins.Select2Scripts.init(\'SujetoPasivo\',
+            {"placeholder":"NIF del Sujeto pasivo"});
+    })();
+</script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 flex-column my-3 my-lg-0 gap-12 d-flex">
+                        <div class="d-inline oneliner">
+                            <label class="large p-0 m-0 weight-medium" for="Presentador">Presentador</label>
+                        </div>
+                        <div class="row d-flex">
+                            <div class="d-flex flex-column col-12 gap-8">
+                                <input class="custom-input w-100" id="Presentador" name="Presentador" placeholder="NIF del presentador" type="text" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 flex-column my-3 my-lg-0 d-none d-lg-flex"></div>
+                </div>
+                <div class="d-flex flex-column gap-12 row">
+                    <div class="col-12">
+                        <h3 class="large p-0 m-0 weight-medium">N&#250;mero</h3>
+                    </div>
+                    <div class="d-flex align-items-lg-start col-12 flex-sm-row flex-column">
+                        <div class="mr-4 d-flex flex-row gap-8">
+                            <input checked="checked" class="fondo-negro" id="BuscarDeclaracion" name="BuscarDeclaracion" onclick="limpiarCampoDeclaracion(&#39;N\xc3\xbamero de declaraci\xc3\xb3n&#39;);" type="radio" value="True" />
+                            <label class="p-0 m-0" for="BuscarDeclaracion">Declaraciones y notificaciones</label>
+                        </div>                        
+                    </div>
+                    <div class="d-flex flex-column col-12 etiquetaFlotante">
+                        <div class="row">
+                            <div class="col-12 col-lg-4">
+                                <label class="small py-0 px-1 m-0 letra" for="SelectedNumero" id="lblNumero">N&#250;mero de declaraci&#243;n</label>
+                                <input aria-describedby="SelectedNumero-error" class="custom-input w-100" data-val="true" data-val-number="El campo N\xc3\xbamero debe ser un n\xc3\xbamero." id="SelectedNumero" name="SelectedNumero" placeholder="N\xc3\xbamero de declaraci\xc3\xb3n" type="text" value="" />
+                                <p id="SelectedNumero-error"><span class="field-validation-valid" data-valmsg-for="SelectedNumero" data-valmsg-replace="true"></span></p>
+                            </div>
+                            <div class="col-lg-4 d-none d-lg-flex"></div>
+                            <div class="col-lg-4 d-none d-lg-flex"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-content-lg-center d-flex flex-lg-row flex-column">
+                    <fieldset class="col-lg-4 gap-12 d-flex flex-column padding-dcha-24 mb-2 mb-lg-0">
+                        <legend class="m-0">
+                            <label class="large p-0 m-0 weight-medium" for="idFamilia">Familia</label>
+                        </legend>
+                        <div class="etiquetaFlotante">
+                            <p class="small py-0 m-0 letra px-1" id="lblFamilia">Familia</p>
+                            <select class="medium select-custom" id="idFamilia" name="SelectedFamilia"><option value=""></option>
+<option value="APL">Aplazamientos</option>
+<option value="IIEE">Declaraci&#243;n de Impuestos Especiales</option>
+<option value="ISOC">Declaraci&#243;n de Impuestos sobre sociedades</option>
+<option value="NOT">Gesti&#243;n de las notificaciones electr&#243;nicas tributarias</option>
+<option value="GFICH">Grandes ficheros</option>
+<option value="IRNR">Impuesto sobre la Renta de No Residentes</option>
+<option value="ISD">Impuesto sobre Sucesiones y Donaciones</option>
+<option value="IIEE: JUEG">Impuestos Especiales del Juego</option>
+<option value="IGEC">Impuestos sobre dep&#243;sitos y sobre grandes superficies comerciales</option>
+<option value="IVA">IVA</option>
+<option value="NOTIFICACI">Notificaciones</option>
+<option value="OTROS">Otros</option>
+<option value="RECAUDAC">Recaudacion</option>
+<option value="RENTA">Renta y Patrimonio</option>
+<option value="ITPAJ">Transmisiones Patrimoniales y Actos Jur&#237;dicos Documentados</option>
+<option value="ayudas">Ayudas</option>
+</select>
+<script type="text/javascript">
+    (function() {
+        window.Aplicacion.Plugins.Select2Scripts.init(\'idFamilia\',
+            {"placeholder":"Familia"});
+    })();
+</script>
+                        </div>
+                    </fieldset>
+                    <fieldset class="col-lg-4 padding-sup-12-mb gap-12 d-flex flex-column padding-dcha-24 pl-lg-0 mb-2 mb-lg-0">
+                        <legend class="m-0">
+                            <label class="large weight-medium p-0 m-0" for="idModelo">Modelo</label>
+                        </legend>
+                        <div class="etiquetaFlotante">
+                            <p class="small py-0 px-1 m-0 letra" id="lblModelo">Modelo</p>
+                            <select class="medium select-custom" id="idModelo" name="SelectedModelo"><option value=""></option>
+<option value="030">(030) Comunicaci&#243;n de cambio de domicilio o de variaci&#243;n de datos personales o familiares</option>
+<option value="035D">(035D) Reg&#237;menes especiales de ventanilla &#218;nica</option>
+<option value="035I">(035I) Reg&#237;menes especiales de ventanilla &#218;nica</option>
+<option value="035U">(035U) Reg&#237;menes especiales de ventanilla &#218;nica</option>
+<option value="039">(039) IVA. Comunicaciones de datos relativos a grupos de entidades</option>
+<option value="04">(04) Comunicaci&#243;n libros obligatorios</option>
+<option value="041">(041) R&#233;gimen de franquicia del IVA en otros Estados miembros: declaraci&#243;n censal de alta, modificaci&#243;n y baja</option>
+<option value="047">(047) Solicitud de reconocimiento de la condici&#243;n de trabajador fronterizo</option>
+<option value="05">(05) Primera matriculaci&#243;n definitiva de determinados medios de transporte con beneficio fiscal</option>
+<option value="113">(113) Comunicaci&#243;n de datos relativos a ganancias patrimoniales por cambio de residencia a otro Estado de la UE</option>
+<option value="130">(130) Pagos fraccionados a cuenta del IRPF trimestral</option>
+<option value="132">(132) Solicitud de datos fiscales</option>
+<option value="135">(135) Gesti&#243;n de rechazos de propuestas de autoliquidaci&#243;n del modelo 130</option>
+<option value="136">(136) Gravamen Especial sobre los Premios de determinadas Loter&#237;as y Apuestas</option>
+<option value="150">(150) R&#233;gimen especial para personas trabajadoras desplazadas</option>
+<option value="155">(155) Impuesto para cancelaci&#243;n anticipada de aplazamientos</option>
+<option value="159">(159) Declaraci&#243;n anual de consumo de energ&#237;a el&#233;ctrica</option>
+<option value="179">(179) Declaraci&#243;n informativa trimestral de la cesi&#243;n de uso de viviendas con fines tur&#237;sticos</option>
+<option value="180">(180) Retenciones de determinadas rentas o rendimientos procedentes del arrendamiento o subarrendamiento de inmuebles urbanos</option>
+<option value="181">(181) Pr&#233;stamos hipotecarios concedidos para adquisici&#243;n de vivienda</option>
+<option value="182">(182) Donativos, donaciones y aportaciones recibidas y disposiciones realizadas</option>
+<option value="184">(184) Entidades en r&#233;gimen de atribuci&#243;n de rentas</option>
+<option value="187">(187) Retenciones e ingresos a cuenta en relaci&#243;n con rentas o ganancias patrim. obtenidas por transm. o reembolsos de esas acc. y participaciones</option>
+<option value="188">(188) Retenciones de capital mobiliario de operaciones de capitalizaci&#243;n, seguros de vida o invalidez</option>
+<option value="189">(189) - Declaraci&#243;n informativa anual acerca de valores, seguros y rentas</option>
+<option value="190">(190) Rendimientos del trabajo, de determinadas actividades econ&#243;micas e imputaciones de renta y Premios</option>
+<option value="193">(193) Retenciones de determinadas Rentas y Rendimientos del capital mobiliario</option>
+<option value="194">(194) Resumen anual de rendimientos impl&#237;citos y aportaciones a cooperativas</option>
+<option value="V20">(200 CAV) Impuesto Sociedades. Normativa CAV</option>
+<option value="210">(210) IRNR. No residentes sin establecimiento permanente</option>
+<option value="211">(211) Impuesto sobre la renta de no residentes. Retenci&#243;n en la adquisici&#243;n de bienes inmuebles a no residentes sin establecimiento permanente.</option>
+<option value="213">(213) Impuesto sobre la renta de no residentes. Gravamen especial sobre bienes inmuebles en Entidades no residentes.</option>
+<option value="216">(216) IRNR. Retenciones e ingresos a cuenta sobre rentas obtenidas sin establecimiento permanente</option>
+<option value="V22">(220 CAV) Impuesto Sociedades. R&#233;gimen de tributaci&#243;n de los Grupos Fiscales. Normativa CAV</option>
+<option value="220">(220) Impuesto sobre sociedades, r&#233;gimen de tributaci&#243;n de los grupos fiscales</option>
+<option value="223">(223) Comunicaci&#243;n del R&#233;gimen de Consolidaci&#243;n Fiscal</option>
+<option value="230">(230) Retenciones e ingresos a cuenta del Gravamen Especial sobre los premios de determinados bienes y apuestas</option>
+<option value="232">(232) Modelo informativo de operaciones vinculadas y de operaciones y situaciones relacionadas con para&#237;sos fiscales</option>
+<option value="234">(234) Declaraci&#243;n de informaci&#243;n de determinados mecanismos de planificaci&#243;n fiscal</option>
+<option value="235">(235) Declaraci&#243;n de informaci&#243;n de actualizaci&#243;n de determinados mecanismos transfronterizos comercializables</option>
+<option value="238">(238) - Declaraci&#243;n informativa de actividades de vendedores a trav&#233;s de operadores de plataforma</option>
+<option value="250">(250) Gravamen especial sobre Dividendos y Rentas de Fuente extranjera</option>
+<option value="270">(270) Resumen anual de retenciones e ingresos a cuenta. Gravamen especial sobre los premios de determinadas loter&#237;as y apuestas</option>
+<option value="280">(280) Declaraci&#243;n informativa anual de Planes de Ahorro a Largo Plazo</option>
+<option value="289">(289) Comunicaciones por declaraci&#243;n de concurso del deudor y cr&#233;ditos incobrables</option>
+<option value="292">(292) Solicitud aplicaci&#243;n r&#233;gimen opcional art 46 del Texto Refundido de la Ley del Impuesto sobre la Renta de no Residentes</option>
+<option value="296">(296) IRNR Declaraci&#243;n anual retenciones e ingresos a cuenta sobre rentas obtenidas sin establecimiento permanente</option>
+<option value="308">(308) Solicitud Devoluci&#243;n: recargo equivalencia, entregas medios transporte, actividad transporte y art. 18.4 LFIVA.</option>
+<option value="309">(309) IVA. Liquidaci&#243;n no peri&#243;dica trimestral</option>
+<option value="320">(320) Impuesto sobre Sociedades de normativa com&#250;n o del Pa&#237;s Vasco</option>
+<option value="321">(321) Notificaciones electr&#243;nicas tributarias: solicitud d&#237;as de no puesta a disposici&#243;n</option>
+<option value="322">(322) IVA. Grupo de entidades. Modelo individual</option>
+<option value="323">(323) Notificaciones electr&#243;nicas tributarias: consulta y solicitud de exclusi&#243;n del servicio</option>
+<option value="340">(340) Declaraci&#243;n informativa de operaciones incluidas en los libros registro de IVA</option>
+<option value="345">(345) Planes, fondos de pensiones, sistemas alternativos, mutualidades de previsi&#243;n social, planes de previsi&#243;n asegurados, planes individuales de ahorro sistem&#225;tico, planes de previsi&#243;n social empresarial y seguros de dependencia.</option>
+<option value="349">(349) Declaraci&#243;n Recapitulativa de operaciones intracomunitarias</option>
+<option value="353">(353) IVA. Grupo de entidades. Modelo agregado</option>
+<option value="366">(366) Impuesto sobre la eliminaci&#243;n en vertedero y la incineraci&#243;n de residuos</option>
+<option value="367">(367) Solicitud de devoluci&#243;n por exenci&#243;n por reinversi&#243;n en vivienda habitual</option>
+<option value="369I">(369I) Reg&#237;menes especiales de ventanilla &#250;nica. Declaraci&#243;n IVA</option>
+<option value="369U">(369U) Reg&#237;menes especiales de ventanilla &#250;nica. Declaraci&#243;n IVA</option>
+<option value="389">(389) Gesti&#243;n de ayudas directas</option>
+<option value="408">(408) Actualizaci&#243;n de balances</option>
+<option value="410">(410) Impuesto para el pago fraccionado</option>
+<option value="411">(411) Impuesto sobre los Dep&#243;sitos en las Entidades de Cr&#233;dito</option>
+<option value="430">(430) Impuesto sobre primas de seguros. Declaraci&#243;n peri&#243;dica</option>
+<option value="480">(480) Impuesto sobre primas de seguros. Resumen anual</option>
+<option value="490">(490) Impuesto sobre Determinados Servicios Digitales. Liquidaci&#243;n.</option>
+<option value="548">(548) Impuestos especiales de fabricaci&#243;n. Declaraci&#243;n informativa de cuotas repercutidas</option>
+<option value="560">(560) Impuesto sobre la electricidad</option>
+<option value="561">(561) Impuesto especial sobre la cerveza</option>
+<option value="562">(562) Impuesto especial sobre productos intermedios</option>
+<option value="563">(563) Impuesto especial sobre alcohol y bebidas derivadas</option>
+<option value="564">(564) Impuesto especial sobre hidrocarburos</option>
+<option value="566">(566) Impuesto especial sobre las labores del tabaco</option>
+<option value="568">(568) Solicitud de devoluci&#243;n por reventa y env&#237;o de medios de transporte fuera del territorio</option>
+<option value="569">(569) Impuesto sobre ventas minoristas de determinados hidrocarburos</option>
+<option value="571">(571) Devoluciones IVMDH</option>
+<option value="573">(573) Impuesto sobre los l&#237;quidos para cigarrillos electr&#243;nicos y otros productos relacionados con el tabaco.</option>
+<option value="576">(576) Primera matriculaci&#243;n definitiva de determinados medios de transporte</option>
+<option value="581">(581) Impuesto especial sobre hidrocarburos</option>
+<option value="582">(582) Impuesto sobre hidrocarburos. Reexpedidores</option>
+<option value="583">(583) Impuesto sobre el valor de la producci&#243;n de energ&#237;a el&#233;ctrica</option>
+<option value="583A">(583A) Impuesto sobre el valor de la producci&#243;n de energ&#237;a el&#233;ctrica. Autoliquidaci&#243;n anual</option>
+<option value="586">(586) Impuesto sobre los Gases Fluorados de Efecto Invernadero. Declaraci&#243;n recapitulativa</option>
+<option value="587">(587) Impuesto sobre los Gases Fluorados de Efecto Invernadero</option>
+<option value="588">(588) Impuesto sobre el valor de la producci&#243;n de energ&#237;a el&#233;ctrica. Autoliquidaci&#243;n anual</option>
+<option value="591">(591) Impuesto sobre el valor de la producci&#243;n de la energ&#237;a el&#233;ctrica. Declaraci&#243;n anual de operaciones con contribuyentes</option>
+<option value="592">(592) Impuesto especial sobre los envases de pl&#225;stico no reutilizables. Autoliquidaci&#243;n</option>
+<option value="594">(594) Contabilidad Impuesto especial sobre los envases de pl&#225;stico no reutilizables</option>
+<option value="600">(600) Impuesto sobre Transmisiones Patrimoniales</option>
+<option value="601">(601) Impuesto sobre Transmisiones Patrimoniales Onerosas. Adquisici&#243;n de bienes muebles a particulares.</option>
+<option value="604">(604)Impuesto sobre Transacciones Financieras</option>
+<option value="605">(605) Impuesto sobre Actos Jur&#237;dicos Documentados</option>
+<option value="610">(610) Impuesto AJD. Pago en met&#225;lico de documentos mercantiles negociado por entidades colaboradoras</option>
+<option value="620">(620) Impuesto sobre Transmisiones Patrimoniales. Venta de veh&#237;culos usados</option>
+<option value="630">(630) Impuesto sobre AJD. Modelos Mercantiles</option>
+<option value="640">(640) Impuesto AJD. Efectos timbrados</option>
+<option value="650">(650) Impuesto sobre sucesiones y donaciones. Sucesiones. Autoliquidaci&#243;n</option>
+<option value="651">(651) Impuesto sobre sucesiones y donaciones. Sucesiones. Tipo de gravamen 0,80 por 100. Autoliquidaci&#243;n</option>
+<option value="652">(652) Impuesto sobre sucesiones y donaciones. Sucesiones. Seguros de vida. Autoliquidaci&#243;n</option>
+<option value="653">(653) Impuesto sobre Sucesiones y Donaciones. Solicitud de pr&#243;rroga o aplazamiento del plazo de presentaci&#243;n</option>
+<option value="660">(660) Impuesto sobre sucesiones y donaciones. Sucesiones</option>
+<option value="661">(661) Impuesto sobre sucesiones y donaciones. Donaciones directas</option>
+<option value="662">(662) Impuesto sobre sucesiones y donaciones. Donaciones indirectas</option>
+<option value="665">(665) Solicitud del NIF de menores por una entidad financiera</option>
+<option value="715">(715) Retenciones IRPF (trimestral): trabajo, profesionales, agr&#237;colas y premios</option>
+<option value="716">(716) Retenciones capital mobiliario. (trimestral)</option>
+<option value="717">(717) Pagos fraccionados a cuenta del IRPF trimestral</option>
+<option value="720">(720) Declaraci&#243;n informativa sobre bienes y derechos situados en el extranjero</option>
+<option value="721">(721) Declaraci&#243;n informativa sobre monedas virtuales situadas en el extranjero</option>
+<option value="745">(745) Retenciones IRPF (mensual); trabajo, profesionales, agr&#237;colas y premios</option>
+<option value="746">(746) Retenciones IRPF y Sociedades (mensual): capital mobiliario (intereses cuentas)</option>
+<option value="747">(747) Retenciones capital mobiliario. Rendimientos expl&#237;citos (mensual)</option>
+<option value="748">(748) Retenciones capital mobiliario. Rendimientos impl&#237;citos</option>
+<option value="759">(759) Retenciones IRPF y Sociedades (trimestral): Arrendamientos inmuebles urbanos</option>
+<option value="760">(760) Retenciones IRPF y Sociedades (mensual): Arrendamientos inmuebles urbanos</option>
+<option value="763">(763) Impuesto sobre actividades de juego en los supuestos de actividades anuales y plurianuales</option>
+<option value="780">(780) Retenciones IRPF, Sociedades y No Residentes (mensual): Incrementos patrimoniales</option>
+<option value="781">(781) Retenciones IRPF, Sociedades y No Residentes (trimestral): Incrementos patrimoniales</option>
+<option value="785">(785) Retenciones capital mobiliario en operaciones de capitalizaci&#243;n y seguros</option>
+<option value="910">(910) Impuesto sobre los Grandes Establecimientos Comerciales. Declaraci&#243;n Censal. Peri&#243;dico</option>
+<option value="910L">(910L) Impuesto sobre los grandes establecimientos comerciales. Autoliquidaci&#243;n</option>
+<option value="994">(994) Formulario Auxiliar Modelos Informativos</option>
+<option value="995">(995) Formilario de carga de grandes ficheros</option>
+<option value="996">(996) Formulario de &#243;rdenes de embargo</option>
+<option value="997">(997) Formulario de levantamientos de embargo</option>
+<option value="998">(998) Formulario para entidades locales</option>
+<option value="A22">(A22) Impuesto Especial sobre los Envases de Pl&#225;stico no reutilizables. Solicitud de devoluci&#243;n.</option>
+<option value="A24">(A24) Impuesto sobre L&#237;quidos para Cigarrillos Electr&#243;nicos y otros Productos relacionados con el Tabaco. Solicitud de devoluci&#243;n por env&#237;os dentro de la Uni&#243;n Europea.</option>
+<option value="C10">(C10) Comunicaciones concurso de acreedores a Hacienda Tributaria de Navarra</option>
+<option value="C06">(CAT06) Solicitud de aplazamientos en v&#237;a voluntaria</option>
+<option value="C08">(CAT08) Fraccionamiento de deudas en v&#237;a de apremio</option>
+<option value="CRE">(CRE) Contestaci&#243;n Diligencia de embargo de Cr&#233;ditos. Pagador</option>
+<option value="E20">(E20) Impuesto Sociedades. Normativa estatal</option>
+<option value="E22">(E22) Impuesto Sociedades. R&#233;gimen de tributaci&#243;n de los Grupos Fiscales. Normativa estatal</option>
+<option value="347">(F50) 347 Declaraci&#243;n anual de operaciones con terceras personas</option>
+<option value="F65">(F65) Opciones y renuncias a censos IVA y comunicaci&#243;n previa a inicio de actividad</option>
+<option value="F66">(F66) IVA. Mensual</option>
+<option value="F69">(F69) IVA. Trimestral (General y Simplificado)</option>
+<option value="F80">(F80) Impuesto sobre el Patrimonio</option>
+<option value="F83">(F83) Impuesto sobre el Patrimonio</option>
+<option value="F93">(F93) Declaraci&#243;n anual IRPF</option>
+<option value="FR2">(FR2) Pagos fraccionados a cuenta del IRPF. Modalidad Segunda</option>
+<option value="G01A">(G01A) Solicitudes alta censo beneficiario gas&#243;leo profesional</option>
+<option value="G01M">(G01M) Solicitudes modificaci&#243;n censo beneficiario gas&#243;leo profesional</option>
+<option value="G03">(G03) Gas&#243;leo agr&#237;cola. Solicitud</option>
+<option value="G04">(G04) Gas&#243;leo profesional: Declaraci&#243;n de suministros en instalaciones de consumo propio</option>
+<option value="G09">(G09) Declaraci&#243;n anual de kil&#243;metros recorridos</option>
+<option value="GDR">(GDR) Declaraci&#243;n responsable empresas transporte para devoluci&#243;n impuesto sobre Hidrocarburos</option>
+<option value="H01">(H01) Incorporaci&#243;n de informaci&#243;n externa</option>
+<option value="H70">(H70) Cantidades percibidas por los promotores de viviendas a cuenta del precio de adquisici&#243;n de &#233;stas</option>
+<option value="J10">(J10) Tasa fiscal sobre el juego: explotaci&#243;n de m&#225;quinas o aparatos autom&#225;ticos</option>
+<option value="J20">(J20) Tasa fiscal sobre el juego: salas de bingo</option>
+<option value="J30">(J30) Tasa Fiscal sobre el Juego: Rifas y T&#243;mbolas</option>
+<option value="J40">(J40) Tasa fiscal sobre el juego: suministro de los cartones de bingo</option>
+<option value="J50">(J50) Tasa fiscal sobre el juego: rifas, t&#243;mbolas, apuestas y combinaciones aleatorias</option>
+<option value="J60">(J60) Tasa fiscal sobre el juego: Comunicaci&#243;n de premios superiores a 3.000 euros</option>
+<option value="MNB">(MNB) Modificaci&#243;n del n&#250;mero de bastidor err&#243;neo</option>
+<option value="N01">(N01) Presentaci&#243;n de documentos</option>
+<option value="P44">(P44) Ingreso de cantidades y pago de deudas</option>
+<option value="S90">(S90) Impuesto Sociedades. Normativa navarra</option>
+<option value="S91">(S91) Impuesto Sociedades. Pago fraccionado</option>
+<option value="SAL">(SAL) Contestaci&#243;n Diligencia de embargo de Salarios. Pagador. Mod SAL</option>
+<option value="COLALTA">Adhesi&#243;n al Acuerdo de Colaboraci&#243;n Externa</option>
+<option value="COLBAJA">Baja voluntaria del Acuerdo de Colaboraci&#243;n externa</option>
+<option value="EGT">EGT</option>
+<option value="NDP">NDP</option>
+</select>
+<script type="text/javascript">
+    (function() {
+        window.Aplicacion.Plugins.Select2Scripts.init(\'idModelo\',
+            {"placeholder":"Modelo"});
+    })();
+</script>
+                        </div>
+                    </fieldset>
+                    <fieldset class="col-lg-4 gap-12 d-flex flex-column pl-lg-0 pt-lg-0">
+                        <legend class="m-0">
+                            <label class="large p-0 m-0 weight-medium" for="SelectedAnio">A&#241;o</label>
+                        </legend>
+                        <div class="etiquetaFlotante">
+                            <p class="small py-0 px-1 m-0 letra" id="lblAnio">A&#241;o</p>
+                            <select data-val="true" data-val-number="El campo A\xc3\xb1o debe ser un n\xc3\xbamero." id="SelectedAnio" name="SelectedAnio"><option value=""></option>
+<option value="2025">2025</option>
+<option value="2024">2024</option>
+<option value="2023">2023</option>
+<option value="2022">2022</option>
+<option value="2021">2021</option>
+<option value="-1">Todos los a&#241;os</option>
+</select>
+<script type="text/javascript">
+    (function() {
+        window.Aplicacion.Plugins.Select2Scripts.init(\'SelectedAnio\',
+            {"placeholder":"A\xc3\xb1o"});
+    })();
+</script>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            
+<div>
+    <ul class="justify-content-end gap-24 flex-row pt-4">
+        <li class="d-flex">
+            <input onclick="limpiarValoresFiltros();" type="reset" name="btnLimpiar" class="btn btn-link bold" value=Borrar todo role="button" />
+        </li>
+        <li class="d-flex">
+            <input onclick="buscarFuncionMovil();" type="submit" id="btnBuscar" name="btnBuscar" class="btn btn-dark" value=Buscar role="button" />
+        </li>
+    </ul>
+</div>
+
+        </div>
+    </div>
+    <div hidden>
+        <input class="text-box single-line" data-val="true" data-val-number="El campo NumeroPagina debe ser un n\xc3\xbamero." id="NumeroPagina" name="NumeroPagina" type="number" value="1" />
+        <input class="text-box single-line" data-val="true" data-val-number="El campo ResultadosPagina debe ser un n\xc3\xbamero." id="ResultadosPagina" name="ResultadosPagina" type="number" value="10" />
+        <input class="text-box single-line" id="UltimosLotes" name="UltimosLotes" type="text" value="false" />
+    </div></form>
+
+
+<div id="divResultadoBusquedaDeclaraciones" class="mt-5">
+</div>
+
+
+            </main>
+        </div>
+    </div>
+
+
+<footer id="pieDePagina" class="container-fluid py-4">
+    <ul class="row justify-content-center mb-4 separador">
+        <li class="">
+            <a id="lnkContactoAdmin" class="small" accesskey="c" href="https://www.navarra.es/es/declaracion-de-accesibilidad" target="_blank" title="Se abre en una nueva ventana">
+                Accesibilidad
+            </a>
+        </li>
+        <li class="">
+            <a id="lnkAyuda" class="small" target="_blank" title="Se abre en una nueva ventana" href="https://www.navarra.es/es/proteccion-de-datos" rel="noopener noreferrer">
+                Protecci&#243;n de datos
+            </a>
+        </li>
+        <li class="">
+            <a href="https://www.navarra.es/es/aviso-legal" class="small" target="_blank" title="Se abre en una nueva ventana">
+                Aviso legal
+            </a>
+        </li>
+    </ul>
+
+    <hr class="border-top-1 m-0" />
+
+
+    <nav class="row text-center my-4 justify-content-center" aria-label="Organismos involucrados">
+        <div class="logos_footer">
+            <div>
+                <img src="/ConsultaDeclaracionesNavarra/images/logo_ue.png" alt="Financiado por la Uni&#243;n Europea NextGenerationEU" />
+            </div>
+            <div>
+                <img src="/ConsultaDeclaracionesNavarra/images/logo_plan.png" alt="Plan de Recuperaci&#243;n, Transformaci&#243;n y Resiliencia" />
+            </div>
+            <div>
+                <a href="https://www.navarra.es" target="_blank" id="linkNavarra">
+                    <img src="/ConsultaDeclaracionesNavarra/images/logo_agenda.png" alt="Ir a navarra.es - AGENDA 2030" />
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <hr class="border-top-1 m-0" />
+
+
+    <div class="row text-center mt-4">
+        <div class="col-sm-12">
+            <img src="/ConsultaDeclaracionesNavarra/images/logo_hacienda.png" alt="Hacienda Navarra" class="img-fluid" accesskeyalt="Logotipo Hacienda Navarra" />
+        </div>
+    </div>
+</footer>
+
+    <!-- Modal alertModal -->
+
+
+<div ModalClasses="modal-dialog modal-dialog-centered" aria-hidden="True" aria-labelledby="alertModalTittle" class="modal fade" data-backdrop="static" id="alertModal" name="alertModal" role="dialog" tabindex="-1"><div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+<div class="modal-header">
+
+<h2 class="modal-title font-weight-bold h2" data-texto="Alerta" id="alertModalTitle">Alerta</h2>
+</div>        <div class="modal-body ">
+<div class="row px-4">
+    <div class="icono col-3 d-flex align-items-center">
+        <span class="icono-estandar fas fa-exclamation-triangle fa-5x"></span>
+    </div>
+    <div class="zona-mensaje col-9 text-center d-flex align-items-center">
+        <p class="col-12 mensaje-alert text-center"></p>
+    </div>
+</div>
+        </div>
+<div class="modal-footer">
+
+<button type="button" class="btn btn-dark" data-texto="Aceptar" data-dismiss="modal" role="button">Aceptar</button>
+</div>    </div>
+</div></div>
+    <!-- Modal confirmModal -->
+
+
+<div aria-hidden="True" aria-labelledby="confirmModalTittle" class="modal fade" data-backdrop="static" id="confirmModal" name="confirmModal" role="dialog" tabindex="-1"><div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+<div class="modal-header">
+
+<h6 class="modal-title font-weight-bold" data-texto="&#191;Est&#225; seguro?" id="confirmModalTitle">&#191;Est&#225; seguro?</h6>
+</div>        <div class="modal-body ">
+<div class="row px-4">
+    <div class="icono col-3 d-flex align-items-center">
+        <span class="icono-estandar fas fa-question-circle fa-5x"></span>
+    </div>
+    <div class="zona-mensaje text-center col-9 d-flex align-items-center">
+        <div class="col-12 mensaje-confirm text-center"></div>
+    </div>
+</div>
+        </div>
+<div class="modal-footer">
+
+<button type="button" class="btn btn-primary boton-aceptar" data-texto="Aceptar" data-dismiss="modal">Aceptar</button>
+<button type="button" class="btn btn-danger boton-cancelar" data-texto="Cancelar" data-dismiss="modal">Cancelar</button>
+</div>    </div>
+</div></div>
+    <!-- Modal mensajeEspera -->
+
+
+<div aria-hidden="True" aria-labelledby="mensajeEsperaTittle" class="modal blackBackground" data-backdrop="static" id="mensajeEspera" name="mensajeEspera" role="dialog" tabindex="-1"><div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-body ">
+
+<div class="text-center my-1">
+    <div class="db-spinner align-middle"></div>
+    <h2 class="ml-4 d-inline align-middle">Espere por favor...</h2>
+</div>
+        </div>
+    </div>
+</div></div>
+    <!-- Modal descargandoModal -->
+
+
+<div aria-hidden="True" aria-labelledby="descargandoModalTittle" class="modal blackBackground" data-backdrop="static" id="descargandoModal" name="descargandoModal" role="dialog" tabindex="-1"><div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-body ">
+
+<div class="text-center my-1">
+    <div class="db-spinner align-middle"></div>
+    <h2 class="ml-4 d-inline align-middle">Descargando...</h2>
+</div>
+        </div>
+    </div>
+</div></div>
+    <!-- Modal cargandoModal -->
+
+
+<div aria-hidden="True" aria-labelledby="cargandoModalTittle" class="modal blackBackground" data-backdrop="static" id="cargandoModal" name="cargandoModal" role="dialog" tabindex="-1"><div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-body ">
+
+<div class="text-center my-1">
+    <div class="db-spinner align-middle"></div>
+    <h2 class="ml-4 d-inline align-middle">Cargando...</h2>
+</div>
+
+
+        </div>
+    </div>
+</div></div>
+    
+    
+    <script src="/ConsultaDeclaracionesNavarra/bundles/Scripts_Externos_Comunes?v=Cv0wAd-_3hLUyS5i6LagPQr3outScbKjVveKgvTWiDs1"></script>
+
+    <script src="/ConsultaDeclaracionesNavarra/bundles/Scripts/Aplicacion?v=Uff385WaAQeOS4TKdUpInWIaRgGu1aXfmN4m9NsOOvk1"></script>
+
+
+    
+    
+    <script src="/ConsultaDeclaracionesNavarra/bundles/Scripts/Select2?v=-Q5ePOddPDmwuu61LYG69PK9v5Is7K6fMnGeoEdNOu81"></script>
+
+    <script src="/ConsultaDeclaracionesNavarra/bundles/Scripts/Grid?v=5ZuZ0Ry1jTX7bKEubaIzjS4kbjat7b-WyNeKVCKSGCw1"></script>
+
+    <script src="/ConsultaDeclaracionesNavarra/bundles/Scripts/Aplicacion?v=Uff385WaAQeOS4TKdUpInWIaRgGu1aXfmN4m9NsOOvk1"></script>
+
+
+    <script>
+    $(document).ready(function () {
+    if (window.location.href.indexOf(\'buscarDeclaraciones\') > 0) {
+        if (window.location.href.indexOf(\'true\') > 0) {
+        buscarDeclaracion();
+        }
+    else {
+        buscarUltimosLotes();
+        }
+    }
+    else {
+        buscarDeclaracion();
+        }
+
+        $("#idFamilia").on("change",
+            function () {
+                var idFamilia = $("#idFamilia").val();
+                var idModelo = $("#idModelo").val();
+                if (idFamilia == "") {
+                    window.Aplicacion.Plugins.Select2Scripts.postReload(
+                        "idModelo",
+                        {
+                            url: urls.getTodosModelos,
+                            method: "GET",
+                            dataType: "json",
+                            global: false
+                        });
+                } else {
+                    if (idModelo != "") {
+                        window.Aplicacion.Plugins.Select2Scripts.postReload(
+                            "idModelo",
+                            {
+                                url: urls.getModelos,
+                                data: {
+                                    "idFamilia": idFamilia
+                                },
+                                method: "GET",
+                                dataType: "json",
+                                global: false,
+                                success: function (data) {
+                                    $("#idModelo").val(idModelo);
+                                    $("#idModelo").trigger("change.select2");
+                                }
+                            });
+                    } else {
+                        window.Aplicacion.Plugins.Select2Scripts.postReload(
+                            "idModelo",
+                            {
+                                url: urls.getModelos,
+                                data: {
+                                    "idFamilia": idFamilia
+                                },
+                                method: "GET",
+                                dataType: "json",
+                                global: false
+                            });
+                    }
+                }
+            });
+        $("#idModelo").on("change",
+            function () {
+                var idModelo = $("#idModelo").val();
+                var idFamilia = $("#idFamilia").val();
+                if (idModelo == null) {
+                    idModelo = "";
+                }
+                if (idModelo != "" && idFamilia == "") {
+                    $.ajax({
+                        url: urls.getFamilia,
+                        type: "POST",
+                        dataType: "text",
+                        data: {
+                            \'idModelo\': idModelo
+                        },
+                        success: function (data) {
+                            $("#idFamilia").val(data);
+                            $("#idFamilia").trigger("change.select2");
+                            var $select = $("#idFamilia").parent().children(\'.select2-container\').children(\'.selection\')
+                                .children().children(\'.select2-selection__arrow\');
+                            $select.addClass(\'d-none\');
+                        }
+                    });
+                } else {
+                    if (idModelo != "" && idFamilia != "") {
+
+                        $.ajax({
+                            url: urls.getFamilia,
+                            type: "POST",
+                            dataType: "text",
+                            data: {
+                                \'idModelo\': idModelo
+                            },
+                            success: function (data) {
+                                $("#idFamilia").val(data);
+                                $("#idFamilia").trigger("change.select2");
+                                var $select = $("#idFamilia").parent().children(\'.select2-container\').children(\'.selection\')
+                                    .children().children(\'.select2-selection__arrow\');
+                                $select.addClass(\'d-none\');
+                            }
+                        });
+                    }
+                }
+
+
+            });
+});
+    </script>
+
+
+
+<script type="text/javascript">
+    window.Aplicacion.Plugins.Validacion.init([
+        {"main":{"es":{"identity":{"version":{"_number":"$Revision: 14982 $","_cldrVersion":"35.1"},"language":"es"},"dates":{"calendars":{"gregorian":{"months":{"format":{"abbreviated":{"1":"ene.","2":"feb.","3":"mar.","4":"abr.","5":"may.","6":"jun.","7":"jul.","8":"ago.","9":"sept.","10":"oct.","11":"nov.","12":"dic."},"narrow":{"1":"E","2":"F","3":"M","4":"A","5":"M","6":"J","7":"J","8":"A","9":"S","10":"O","11":"N","12":"D"},"wide":{"1":"enero","2":"febrero","3":"marzo","4":"abril","5":"mayo","6":"junio","7":"julio","8":"agosto","9":"septiembre","10":"octubre","11":"noviembre","12":"diciembre"}},"stand-alone":{"abbreviated":{"1":"ene.","2":"feb.","3":"mar.","4":"abr.","5":"may.","6":"jun.","7":"jul.","8":"ago.","9":"sept.","10":"oct.","11":"nov.","12":"dic."},"narrow":{"1":"E","2":"F","3":"M","4":"A","5":"M","6":"J","7":"J","8":"A","9":"S","10":"O","11":"N","12":"D"},"wide":{"1":"enero","2":"febrero","3":"marzo","4":"abril","5":"mayo","6":"junio","7":"julio","8":"agosto","9":"septiembre","10":"octubre","11":"noviembre","12":"diciembre"}}},"days":{"format":{"abbreviated":{"sun":"dom.","mon":"lun.","tue":"mar.","wed":"mi\xc3\xa9.","thu":"jue.","fri":"vie.","sat":"s\xc3\xa1b."},"narrow":{"sun":"D","mon":"L","tue":"M","wed":"X","thu":"J","fri":"V","sat":"S"},"short":{"sun":"DO","mon":"LU","tue":"MA","wed":"MI","thu":"JU","fri":"VI","sat":"SA"},"wide":{"sun":"domingo","mon":"lunes","tue":"martes","wed":"mi\xc3\xa9rcoles","thu":"jueves","fri":"viernes","sat":"s\xc3\xa1bado"}},"stand-alone":{"abbreviated":{"sun":"dom.","mon":"lun.","tue":"mar.","wed":"mi\xc3\xa9.","thu":"jue.","fri":"vie.","sat":"s\xc3\xa1b."},"narrow":{"sun":"D","mon":"L","tue":"M","wed":"X","thu":"J","fri":"V","sat":"S"},"short":{"sun":"DO","mon":"LU","tue":"MA","wed":"MI","thu":"JU","fri":"VI","sat":"SA"},"wide":{"sun":"domingo","mon":"lunes","tue":"martes","wed":"mi\xc3\xa9rcoles","thu":"jueves","fri":"viernes","sat":"s\xc3\xa1bado"}}},"quarters":{"format":{"abbreviated":{"1":"T1","2":"T2","3":"T3","4":"T4"},"narrow":{"1":"1","2":"2","3":"3","4":"4"},"wide":{"1":"1.er trimestre","2":"2.\xc2\xba trimestre","3":"3.er trimestre","4":"4.\xc2\xba trimestre"}},"stand-alone":{"abbreviated":{"1":"T1","2":"T2","3":"T3","4":"T4"},"narrow":{"1":"1","2":"2","3":"3","4":"4"},"wide":{"1":"1.er trimestre","2":"2.\xc2\xba trimestre","3":"3.er trimestre","4":"4.\xc2\xba trimestre"}}},"dayPeriods":{"format":{"abbreviated":{"am":"a.\xc2\xa0m.","noon":"del mediod\xc3\xada","pm":"p.\xc2\xa0m.","morning1":"de la madrugada","morning2":"de la ma\xc3\xb1ana","evening1":"de la tarde","night1":"de la noche"},"narrow":{"am":"a.\xc2\xa0m.","noon":"del mediod\xc3\xada","pm":"p.\xc2\xa0m.","morning1":"de la madrugada","morning2":"de la ma\xc3\xb1ana","evening1":"de la tarde","night1":"de la noche"},"wide":{"am":"a.\xc2\xa0m.","noon":"del mediod\xc3\xada","pm":"p.\xc2\xa0m.","morning1":"de la madrugada","morning2":"de la ma\xc3\xb1ana","evening1":"de la tarde","night1":"de la noche"}},"stand-alone":{"abbreviated":{"am":"a.\xc2\xa0m.","noon":"mediod\xc3\xada","pm":"p.\xc2\xa0m.","morning1":"madrugada","morning2":"ma\xc3\xb1ana","evening1":"tarde","night1":"noche"},"narrow":{"am":"a.\xc2\xa0m.","noon":"mediod\xc3\xada","pm":"p.\xc2\xa0m.","morning1":"madrugada","morning2":"ma\xc3\xb1ana","evening1":"tarde","night1":"noche"},"wide":{"am":"a.\xc2\xa0m.","noon":"mediod\xc3\xada","pm":"p.\xc2\xa0m.","morning1":"madrugada","morning2":"ma\xc3\xb1ana","evening1":"tarde","night1":"noche"}}},"eras":{"eraNames":{"0":"antes de Cristo","0-alt-variant":"antes de la era com\xc3\xban","1":"despu\xc3\xa9s de Cristo","1-alt-variant":"era com\xc3\xban"},"eraAbbr":{"0":"a. C.","0-alt-variant":"a. e. c.","1":"d. C.","1-alt-variant":"e. c."},"eraNarrow":{"0":"a. C.","0-alt-variant":"a. e. c.","1":"d. C.","1-alt-variant":"e. c."}},"dateFormats":{"full":"EEEE, d \'de\' MMMM \'de\' y","long":"d \'de\' MMMM \'de\' y","medium":"d MMM y","short":"d/M/yy"},"timeFormats":{"full":"H:mm:ss (zzzz)","long":"H:mm:ss z","medium":"H:mm:ss","short":"H:mm"},"dateTimeFormats":{"full":"{1}, {0}","long":"{1}, {0}","medium":"{1} {0}","short":"{1} {0}","availableFormats":{"Bh":"h B","Bhm":"h:mm B","Bhms":"h:mm:ss B","d":"d","E":"ccc","EBhm":"E h:mm B","EBhms":"E h:mm:ss B","Ed":"E d","Ehm":"E, h:mm a","EHm":"E, H:mm","Ehms":"E, h:mm:ss a","EHms":"E, H:mm:ss","Gy":"y G","GyMMM":"MMM y G","GyMMMd":"d MMM y G","GyMMMEd":"E, d MMM y G","GyMMMM":"MMMM \'de\' y G","GyMMMMd":"d \'de\' MMMM \'de\' y G","GyMMMMEd":"E, d \'de\' MMMM \'de\' y G","h":"h a","H":"H","hm":"h:mm a","Hm":"H:mm","hms":"h:mm:ss a","Hms":"H:mm:ss","hmsv":"h:mm:ss a v","Hmsv":"H:mm:ss v","hmsvvvv":"h:mm:ss a (vvvv)","Hmsvvvv":"H:mm:ss (vvvv)","hmv":"h:mm a v","Hmv":"H:mm v","M":"L","Md":"d/M","MEd":"E, d/M","MMd":"d/M","MMdd":"d/M","MMM":"LLL","MMMd":"d MMM","MMMEd":"E, d MMM","MMMMd":"d \'de\' MMMM","MMMMEd":"E, d \'de\' MMMM","MMMMW-count-one":"\'semana\' W \'de\' MMMM","MMMMW-count-other":"\'semana\' W \'de\' MMMM","ms":"mm:ss","y":"y","yM":"M/y","yMd":"d/M/y","yMEd":"EEE, d/M/y","yMM":"M/y","yMMM":"MMM y","yMMMd":"d MMM y","yMMMEd":"EEE, d MMM y","yMMMM":"MMMM \'de\' y","yMMMMd":"d \'de\' MMMM \'de\' y","yMMMMEd":"EEE, d \'de\' MMMM \'de\' y","yQQQ":"QQQ y","yQQQQ":"QQQQ \'de\' y","yw-count-one":"\'semana\' w \'de\' Y","yw-count-other":"\'semana\' w \'de\' Y"},"appendItems":{"Day":"{0} ({2}: {1})","Day-Of-Week":"{0} {1}","Era":"{1} {0}","Hour":"{0} ({2}: {1})","Minute":"{0} ({2}: {1})","Month":"{0} ({2}: {1})","Quarter":"{0} ({2}: {1})","Second":"{0} ({2}: {1})","Timezone":"{0} {1}","Week":"{0} ({2}: {1})","Year":"{1} {0}"},"intervalFormats":{"intervalFormatFallback":"{0}\xe2\x80\x93{1}","Bh":{"B":"h B \xe2\x80\x93 h B","h":"h\xe2\x80\x93h B"},"Bhm":{"B":"h:mm B \xe2\x80\x93 h:mm B","h":"h:mm\xe2\x80\x93h:mm B","m":"h:mm\xe2\x80\x93h:mm B"},"d":{"d":"d\xe2\x80\x93d"},"Gy":{"G":"y G \xe2\x80\x93 y G","y":"y\xe2\x80\x93y G"},"GyM":{"G":"y-MM GGGGG \xe2\x80\x93 y-MM GGGGG","M":"y-MM \xe2\x80\x93 y-MM GGGGG","y":"y-MM \xe2\x80\x93 y-MM GGGGG"},"GyMd":{"d":"y-MM-dd \xe2\x80\x93 y-MM-dd GGGGG","G":"y-MM-dd GGGGG \xe2\x80\x93 y-MM-dd GGGGG","M":"y-MM-dd \xe2\x80\x93 y-MM-dd GGGGG","y":"y-MM-dd \xe2\x80\x93 y-MM-dd GGGGG"},"GyMEd":{"d":"E y-MM-dd \xe2\x80\x93 E y-MM-dd GGGGG","G":"E y-MM-dd GGGGG \xe2\x80\x93 E y-MM-dd GGGGG","M":"E y-MM-dd \xe2\x80\x93 E y-MM-dd GGGGG","y":"E y-MM-dd \xe2\x80\x93 E y-MM-dd GGGGG"},"GyMMM":{"G":"MMM y G \xe2\x80\x93 MMM y G","M":"MMM\xe2\x80\x93MMM y G","y":"MMM y \xe2\x80\x93 MMM y G"},"GyMMMd":{"d":"MMM d\xe2\x80\x93d y G","G":"MMM d y G \xe2\x80\x93 MMM d y G","M":"MMM d \xe2\x80\x93 MMM d y G","y":"MMM d y \xe2\x80\x93 MMM d y G"},"GyMMMEd":{"d":"E d MMM \xe2\x80\x93 E d MMM, y G","G":"E, MMM d, y G \xe2\x80\x93 E, MMM d, y G","M":"E d MMM \xe2\x80\x93 E d MMM, y G","y":"E d MMM, y \xe2\x80\x93 E d MMM, y G"},"h":{"a":"h a \xe2\x80\x93 h a","h":"h\xe2\x80\x93h a"},"H":{"H":"H\xe2\x80\x93H"},"hm":{"a":"h:mm a \xe2\x80\x93 h:mm a","h":"h:mm \xe2\x80\x93 h:mm a","m":"h:mm \xe2\x80\x93 h:mm a"},"Hm":{"H":"H:mm\xe2\x80\x93H:mm","m":"H:mm\xe2\x80\x93H:mm"},"hmv":{"a":"h:mm a \xe2\x80\x93 h:mm a v","h":"h:mm\xe2\x80\x93h:mm a v","m":"h:mm\xe2\x80\x93h:mm a v"},"Hmv":{"H":"H:mm\xe2\x80\x93H:mm v","m":"H:mm\xe2\x80\x93H:mm v"},"hv":{"a":"h a \xe2\x80\x93 h a v","h":"h\xe2\x80\x93h a v"},"Hv":{"H":"H\xe2\x80\x93H v"},"M":{"M":"M\xe2\x80\x93M"},"Md":{"d":"d/M\xe2\x80\x93d/M","M":"d/M\xe2\x80\x93d/M"},"MEd":{"d":"E, d/M \xe2\x80\x93 E, d/M","M":"E, d/M \xe2\x80\x93 E, d/M"},"MMM":{"M":"MMM\xe2\x80\x93MMM"},"MMMd":{"d":"d\xe2\x80\x93d MMM","M":"d MMM \xe2\x80\x93 d MMM"},"MMMEd":{"d":"E, d MMM \xe2\x80\x93 E, d MMM","M":"E, d MMM \xe2\x80\x93 E, d MMM"},"MMMMd":{"d":"d\xe2\x80\x93d \'de\' MMMM","M":"d \'de\' MMMM\xe2\x80\x93d \'de\' MMMM"},"MMMMEd":{"d":"E, d \'de\' MMMM\xe2\x80\x93E, d \'de\' MMMM","M":"E, d \'de\' MMMM\xe2\x80\x93E, d \'de\' MMMM"},"y":{"y":"y\xe2\x80\x93y"},"yM":{"M":"M/y\xe2\x80\x93M/y","y":"M/y\xe2\x80\x93M/y"},"yMd":{"d":"d/M/y\xe2\x80\x93d/M/y","M":"d/M/y\xe2\x80\x93d/M/y","y":"d/M/y\xe2\x80\x93d/M/y"},"yMEd":{"d":"E, d/M/y \xe2\x80\x93 E, d/M/y","M":"E, d/M/y \xe2\x80\x93 E, d/M/y","y":"E, d/M/y \xe2\x80\x93 E, d/M/y"},"yMMM":{"M":"MMM\xe2\x80\x93MMM y","y":"MMM y \xe2\x80\x93 MMM y"},"yMMMd":{"d":"d\xe2\x80\x93d MMM y","M":"d MMM \xe2\x80\x93 d MMM y","y":"d MMM y \xe2\x80\x93 d MMM y"},"yMMMEd":{"d":"E, d MMM \xe2\x80\x93 E, d MMM y","M":"E, d MMM \xe2\x80\x93 E, d MMM y","y":"E, d MMM y \xe2\x80\x93 E, d MMM y"},"yMMMM":{"M":"MMMM\xe2\x80\x93MMMM \'de\' y","y":"MMMM \'de\' y \xe2\x80\x93 MMMM \'de\' y"},"yMMMMd":{"d":"d\xe2\x80\x93d \'de\' MMMM \'de\' y","M":"d \'de\' MMMM\xe2\x80\x93d \'de\' MMMM \'de\' y","y":"d \'de\' MMMM \'de\' y\xe2\x80\x93d \'de\' MMMM \'de\' y"},"yMMMMEd":{"d":"E, d \'de\' MMMM\xe2\x80\x93E, d \'de\' MMMM \'de\' y","M":"E, d \'de\' MMMM\xe2\x80\x93E, d \'de\' MMMM \'de\' y","y":"E, d \'de\' MMMM \'de\' y\xe2\x80\x93E, d \'de\' MMMM \'de\' y"}}}}}}}}}, {"supplemental":{"version":{"_number":"$Revision: 14881 $","_unicodeVersion":"12.1.0","_cldrVersion":"35.1"},"likelySubtags":{"aa":"aa-Latn-ET","aai":"aai-Latn-ZZ","aak":"aak-Latn-ZZ","aau":"aau-Latn-ZZ","ab":"ab-Cyrl-GE","abi":"abi-Latn-ZZ","abq":"abq-Cyrl-ZZ","abr":"abr-Latn-GH","abt":"abt-Latn-ZZ","aby":"aby-Latn-ZZ","acd":"acd-Latn-ZZ","ace":"ace-Latn-ID","ach":"ach-Latn-UG","ada":"ada-Latn-GH","ade":"ade-Latn-ZZ","adj":"adj-Latn-ZZ","ady":"ady-Cyrl-RU","adz":"adz-Latn-ZZ","ae":"ae-Avst-IR","aeb":"aeb-Arab-TN","aey":"aey-Latn-ZZ","af":"af-Latn-ZA","agc":"agc-Latn-ZZ","agd":"agd-Latn-ZZ","agg":"agg-Latn-ZZ","agm":"agm-Latn-ZZ","ago":"ago-Latn-ZZ","agq":"agq-Latn-CM","aha":"aha-Latn-ZZ","ahl":"ahl-Latn-ZZ","aho":"aho-Ahom-IN","ajg":"ajg-Latn-ZZ","ak":"ak-Latn-GH","akk":"akk-Xsux-IQ","ala":"ala-Latn-ZZ","ali":"ali-Latn-ZZ","aln":"aln-Latn-XK","alt":"alt-Cyrl-RU","am":"am-Ethi-ET","amm":"amm-Latn-ZZ","amn":"amn-Latn-ZZ","amo":"amo-Latn-NG","amp":"amp-Latn-ZZ","anc":"anc-Latn-ZZ","ank":"ank-Latn-ZZ","ann":"ann-Latn-ZZ","any":"any-Latn-ZZ","aoj":"aoj-Latn-ZZ","aom":"aom-Latn-ZZ","aoz":"aoz-Latn-ID","apc":"apc-Arab-ZZ","apd":"apd-Arab-TG","ape":"ape-Latn-ZZ","apr":"apr-Latn-ZZ","aps":"aps-Latn-ZZ","apz":"apz-Latn-ZZ","ar":"ar-Arab-EG","arc":"arc-Armi-IR","arc-Nbat":"arc-Nbat-JO","arc-Palm":"arc-Palm-SY","arh":"arh-Latn-ZZ","arn":"arn-Latn-CL","aro":"aro-Latn-BO","arq":"arq-Arab-DZ","ary":"ary-Arab-MA","arz":"arz-Arab-EG","as":"as-Beng-IN","asa":"asa-Latn-TZ","ase":"ase-Sgnw-US","asg":"asg-Latn-ZZ","aso":"aso-Latn-ZZ","ast":"ast-Latn-ES","ata":"ata-Latn-ZZ","atg":"atg-Latn-ZZ","atj":"atj-Latn-CA","auy":"auy-Latn-ZZ","av":"av-Cyrl-RU","avl":"avl-Arab-ZZ","avn":"avn-Latn-ZZ","avt":"avt-Latn-ZZ","avu":"avu-Latn-ZZ","awa":"awa-Deva-IN","awb":"awb-Latn-ZZ","awo":"awo-Latn-ZZ","awx":"awx-Latn-ZZ","ay":"ay-Latn-BO","ayb":"ayb-Latn-ZZ","az":"az-Latn-AZ","az-Arab":"az-Arab-IR","az-IQ":"az-Arab-IQ","az-IR":"az-Arab-IR","az-RU":"az-Cyrl-RU","ba":"ba-Cyrl-RU","bal":"bal-Arab-PK","ban":"ban-Latn-ID","bap":"bap-Deva-NP","bar":"bar-Latn-AT","bas":"bas-Latn-CM","bav":"bav-Latn-ZZ","bax":"bax-Bamu-CM","bba":"bba-Latn-ZZ","bbb":"bbb-Latn-ZZ","bbc":"bbc-Latn-ID","bbd":"bbd-Latn-ZZ","bbj":"bbj-Latn-CM","bbp":"bbp-Latn-ZZ","bbr":"bbr-Latn-ZZ","bcf":"bcf-Latn-ZZ","bch":"bch-Latn-ZZ","bci":"bci-Latn-CI","bcm":"bcm-Latn-ZZ","bcn":"bcn-Latn-ZZ","bco":"bco-Latn-ZZ","bcq":"bcq-Ethi-ZZ","bcu":"bcu-Latn-ZZ","bdd":"bdd-Latn-ZZ","be":"be-Cyrl-BY","bef":"bef-Latn-ZZ","beh":"beh-Latn-ZZ","bej":"bej-Arab-SD","bem":"bem-Latn-ZM","bet":"bet-Latn-ZZ","bew":"bew-Latn-ID","bex":"bex-Latn-ZZ","bez":"bez-Latn-TZ","bfd":"bfd-Latn-CM","bfq":"bfq-Taml-IN","bft":"bft-Arab-PK","bfy":"bfy-Deva-IN","bg":"bg-Cyrl-BG","bgc":"bgc-Deva-IN","bgn":"bgn-Arab-PK","bgx":"bgx-Grek-TR","bhb":"bhb-Deva-IN","bhg":"bhg-Latn-ZZ","bhi":"bhi-Deva-IN","bhk":"bhk-Latn-PH","bhl":"bhl-Latn-ZZ","bho":"bho-Deva-IN","bhy":"bhy-Latn-ZZ","bi":"bi-Latn-VU","bib":"bib-Latn-ZZ","big":"big-Latn-ZZ","bik":"bik-Latn-PH","bim":"bim-Latn-ZZ","bin":"bin-Latn-NG","bio":"bio-Latn-ZZ","biq":"biq-Latn-ZZ","bjh":"bjh-Latn-ZZ","bji":"bji-Ethi-ZZ","bjj":"bjj-Deva-IN","bjn":"bjn-Latn-ID","bjo":"bjo-Latn-ZZ","bjr":"bjr-Latn-ZZ","bjt":"bjt-Latn-SN","bjz":"bjz-Latn-ZZ","bkc":"bkc-Latn-ZZ","bkm":"bkm-Latn-CM","bkq":"bkq-Latn-ZZ","bku":"bku-Latn-PH","bkv":"bkv-Latn-ZZ","blt":"blt-Tavt-VN","bm":"bm-Latn-ML","bmh":"bmh-Latn-ZZ","bmk":"bmk-Latn-ZZ","bmq":"bmq-Latn-ML","bmu":"bmu-Latn-ZZ","bn":"bn-Beng-BD","bng":"bng-Latn-ZZ","bnm":"bnm-Latn-ZZ","bnp":"bnp-Latn-ZZ","bo":"bo-Tibt-CN","boj":"boj-Latn-ZZ","bom":"bom-Latn-ZZ","bon":"bon-Latn-ZZ","bpy":"bpy-Beng-IN","bqc":"bqc-Latn-ZZ","bqi":"bqi-Arab-IR","bqp":"bqp-Latn-ZZ","bqv":"bqv-Latn-CI","br":"br-Latn-FR","bra":"bra-Deva-IN","brh":"brh-Arab-PK","brx":"brx-Deva-IN","brz":"brz-Latn-ZZ","bs":"bs-Latn-BA","bsj":"bsj-Latn-ZZ","bsq":"bsq-Bass-LR","bss":"bss-Latn-CM","bst":"bst-Ethi-ZZ","bto":"bto-Latn-PH","btt":"btt-Latn-ZZ","btv":"btv-Deva-PK","bua":"bua-Cyrl-RU","buc":"buc-Latn-YT","bud":"bud-Latn-ZZ","bug":"bug-Latn-ID","buk":"buk-Latn-ZZ","bum":"bum-Latn-CM","buo":"buo-Latn-ZZ","bus":"bus-Latn-ZZ","buu":"buu-Latn-ZZ","bvb":"bvb-Latn-GQ","bwd":"bwd-Latn-ZZ","bwr":"bwr-Latn-ZZ","bxh":"bxh-Latn-ZZ","bye":"bye-Latn-ZZ","byn":"byn-Ethi-ER","byr":"byr-Latn-ZZ","bys":"bys-Latn-ZZ","byv":"byv-Latn-CM","byx":"byx-Latn-ZZ","bza":"bza-Latn-ZZ","bze":"bze-Latn-ML","bzf":"bzf-Latn-ZZ","bzh":"bzh-Latn-ZZ","bzw":"bzw-Latn-ZZ","ca":"ca-Latn-ES","can":"can-Latn-ZZ","cbj":"cbj-Latn-ZZ","cch":"cch-Latn-NG","ccp":"ccp-Cakm-BD","ce":"ce-Cyrl-RU","ceb":"ceb-Latn-PH","cfa":"cfa-Latn-ZZ","cgg":"cgg-Latn-UG","ch":"ch-Latn-GU","chk":"chk-Latn-FM","chm":"chm-Cyrl-RU","cho":"cho-Latn-US","chp":"chp-Latn-CA","chr":"chr-Cher-US","cja":"cja-Arab-KH","cjm":"cjm-Cham-VN","cjv":"cjv-Latn-ZZ","ckb":"ckb-Arab-IQ","ckl":"ckl-Latn-ZZ","cko":"cko-Latn-ZZ","cky":"cky-Latn-ZZ","cla":"cla-Latn-ZZ","cme":"cme-Latn-ZZ","cmg":"cmg-Soyo-MN","co":"co-Latn-FR","cop":"cop-Copt-EG","cps":"cps-Latn-PH","cr":"cr-Cans-CA","crh":"crh-Cyrl-UA","crj":"crj-Cans-CA","crk":"crk-Cans-CA","crl":"crl-Cans-CA","crm":"crm-Cans-CA","crs":"crs-Latn-SC","cs":"cs-Latn-CZ","csb":"csb-Latn-PL","csw":"csw-Cans-CA","ctd":"ctd-Pauc-MM","cu":"cu-Cyrl-RU","cu-Glag":"cu-Glag-BG","cv":"cv-Cyrl-RU","cy":"cy-Latn-GB","da":"da-Latn-DK","dad":"dad-Latn-ZZ","daf":"daf-Latn-ZZ","dag":"dag-Latn-ZZ","dah":"dah-Latn-ZZ","dak":"dak-Latn-US","dar":"dar-Cyrl-RU","dav":"dav-Latn-KE","dbd":"dbd-Latn-ZZ","dbq":"dbq-Latn-ZZ","dcc":"dcc-Arab-IN","ddn":"ddn-Latn-ZZ","de":"de-Latn-DE","ded":"ded-Latn-ZZ","den":"den-Latn-CA","dga":"dga-Latn-ZZ","dgh":"dgh-Latn-ZZ","dgi":"dgi-Latn-ZZ","dgl":"dgl-Arab-ZZ","dgr":"dgr-Latn-CA","dgz":"dgz-Latn-ZZ","dia":"dia-Latn-ZZ","dje":"dje-Latn-NE","dnj":"dnj-Latn-CI","dob":"dob-Latn-ZZ","doi":"doi-Arab-IN","dop":"dop-Latn-ZZ","dow":"dow-Latn-ZZ","dri":"dri-Latn-ZZ","drs":"drs-Ethi-ZZ","dsb":"dsb-Latn-DE","dtm":"dtm-Latn-ML","dtp":"dtp-Latn-MY","dts":"dts-Latn-ZZ","dty":"dty-Deva-NP","dua":"dua-Latn-CM","duc":"duc-Latn-ZZ","dud":"dud-Latn-ZZ","dug":"dug-Latn-ZZ","dv":"dv-Thaa-MV","dva":"dva-Latn-ZZ","dww":"dww-Latn-ZZ","dyo":"dyo-Latn-SN","dyu":"dyu-Latn-BF","dz":"dz-Tibt-BT","dzg":"dzg-Latn-ZZ","ebu":"ebu-Latn-KE","ee":"ee-Latn-GH","efi":"efi-Latn-NG","egl":"egl-Latn-IT","egy":"egy-Egyp-EG","eka":"eka-Latn-ZZ","eky":"eky-Kali-MM","el":"el-Grek-GR","ema":"ema-Latn-ZZ","emi":"emi-Latn-ZZ","en":"en-Latn-US","en-Shaw":"en-Shaw-GB","enn":"enn-Latn-ZZ","enq":"enq-Latn-ZZ","eo":"eo-Latn-001","eri":"eri-Latn-ZZ","es":"es-Latn-ES","esg":"esg-Gonm-IN","esu":"esu-Latn-US","et":"et-Latn-EE","etr":"etr-Latn-ZZ","ett":"ett-Ital-IT","etu":"etu-Latn-ZZ","etx":"etx-Latn-ZZ","eu":"eu-Latn-ES","ewo":"ewo-Latn-CM","ext":"ext-Latn-ES","fa":"fa-Arab-IR","faa":"faa-Latn-ZZ","fab":"fab-Latn-ZZ","fag":"fag-Latn-ZZ","fai":"fai-Latn-ZZ","fan":"fan-Latn-GQ","ff":"ff-Latn-SN","ff-Adlm":"ff-Adlm-GN","ffi":"ffi-Latn-ZZ","ffm":"ffm-Latn-ML","fi":"fi-Latn-FI","fia":"fia-Arab-SD","fil":"fil-Latn-PH","fit":"fit-Latn-SE","fj":"fj-Latn-FJ","flr":"flr-Latn-ZZ","fmp":"fmp-Latn-ZZ","fo":"fo-Latn-FO","fod":"fod-Latn-ZZ","fon":"fon-Latn-BJ","for":"for-Latn-ZZ","fpe":"fpe-Latn-ZZ","fqs":"fqs-Latn-ZZ","fr":"fr-Latn-FR","frc":"frc-Latn-US","frp":"frp-Latn-FR","frr":"frr-Latn-DE","frs":"frs-Latn-DE","fub":"fub-Arab-CM","fud":"fud-Latn-WF","fue":"fue-Latn-ZZ","fuf":"fuf-Latn-GN","fuh":"fuh-Latn-ZZ","fuq":"fuq-Latn-NE","fur":"fur-Latn-IT","fuv":"fuv-Latn-NG","fuy":"fuy-Latn-ZZ","fvr":"fvr-Latn-SD","fy":"fy-Latn-NL","ga":"ga-Latn-IE","gaa":"gaa-Latn-GH","gaf":"gaf-Latn-ZZ","gag":"gag-Latn-MD","gah":"gah-Latn-ZZ","gaj":"gaj-Latn-ZZ","gam":"gam-Latn-ZZ","gan":"gan-Hans-CN","gaw":"gaw-Latn-ZZ","gay":"gay-Latn-ID","gba":"gba-Latn-ZZ","gbf":"gbf-Latn-ZZ","gbm":"gbm-Deva-IN","gby":"gby-Latn-ZZ","gbz":"gbz-Arab-IR","gcr":"gcr-Latn-GF","gd":"gd-Latn-GB","gde":"gde-Latn-ZZ","gdn":"gdn-Latn-ZZ","gdr":"gdr-Latn-ZZ","geb":"geb-Latn-ZZ","gej":"gej-Latn-ZZ","gel":"gel-Latn-ZZ","gez":"gez-Ethi-ET","gfk":"gfk-Latn-ZZ","ggn":"ggn-Deva-NP","ghs":"ghs-Latn-ZZ","gil":"gil-Latn-KI","gim":"gim-Latn-ZZ","gjk":"gjk-Arab-PK","gjn":"gjn-Latn-ZZ","gju":"gju-Arab-PK","gkn":"gkn-Latn-ZZ","gkp":"gkp-Latn-ZZ","gl":"gl-Latn-ES","glk":"glk-Arab-IR","gmm":"gmm-Latn-ZZ","gmv":"gmv-Ethi-ZZ","gn":"gn-Latn-PY","gnd":"gnd-Latn-ZZ","gng":"gng-Latn-ZZ","god":"god-Latn-ZZ","gof":"gof-Ethi-ZZ","goi":"goi-Latn-ZZ","gom":"gom-Deva-IN","gon":"gon-Telu-IN","gor":"gor-Latn-ID","gos":"gos-Latn-NL","got":"got-Goth-UA","grb":"grb-Latn-ZZ","grc":"grc-Cprt-CY","grc-Linb":"grc-Linb-GR","grt":"grt-Beng-IN","grw":"grw-Latn-ZZ","gsw":"gsw-Latn-CH","gu":"gu-Gujr-IN","gub":"gub-Latn-BR","guc":"guc-Latn-CO","gud":"gud-Latn-ZZ","gur":"gur-Latn-GH","guw":"guw-Latn-ZZ","gux":"gux-Latn-ZZ","guz":"guz-Latn-KE","gv":"gv-Latn-IM","gvf":"gvf-Latn-ZZ","gvr":"gvr-Deva-NP","gvs":"gvs-Latn-ZZ","gwc":"gwc-Arab-ZZ","gwi":"gwi-Latn-CA","gwt":"gwt-Arab-ZZ","gyi":"gyi-Latn-ZZ","ha":"ha-Latn-NG","ha-CM":"ha-Arab-CM","ha-SD":"ha-Arab-SD","hag":"hag-Latn-ZZ","hak":"hak-Hans-CN","ham":"ham-Latn-ZZ","haw":"haw-Latn-US","haz":"haz-Arab-AF","hbb":"hbb-Latn-ZZ","hdy":"hdy-Ethi-ZZ","he":"he-Hebr-IL","hhy":"hhy-Latn-ZZ","hi":"hi-Deva-IN","hia":"hia-Latn-ZZ","hif":"hif-Latn-FJ","hig":"hig-Latn-ZZ","hih":"hih-Latn-ZZ","hil":"hil-Latn-PH","hla":"hla-Latn-ZZ","hlu":"hlu-Hluw-TR","hmd":"hmd-Plrd-CN","hmt":"hmt-Latn-ZZ","hnd":"hnd-Arab-PK","hne":"hne-Deva-IN","hnj":"hnj-Hmng-LA","hnn":"hnn-Latn-PH","hno":"hno-Arab-PK","ho":"ho-Latn-PG","hoc":"hoc-Deva-IN","hoj":"hoj-Deva-IN","hot":"hot-Latn-ZZ","hr":"hr-Latn-HR","hsb":"hsb-Latn-DE","hsn":"hsn-Hans-CN","ht":"ht-Latn-HT","hu":"hu-Latn-HU","hui":"hui-Latn-ZZ","hy":"hy-Armn-AM","hz":"hz-Latn-NA","ia":"ia-Latn-001","ian":"ian-Latn-ZZ","iar":"iar-Latn-ZZ","iba":"iba-Latn-MY","ibb":"ibb-Latn-NG","iby":"iby-Latn-ZZ","ica":"ica-Latn-ZZ","ich":"ich-Latn-ZZ","id":"id-Latn-ID","idd":"idd-Latn-ZZ","idi":"idi-Latn-ZZ","idu":"idu-Latn-ZZ","ife":"ife-Latn-TG","ig":"ig-Latn-NG","igb":"igb-Latn-ZZ","ige":"ige-Latn-ZZ","ii":"ii-Yiii-CN","ijj":"ijj-Latn-ZZ","ik":"ik-Latn-US","ikk":"ikk-Latn-ZZ","ikt":"ikt-Latn-CA","ikw":"ikw-Latn-ZZ","ikx":"ikx-Latn-ZZ","ilo":"ilo-Latn-PH","imo":"imo-Latn-ZZ","in":"in-Latn-ID","inh":"inh-Cyrl-RU","io":"io-Latn-001","iou":"iou-Latn-ZZ","iri":"iri-Latn-ZZ","is":"is-Latn-IS","it":"it-Latn-IT","iu":"iu-Cans-CA","iw":"iw-Hebr-IL","iwm":"iwm-Latn-ZZ","iws":"iws-Latn-ZZ","izh":"izh-Latn-RU","izi":"izi-Latn-ZZ","ja":"ja-Jpan-JP","jab":"jab-Latn-ZZ","jam":"jam-Latn-JM","jbo":"jbo-Latn-001","jbu":"jbu-Latn-ZZ","jen":"jen-Latn-ZZ","jgk":"jgk-Latn-ZZ","jgo":"jgo-Latn-CM","ji":"ji-Hebr-UA","jib":"jib-Latn-ZZ","jmc":"jmc-Latn-TZ","jml":"jml-Deva-NP","jra":"jra-Latn-ZZ","jut":"jut-Latn-DK","jv":"jv-Latn-ID","jw":"jw-Latn-ID","ka":"ka-Geor-GE","kaa":"kaa-Cyrl-UZ","kab":"kab-Latn-DZ","kac":"kac-Latn-MM","kad":"kad-Latn-ZZ","kai":"kai-Latn-ZZ","kaj":"kaj-Latn-NG","kam":"kam-Latn-KE","kao":"kao-Latn-ML","kbd":"kbd-Cyrl-RU","kbm":"kbm-Latn-ZZ","kbp":"kbp-Latn-ZZ","kbq":"kbq-Latn-ZZ","kbx":"kbx-Latn-ZZ","kby":"kby-Arab-NE","kcg":"kcg-Latn-NG","kck":"kck-Latn-ZW","kcl":"kcl-Latn-ZZ","kct":"kct-Latn-ZZ","kde":"kde-Latn-TZ","kdh":"kdh-Arab-TG","kdl":"kdl-Latn-ZZ","kdt":"kdt-Thai-TH","kea":"kea-Latn-CV","ken":"ken-Latn-CM","kez":"kez-Latn-ZZ","kfo":"kfo-Latn-CI","kfr":"kfr-Deva-IN","kfy":"kfy-Deva-IN","kg":"kg-Latn-CD","kge":"kge-Latn-ID","kgf":"kgf-Latn-ZZ","kgp":"kgp-Latn-BR","kha":"kha-Latn-IN","khb":"khb-Talu-CN","khn":"khn-Deva-IN","khq":"khq-Latn-ML","khs":"khs-Latn-ZZ","kht":"kht-Mymr-IN","khw":"khw-Arab-PK","khz":"khz-Latn-ZZ","ki":"ki-Latn-KE","kij":"kij-Latn-ZZ","kiu":"kiu-Latn-TR","kiw":"kiw-Latn-ZZ","kj":"kj-Latn-NA","kjd":"kjd-Latn-ZZ","kjg":"kjg-Laoo-LA","kjs":"kjs-Latn-ZZ","kjy":"kjy-Latn-ZZ","kk":"kk-Cyrl-KZ","kk-AF":"kk-Arab-AF","kk-Arab":"kk-Arab-CN","kk-CN":"kk-Arab-CN","kk-IR":"kk-Arab-IR","kk-MN":"kk-Arab-MN","kkc":"kkc-Latn-ZZ","kkj":"kkj-Latn-CM","kl":"kl-Latn-GL","kln":"kln-Latn-KE","klq":"klq-Latn-ZZ","klt":"klt-Latn-ZZ","klx":"klx-Latn-ZZ","km":"km-Khmr-KH","kmb":"kmb-Latn-AO","kmh":"kmh-Latn-ZZ","kmo":"kmo-Latn-ZZ","kms":"kms-Latn-ZZ","kmu":"kmu-Latn-ZZ","kmw":"kmw-Latn-ZZ","kn":"kn-Knda-IN","knf":"knf-Latn-GW","knp":"knp-Latn-ZZ","ko":"ko-Kore-KR","koi":"koi-Cyrl-RU","kok":"kok-Deva-IN","kol":"kol-Latn-ZZ","kos":"kos-Latn-FM","koz":"koz-Latn-ZZ","kpe":"kpe-Latn-LR","kpf":"kpf-Latn-ZZ","kpo":"kpo-Latn-ZZ","kpr":"kpr-Latn-ZZ","kpx":"kpx-Latn-ZZ","kqb":"kqb-Latn-ZZ","kqf":"kqf-Latn-ZZ","kqs":"kqs-Latn-ZZ","kqy":"kqy-Ethi-ZZ","kr":"kr-Latn-ZZ","krc":"krc-Cyrl-RU","kri":"kri-Latn-SL","krj":"krj-Latn-PH","krl":"krl-Latn-RU","krs":"krs-Latn-ZZ","kru":"kru-Deva-IN","ks":"ks-Arab-IN","ksb":"ksb-Latn-TZ","ksd":"ksd-Latn-ZZ","ksf":"ksf-Latn-CM","ksh":"ksh-Latn-DE","ksj":"ksj-Latn-ZZ","ksr":"ksr-Latn-ZZ","ktb":"ktb-Ethi-ZZ","ktm":"ktm-Latn-ZZ","kto":"kto-Latn-ZZ","ku":"ku-Latn-TR","ku-Arab":"ku-Arab-IQ","ku-LB":"ku-Arab-LB","kub":"kub-Latn-ZZ","kud":"kud-Latn-ZZ","kue":"kue-Latn-ZZ","kuj":"kuj-Latn-ZZ","kum":"kum-Cyrl-RU","kun":"kun-Latn-ZZ","kup":"kup-Latn-ZZ","kus":"kus-Latn-ZZ","kv":"kv-Cyrl-RU","kvg":"kvg-Latn-ZZ","kvr":"kvr-Latn-ID","kvx":"kvx-Arab-PK","kw":"kw-Latn-GB","kwj":"kwj-Latn-ZZ","kwo":"kwo-Latn-ZZ","kxa":"kxa-Latn-ZZ","kxc":"kxc-Ethi-ZZ","kxm":"kxm-Thai-TH","kxp":"kxp-Arab-PK","kxw":"kxw-Latn-ZZ","kxz":"kxz-Latn-ZZ","ky":"ky-Cyrl-KG","ky-Arab":"ky-Arab-CN","ky-CN":"ky-Arab-CN","ky-Latn":"ky-Latn-TR","ky-TR":"ky-Latn-TR","kye":"kye-Latn-ZZ","kyx":"kyx-Latn-ZZ","kzr":"kzr-Latn-ZZ","la":"la-Latn-VA","lab":"lab-Lina-GR","lad":"lad-Hebr-IL","lag":"lag-Latn-TZ","lah":"lah-Arab-PK","laj":"laj-Latn-UG","las":"las-Latn-ZZ","lb":"lb-Latn-LU","lbe":"lbe-Cyrl-RU","lbu":"lbu-Latn-ZZ","lbw":"lbw-Latn-ID","lcm":"lcm-Latn-ZZ","lcp":"lcp-Thai-CN","ldb":"ldb-Latn-ZZ","led":"led-Latn-ZZ","lee":"lee-Latn-ZZ","lem":"lem-Latn-ZZ","lep":"lep-Lepc-IN","leq":"leq-Latn-ZZ","leu":"leu-Latn-ZZ","lez":"lez-Cyrl-RU","lg":"lg-Latn-UG","lgg":"lgg-Latn-ZZ","li":"li-Latn-NL","lia":"lia-Latn-ZZ","lid":"lid-Latn-ZZ","lif":"lif-Deva-NP","lif-Limb":"lif-Limb-IN","lig":"lig-Latn-ZZ","lih":"lih-Latn-ZZ","lij":"lij-Latn-IT","lis":"lis-Lisu-CN","ljp":"ljp-Latn-ID","lki":"lki-Arab-IR","lkt":"lkt-Latn-US","lle":"lle-Latn-ZZ","lln":"lln-Latn-ZZ","lmn":"lmn-Telu-IN","lmo":"lmo-Latn-IT","lmp":"lmp-Latn-ZZ","ln":"ln-Latn-CD","lns":"lns-Latn-ZZ","lnu":"lnu-Latn-ZZ","lo":"lo-Laoo-LA","loj":"loj-Latn-ZZ","lok":"lok-Latn-ZZ","lol":"lol-Latn-CD","lor":"lor-Latn-ZZ","los":"los-Latn-ZZ","loz":"loz-Latn-ZM","lrc":"lrc-Arab-IR","lt":"lt-Latn-LT","ltg":"ltg-Latn-LV","lu":"lu-Latn-CD","lua":"lua-Latn-CD","luo":"luo-Latn-KE","luy":"luy-Latn-KE","luz":"luz-Arab-IR","lv":"lv-Latn-LV","lwl":"lwl-Thai-TH","lzh":"lzh-Hans-CN","lzz":"lzz-Latn-TR","mad":"mad-Latn-ID","maf":"maf-Latn-CM","mag":"mag-Deva-IN","mai":"mai-Deva-IN","mak":"mak-Latn-ID","man":"man-Latn-GM","man-GN":"man-Nkoo-GN","man-Nkoo":"man-Nkoo-GN","mas":"mas-Latn-KE","maw":"maw-Latn-ZZ","maz":"maz-Latn-MX","mbh":"mbh-Latn-ZZ","mbo":"mbo-Latn-ZZ","mbq":"mbq-Latn-ZZ","mbu":"mbu-Latn-ZZ","mbw":"mbw-Latn-ZZ","mci":"mci-Latn-ZZ","mcp":"mcp-Latn-ZZ","mcq":"mcq-Latn-ZZ","mcr":"mcr-Latn-ZZ","mcu":"mcu-Latn-ZZ","mda":"mda-Latn-ZZ","mde":"mde-Arab-ZZ","mdf":"mdf-Cyrl-RU","mdh":"mdh-Latn-PH","mdj":"mdj-Latn-ZZ","mdr":"mdr-Latn-ID","mdx":"mdx-Ethi-ZZ","med":"med-Latn-ZZ","mee":"mee-Latn-ZZ","mek":"mek-Latn-ZZ","men":"men-Latn-SL","mer":"mer-Latn-KE","met":"met-Latn-ZZ","meu":"meu-Latn-ZZ","mfa":"mfa-Arab-TH","mfe":"mfe-Latn-MU","mfn":"mfn-Latn-ZZ","mfo":"mfo-Latn-ZZ","mfq":"mfq-Latn-ZZ","mg":"mg-Latn-MG","mgh":"mgh-Latn-MZ","mgl":"mgl-Latn-ZZ","mgo":"mgo-Latn-CM","mgp":"mgp-Deva-NP","mgy":"mgy-Latn-TZ","mh":"mh-Latn-MH","mhi":"mhi-Latn-ZZ","mhl":"mhl-Latn-ZZ","mi":"mi-Latn-NZ","mif":"mif-Latn-ZZ","min":"min-Latn-ID","mis":"mis-Hatr-IQ","mis-Medf":"mis-Medf-NG","miw":"miw-Latn-ZZ","mk":"mk-Cyrl-MK","mki":"mki-Arab-ZZ","mkl":"mkl-Latn-ZZ","mkp":"mkp-Latn-ZZ","mkw":"mkw-Latn-ZZ","ml":"ml-Mlym-IN","mle":"mle-Latn-ZZ","mlp":"mlp-Latn-ZZ","mls":"mls-Latn-SD","mmo":"mmo-Latn-ZZ","mmu":"mmu-Latn-ZZ","mmx":"mmx-Latn-ZZ","mn":"mn-Cyrl-MN","mn-CN":"mn-Mong-CN","mn-Mong":"mn-Mong-CN","mna":"mna-Latn-ZZ","mnf":"mnf-Latn-ZZ","mni":"mni-Beng-IN","mnw":"mnw-Mymr-MM","moa":"moa-Latn-ZZ","moe":"moe-Latn-CA","moh":"moh-Latn-CA","mos":"mos-Latn-BF","mox":"mox-Latn-ZZ","mpp":"mpp-Latn-ZZ","mps":"mps-Latn-ZZ","mpt":"mpt-Latn-ZZ","mpx":"mpx-Latn-ZZ","mql":"mql-Latn-ZZ","mr":"mr-Deva-IN","mrd":"mrd-Deva-NP","mrj":"mrj-Cyrl-RU","mro":"mro-Mroo-BD","ms":"ms-Latn-MY","ms-CC":"ms-Arab-CC","ms-ID":"ms-Arab-ID","mt":"mt-Latn-MT","mtc":"mtc-Latn-ZZ","mtf":"mtf-Latn-ZZ","mti":"mti-Latn-ZZ","mtr":"mtr-Deva-IN","mua":"mua-Latn-CM","mur":"mur-Latn-ZZ","mus":"mus-Latn-US","mva":"mva-Latn-ZZ","mvn":"mvn-Latn-ZZ","mvy":"mvy-Arab-PK","mwk":"mwk-Latn-ML","mwr":"mwr-Deva-IN","mwv":"mwv-Latn-ID","mww":"mww-Hmnp-US","mxc":"mxc-Latn-ZW","mxm":"mxm-Latn-ZZ","my":"my-Mymr-MM","myk":"myk-Latn-ZZ","mym":"mym-Ethi-ZZ","myv":"myv-Cyrl-RU","myw":"myw-Latn-ZZ","myx":"myx-Latn-UG","myz":"myz-Mand-IR","mzk":"mzk-Latn-ZZ","mzm":"mzm-Latn-ZZ","mzn":"mzn-Arab-IR","mzp":"mzp-Latn-ZZ","mzw":"mzw-Latn-ZZ","mzz":"mzz-Latn-ZZ","na":"na-Latn-NR","nac":"nac-Latn-ZZ","naf":"naf-Latn-ZZ","nak":"nak-Latn-ZZ","nan":"nan-Hans-CN","nap":"nap-Latn-IT","naq":"naq-Latn-NA","nas":"nas-Latn-ZZ","nb":"nb-Latn-NO","nca":"nca-Latn-ZZ","nce":"nce-Latn-ZZ","ncf":"ncf-Latn-ZZ","nch":"nch-Latn-MX","nco":"nco-Latn-ZZ","ncu":"ncu-Latn-ZZ","nd":"nd-Latn-ZW","ndc":"ndc-Latn-MZ","nds":"nds-Latn-DE","ne":"ne-Deva-NP","neb":"neb-Latn-ZZ","new":"new-Deva-NP","nex":"nex-Latn-ZZ","nfr":"nfr-Latn-ZZ","ng":"ng-Latn-NA","nga":"nga-Latn-ZZ","ngb":"ngb-Latn-ZZ","ngl":"ngl-Latn-MZ","nhb":"nhb-Latn-ZZ","nhe":"nhe-Latn-MX","nhw":"nhw-Latn-MX","nif":"nif-Latn-ZZ","nii":"nii-Latn-ZZ","nij":"nij-Latn-ID","nin":"nin-Latn-ZZ","niu":"niu-Latn-NU","niy":"niy-Latn-ZZ","niz":"niz-Latn-ZZ","njo":"njo-Latn-IN","nkg":"nkg-Latn-ZZ","nko":"nko-Latn-ZZ","nl":"nl-Latn-NL","nmg":"nmg-Latn-CM","nmz":"nmz-Latn-ZZ","nn":"nn-Latn-NO","nnf":"nnf-Latn-ZZ","nnh":"nnh-Latn-CM","nnk":"nnk-Latn-ZZ","nnm":"nnm-Latn-ZZ","nnp":"nnp-Wcho-IN","no":"no-Latn-NO","nod":"nod-Lana-TH","noe":"noe-Deva-IN","non":"non-Runr-SE","nop":"nop-Latn-ZZ","nou":"nou-Latn-ZZ","nqo":"nqo-Nkoo-GN","nr":"nr-Latn-ZA","nrb":"nrb-Latn-ZZ","nsk":"nsk-Cans-CA","nsn":"nsn-Latn-ZZ","nso":"nso-Latn-ZA","nss":"nss-Latn-ZZ","ntm":"ntm-Latn-ZZ","ntr":"ntr-Latn-ZZ","nui":"nui-Latn-ZZ","nup":"nup-Latn-ZZ","nus":"nus-Latn-SS","nuv":"nuv-Latn-ZZ","nux":"nux-Latn-ZZ","nv":"nv-Latn-US","nwb":"nwb-Latn-ZZ","nxq":"nxq-Latn-CN","nxr":"nxr-Latn-ZZ","ny":"ny-Latn-MW","nym":"nym-Latn-TZ","nyn":"nyn-Latn-UG","nzi":"nzi-Latn-GH","oc":"oc-Latn-FR","ogc":"ogc-Latn-ZZ","okr":"okr-Latn-ZZ","okv":"okv-Latn-ZZ","om":"om-Latn-ET","ong":"ong-Latn-ZZ","onn":"onn-Latn-ZZ","ons":"ons-Latn-ZZ","opm":"opm-Latn-ZZ","or":"or-Orya-IN","oro":"oro-Latn-ZZ","oru":"oru-Arab-ZZ","os":"os-Cyrl-GE","osa":"osa-Osge-US","ota":"ota-Arab-ZZ","otk":"otk-Orkh-MN","ozm":"ozm-Latn-ZZ","pa":"pa-Guru-IN","pa-Arab":"pa-Arab-PK","pa-PK":"pa-Arab-PK","pag":"pag-Latn-PH","pal":"pal-Phli-IR","pal-Phlp":"pal-Phlp-CN","pam":"pam-Latn-PH","pap":"pap-Latn-AW","pau":"pau-Latn-PW","pbi":"pbi-Latn-ZZ","pcd":"pcd-Latn-FR","pcm":"pcm-Latn-NG","pdc":"pdc-Latn-US","pdt":"pdt-Latn-CA","ped":"ped-Latn-ZZ","peo":"peo-Xpeo-IR","pex":"pex-Latn-ZZ","pfl":"pfl-Latn-DE","phl":"phl-Arab-ZZ","phn":"phn-Phnx-LB","pil":"pil-Latn-ZZ","pip":"pip-Latn-ZZ","pka":"pka-Brah-IN","pko":"pko-Latn-KE","pl":"pl-Latn-PL","pla":"pla-Latn-ZZ","pms":"pms-Latn-IT","png":"png-Latn-ZZ","pnn":"pnn-Latn-ZZ","pnt":"pnt-Grek-GR","pon":"pon-Latn-FM","ppo":"ppo-Latn-ZZ","pra":"pra-Khar-PK","prd":"prd-Arab-IR","prg":"prg-Latn-001","ps":"ps-Arab-AF","pss":"pss-Latn-ZZ","pt":"pt-Latn-BR","ptp":"ptp-Latn-ZZ","puu":"puu-Latn-GA","pwa":"pwa-Latn-ZZ","qu":"qu-Latn-PE","quc":"quc-Latn-GT","qug":"qug-Latn-EC","rai":"rai-Latn-ZZ","raj":"raj-Deva-IN","rao":"rao-Latn-ZZ","rcf":"rcf-Latn-RE","rej":"rej-Latn-ID","rel":"rel-Latn-ZZ","res":"res-Latn-ZZ","rgn":"rgn-Latn-IT","rhg":"rhg-Arab-MM","ria":"ria-Latn-IN","rif":"rif-Tfng-MA","rif-NL":"rif-Latn-NL","rjs":"rjs-Deva-NP","rkt":"rkt-Beng-BD","rm":"rm-Latn-CH","rmf":"rmf-Latn-FI","rmo":"rmo-Latn-CH","rmt":"rmt-Arab-IR","rmu":"rmu-Latn-SE","rn":"rn-Latn-BI","rna":"rna-Latn-ZZ","rng":"rng-Latn-MZ","ro":"ro-Latn-RO","rob":"rob-Latn-ID","rof":"rof-Latn-TZ","roo":"roo-Latn-ZZ","rro":"rro-Latn-ZZ","rtm":"rtm-Latn-FJ","ru":"ru-Cyrl-RU","rue":"rue-Cyrl-UA","rug":"rug-Latn-SB","rw":"rw-Latn-RW","rwk":"rwk-Latn-TZ","rwo":"rwo-Latn-ZZ","ryu":"ryu-Kana-JP","sa":"sa-Deva-IN","saf":"saf-Latn-GH","sah":"sah-Cyrl-RU","saq":"saq-Latn-KE","sas":"sas-Latn-ID","sat":"sat-Latn-IN","sav":"sav-Latn-SN","saz":"saz-Saur-IN","sba":"sba-Latn-ZZ","sbe":"sbe-Latn-ZZ","sbp":"sbp-Latn-TZ","sc":"sc-Latn-IT","sck":"sck-Deva-IN","scl":"scl-Arab-ZZ","scn":"scn-Latn-IT","sco":"sco-Latn-GB","scs":"scs-Latn-CA","sd":"sd-Arab-PK","sd-Deva":"sd-Deva-IN","sd-Khoj":"sd-Khoj-IN","sd-Sind":"sd-Sind-IN","sdc":"sdc-Latn-IT","sdh":"sdh-Arab-IR","se":"se-Latn-NO","sef":"sef-Latn-CI","seh":"seh-Latn-MZ","sei":"sei-Latn-MX","ses":"ses-Latn-ML","sg":"sg-Latn-CF","sga":"sga-Ogam-IE","sgs":"sgs-Latn-LT","sgw":"sgw-Ethi-ZZ","sgz":"sgz-Latn-ZZ","shi":"shi-Tfng-MA","shk":"shk-Latn-ZZ","shn":"shn-Mymr-MM","shu":"shu-Arab-ZZ","si":"si-Sinh-LK","sid":"sid-Latn-ET","sig":"sig-Latn-ZZ","sil":"sil-Latn-ZZ","sim":"sim-Latn-ZZ","sjr":"sjr-Latn-ZZ","sk":"sk-Latn-SK","skc":"skc-Latn-ZZ","skr":"skr-Arab-PK","sks":"sks-Latn-ZZ","sl":"sl-Latn-SI","sld":"sld-Latn-ZZ","sli":"sli-Latn-PL","sll":"sll-Latn-ZZ","sly":"sly-Latn-ID","sm":"sm-Latn-WS","sma":"sma-Latn-SE","smj":"smj-Latn-SE","smn":"smn-Latn-FI","smp":"smp-Samr-IL","smq":"smq-Latn-ZZ","sms":"sms-Latn-FI","sn":"sn-Latn-ZW","snc":"snc-Latn-ZZ","snk":"snk-Latn-ML","snp":"snp-Latn-ZZ","snx":"snx-Latn-ZZ","sny":"sny-Latn-ZZ","so":"so-Latn-SO","sog":"sog-Sogd-UZ","sok":"sok-Latn-ZZ","soq":"soq-Latn-ZZ","sou":"sou-Thai-TH","soy":"soy-Latn-ZZ","spd":"spd-Latn-ZZ","spl":"spl-Latn-ZZ","sps":"sps-Latn-ZZ","sq":"sq-Latn-AL","sr":"sr-Cyrl-RS","sr-ME":"sr-Latn-ME","sr-RO":"sr-Latn-RO","sr-RU":"sr-Latn-RU","sr-TR":"sr-Latn-TR","srb":"srb-Sora-IN","srn":"srn-Latn-SR","srr":"srr-Latn-SN","srx":"srx-Deva-IN","ss":"ss-Latn-ZA","ssd":"ssd-Latn-ZZ","ssg":"ssg-Latn-ZZ","ssy":"ssy-Latn-ER","st":"st-Latn-ZA","stk":"stk-Latn-ZZ","stq":"stq-Latn-DE","su":"su-Latn-ID","sua":"sua-Latn-ZZ","sue":"sue-Latn-ZZ","suk":"suk-Latn-TZ","sur":"sur-Latn-ZZ","sus":"sus-Latn-GN","sv":"sv-Latn-SE","sw":"sw-Latn-TZ","swb":"swb-Arab-YT","swc":"swc-Latn-CD","swg":"swg-Latn-DE","swp":"swp-Latn-ZZ","swv":"swv-Deva-IN","sxn":"sxn-Latn-ID","sxw":"sxw-Latn-ZZ","syl":"syl-Beng-BD","syr":"syr-Syrc-IQ","szl":"szl-Latn-PL","ta":"ta-Taml-IN","taj":"taj-Deva-NP","tal":"tal-Latn-ZZ","tan":"tan-Latn-ZZ","taq":"taq-Latn-ZZ","tbc":"tbc-Latn-ZZ","tbd":"tbd-Latn-ZZ","tbf":"tbf-Latn-ZZ","tbg":"tbg-Latn-ZZ","tbo":"tbo-Latn-ZZ","tbw":"tbw-Latn-PH","tbz":"tbz-Latn-ZZ","tci":"tci-Latn-ZZ","tcy":"tcy-Knda-IN","tdd":"tdd-Tale-CN","tdg":"tdg-Deva-NP","tdh":"tdh-Deva-NP","te":"te-Telu-IN","ted":"ted-Latn-ZZ","tem":"tem-Latn-SL","teo":"teo-Latn-UG","tet":"tet-Latn-TL","tfi":"tfi-Latn-ZZ","tg":"tg-Cyrl-TJ","tg-Arab":"tg-Arab-PK","tg-PK":"tg-Arab-PK","tgc":"tgc-Latn-ZZ","tgo":"tgo-Latn-ZZ","tgu":"tgu-Latn-ZZ","th":"th-Thai-TH","thl":"thl-Deva-NP","thq":"thq-Deva-NP","thr":"thr-Deva-NP","ti":"ti-Ethi-ET","tif":"tif-Latn-ZZ","tig":"tig-Ethi-ER","tik":"tik-Latn-ZZ","tim":"tim-Latn-ZZ","tio":"tio-Latn-ZZ","tiv":"tiv-Latn-NG","tk":"tk-Latn-TM","tkl":"tkl-Latn-TK","tkr":"tkr-Latn-AZ","tkt":"tkt-Deva-NP","tl":"tl-Latn-PH","tlf":"tlf-Latn-ZZ","tlx":"tlx-Latn-ZZ","tly":"tly-Latn-AZ","tmh":"tmh-Latn-NE","tmy":"tmy-Latn-ZZ","tn":"tn-Latn-ZA","tnh":"tnh-Latn-ZZ","to":"to-Latn-TO","tof":"tof-Latn-ZZ","tog":"tog-Latn-MW","toq":"toq-Latn-ZZ","tpi":"tpi-Latn-PG","tpm":"tpm-Latn-ZZ","tpz":"tpz-Latn-ZZ","tqo":"tqo-Latn-ZZ","tr":"tr-Latn-TR","tru":"tru-Latn-TR","trv":"trv-Latn-TW","trw":"trw-Arab-ZZ","ts":"ts-Latn-ZA","tsd":"tsd-Grek-GR","tsf":"tsf-Deva-NP","tsg":"tsg-Latn-PH","tsj":"tsj-Tibt-BT","tsw":"tsw-Latn-ZZ","tt":"tt-Cyrl-RU","ttd":"ttd-Latn-ZZ","tte":"tte-Latn-ZZ","ttj":"ttj-Latn-UG","ttr":"ttr-Latn-ZZ","tts":"tts-Thai-TH","ttt":"ttt-Latn-AZ","tuh":"tuh-Latn-ZZ","tul":"tul-Latn-ZZ","tum":"tum-Latn-MW","tuq":"tuq-Latn-ZZ","tvd":"tvd-Latn-ZZ","tvl":"tvl-Latn-TV","tvu":"tvu-Latn-ZZ","twh":"twh-Latn-ZZ","twq":"twq-Latn-NE","txg":"txg-Tang-CN","ty":"ty-Latn-PF","tya":"tya-Latn-ZZ","tyv":"tyv-Cyrl-RU","tzm":"tzm-Latn-MA","ubu":"ubu-Latn-ZZ","udm":"udm-Cyrl-RU","ug":"ug-Arab-CN","ug-Cyrl":"ug-Cyrl-KZ","ug-KZ":"ug-Cyrl-KZ","ug-MN":"ug-Cyrl-MN","uga":"uga-Ugar-SY","uk":"uk-Cyrl-UA","uli":"uli-Latn-FM","umb":"umb-Latn-AO","und":"en-Latn-US","und-002":"en-Latn-NG","und-003":"en-Latn-US","und-005":"pt-Latn-BR","und-009":"en-Latn-AU","und-011":"en-Latn-NG","und-013":"es-Latn-MX","und-014":"sw-Latn-TZ","und-015":"ar-Arab-EG","und-017":"sw-Latn-CD","und-018":"en-Latn-ZA","und-019":"en-Latn-US","und-021":"en-Latn-US","und-029":"es-Latn-CU","und-030":"zh-Hans-CN","und-034":"hi-Deva-IN","und-035":"id-Latn-ID","und-039":"it-Latn-IT","und-053":"en-Latn-AU","und-054":"en-Latn-PG","und-057":"en-Latn-GU","und-061":"sm-Latn-WS","und-142":"zh-Hans-CN","und-143":"uz-Latn-UZ","und-145":"ar-Arab-SA","und-150":"ru-Cyrl-RU","und-151":"ru-Cyrl-RU","und-154":"en-Latn-GB","und-155":"de-Latn-DE","und-202":"en-Latn-NG","und-419":"es-Latn-419","und-AD":"ca-Latn-AD","und-Adlm":"ff-Adlm-GN","und-AE":"ar-Arab-AE","und-AF":"fa-Arab-AF","und-Aghb":"lez-Aghb-RU","und-Ahom":"aho-Ahom-IN","und-AL":"sq-Latn-AL","und-AM":"hy-Armn-AM","und-AO":"pt-Latn-AO","und-AQ":"und-Latn-AQ","und-AR":"es-Latn-AR","und-Arab":"ar-Arab-EG","und-Arab-CC":"ms-Arab-CC","und-Arab-CN":"ug-Arab-CN","und-Arab-GB":"ks-Arab-GB","und-Arab-ID":"ms-Arab-ID","und-Arab-IN":"ur-Arab-IN","und-Arab-KH":"cja-Arab-KH","und-Arab-MM":"rhg-Arab-MM","und-Arab-MN":"kk-Arab-MN","und-Arab-MU":"ur-Arab-MU","und-Arab-NG":"ha-Arab-NG","und-Arab-PK":"ur-Arab-PK","und-Arab-TG":"apd-Arab-TG","und-Arab-TH":"mfa-Arab-TH","und-Arab-TJ":"fa-Arab-TJ","und-Arab-TR":"az-Arab-TR","und-Arab-YT":"swb-Arab-YT","und-Armi":"arc-Armi-IR","und-Armn":"hy-Armn-AM","und-AS":"sm-Latn-AS","und-AT":"de-Latn-AT","und-Avst":"ae-Avst-IR","und-AW":"nl-Latn-AW","und-AX":"sv-Latn-AX","und-AZ":"az-Latn-AZ","und-BA":"bs-Latn-BA","und-Bali":"ban-Bali-ID","und-Bamu":"bax-Bamu-CM","und-Bass":"bsq-Bass-LR","und-Batk":"bbc-Batk-ID","und-BD":"bn-Beng-BD","und-BE":"nl-Latn-BE","und-Beng":"bn-Beng-BD","und-BF":"fr-Latn-BF","und-BG":"bg-Cyrl-BG","und-BH":"ar-Arab-BH","und-Bhks":"sa-Bhks-IN","und-BI":"rn-Latn-BI","und-BJ":"fr-Latn-BJ","und-BL":"fr-Latn-BL","und-BN":"ms-Latn-BN","und-BO":"es-Latn-BO","und-Bopo":"zh-Bopo-TW","und-BQ":"pap-Latn-BQ","und-BR":"pt-Latn-BR","und-Brah":"pka-Brah-IN","und-Brai":"fr-Brai-FR","und-BT":"dz-Tibt-BT","und-Bugi":"bug-Bugi-ID","und-Buhd":"bku-Buhd-PH","und-BV":"und-Latn-BV","und-BY":"be-Cyrl-BY","und-Cakm":"ccp-Cakm-BD","und-Cans":"cr-Cans-CA","und-Cari":"xcr-Cari-TR","und-CD":"sw-Latn-CD","und-CF":"fr-Latn-CF","und-CG":"fr-Latn-CG","und-CH":"de-Latn-CH","und-Cham":"cjm-Cham-VN","und-Cher":"chr-Cher-US","und-CI":"fr-Latn-CI","und-CL":"es-Latn-CL","und-CM":"fr-Latn-CM","und-CN":"zh-Hans-CN","und-CO":"es-Latn-CO","und-Copt":"cop-Copt-EG","und-CP":"und-Latn-CP","und-Cprt":"grc-Cprt-CY","und-CR":"es-Latn-CR","und-CU":"es-Latn-CU","und-CV":"pt-Latn-CV","und-CW":"pap-Latn-CW","und-CY":"el-Grek-CY","und-Cyrl":"ru-Cyrl-RU","und-Cyrl-AL":"mk-Cyrl-AL","und-Cyrl-BA":"sr-Cyrl-BA","und-Cyrl-GE":"ab-Cyrl-GE","und-Cyrl-GR":"mk-Cyrl-GR","und-Cyrl-MD":"uk-Cyrl-MD","und-Cyrl-RO":"bg-Cyrl-RO","und-Cyrl-SK":"uk-Cyrl-SK","und-Cyrl-TR":"kbd-Cyrl-TR","und-Cyrl-XK":"sr-Cyrl-XK","und-CZ":"cs-Latn-CZ","und-DE":"de-Latn-DE","und-Deva":"hi-Deva-IN","und-Deva-BT":"ne-Deva-BT","und-Deva-FJ":"hif-Deva-FJ","und-Deva-MU":"bho-Deva-MU","und-Deva-PK":"btv-Deva-PK","und-DJ":"aa-Latn-DJ","und-DK":"da-Latn-DK","und-DO":"es-Latn-DO","und-Dogr":"doi-Dogr-IN","und-Dupl":"fr-Dupl-FR","und-DZ":"ar-Arab-DZ","und-EA":"es-Latn-EA","und-EC":"es-Latn-EC","und-EE":"et-Latn-EE","und-EG":"ar-Arab-EG","und-Egyp":"egy-Egyp-EG","und-EH":"ar-Arab-EH","und-Elba":"sq-Elba-AL","und-Elym":"arc-Elym-IR","und-ER":"ti-Ethi-ER","und-ES":"es-Latn-ES","und-ET":"am-Ethi-ET","und-Ethi":"am-Ethi-ET","und-EU":"en-Latn-GB","und-EZ":"de-Latn-EZ","und-FI":"fi-Latn-FI","und-FO":"fo-Latn-FO","und-FR":"fr-Latn-FR","und-GA":"fr-Latn-GA","und-GE":"ka-Geor-GE","und-Geor":"ka-Geor-GE","und-GF":"fr-Latn-GF","und-GH":"ak-Latn-GH","und-GL":"kl-Latn-GL","und-Glag":"cu-Glag-BG","und-GN":"fr-Latn-GN","und-Gong":"wsg-Gong-IN","und-Gonm":"esg-Gonm-IN","und-Goth":"got-Goth-UA","und-GP":"fr-Latn-GP","und-GQ":"es-Latn-GQ","und-GR":"el-Grek-GR","und-Gran":"sa-Gran-IN","und-Grek":"el-Grek-GR","und-Grek-TR":"bgx-Grek-TR","und-GS":"und-Latn-GS","und-GT":"es-Latn-GT","und-Gujr":"gu-Gujr-IN","und-Guru":"pa-Guru-IN","und-GW":"pt-Latn-GW","und-Hanb":"zh-Hanb-TW","und-Hang":"ko-Hang-KR","und-Hani":"zh-Hani-CN","und-Hano":"hnn-Hano-PH","und-Hans":"zh-Hans-CN","und-Hant":"zh-Hant-TW","und-Hatr":"mis-Hatr-IQ","und-Hebr":"he-Hebr-IL","und-Hebr-CA":"yi-Hebr-CA","und-Hebr-GB":"yi-Hebr-GB","und-Hebr-SE":"yi-Hebr-SE","und-Hebr-UA":"yi-Hebr-UA","und-Hebr-US":"yi-Hebr-US","und-Hira":"ja-Hira-JP","und-HK":"zh-Hant-HK","und-Hluw":"hlu-Hluw-TR","und-HM":"und-Latn-HM","und-Hmng":"hnj-Hmng-LA","und-Hmnp":"mww-Hmnp-US","und-HN":"es-Latn-HN","und-HR":"hr-Latn-HR","und-HT":"ht-Latn-HT","und-HU":"hu-Latn-HU","und-Hung":"hu-Hung-HU","und-IC":"es-Latn-IC","und-ID":"id-Latn-ID","und-IL":"he-Hebr-IL","und-IN":"hi-Deva-IN","und-IQ":"ar-Arab-IQ","und-IR":"fa-Arab-IR","und-IS":"is-Latn-IS","und-IT":"it-Latn-IT","und-Ital":"ett-Ital-IT","und-Jamo":"ko-Jamo-KR","und-Java":"jv-Java-ID","und-JO":"ar-Arab-JO","und-JP":"ja-Jpan-JP","und-Jpan":"ja-Jpan-JP","und-Kali":"eky-Kali-MM","und-Kana":"ja-Kana-JP","und-KE":"sw-Latn-KE","und-KG":"ky-Cyrl-KG","und-KH":"km-Khmr-KH","und-Khar":"pra-Khar-PK","und-Khmr":"km-Khmr-KH","und-Khoj":"sd-Khoj-IN","und-KM":"ar-Arab-KM","und-Knda":"kn-Knda-IN","und-Kore":"ko-Kore-KR","und-KP":"ko-Kore-KP","und-KR":"ko-Kore-KR","und-Kthi":"bho-Kthi-IN","und-KW":"ar-Arab-KW","und-KZ":"ru-Cyrl-KZ","und-LA":"lo-Laoo-LA","und-Lana":"nod-Lana-TH","und-Laoo":"lo-Laoo-LA","und-Latn-AF":"tk-Latn-AF","und-Latn-AM":"ku-Latn-AM","und-Latn-CN":"za-Latn-CN","und-Latn-CY":"tr-Latn-CY","und-Latn-DZ":"fr-Latn-DZ","und-Latn-ET":"en-Latn-ET","und-Latn-GE":"ku-Latn-GE","und-Latn-IR":"tk-Latn-IR","und-Latn-KM":"fr-Latn-KM","und-Latn-MA":"fr-Latn-MA","und-Latn-MK":"sq-Latn-MK","und-Latn-MM":"kac-Latn-MM","und-Latn-MO":"pt-Latn-MO","und-Latn-MR":"fr-Latn-MR","und-Latn-RU":"krl-Latn-RU","und-Latn-SY":"fr-Latn-SY","und-Latn-TN":"fr-Latn-TN","und-Latn-TW":"trv-Latn-TW","und-Latn-UA":"pl-Latn-UA","und-LB":"ar-Arab-LB","und-Lepc":"lep-Lepc-IN","und-LI":"de-Latn-LI","und-Limb":"lif-Limb-IN","und-Lina":"lab-Lina-GR","und-Linb":"grc-Linb-GR","und-Lisu":"lis-Lisu-CN","und-LK":"si-Sinh-LK","und-LS":"st-Latn-LS","und-LT":"lt-Latn-LT","und-LU":"fr-Latn-LU","und-LV":"lv-Latn-LV","und-LY":"ar-Arab-LY","und-Lyci":"xlc-Lyci-TR","und-Lydi":"xld-Lydi-TR","und-MA":"ar-Arab-MA","und-Mahj":"hi-Mahj-IN","und-Maka":"mak-Maka-ID","und-Mand":"myz-Mand-IR","und-Mani":"xmn-Mani-CN","und-Marc":"bo-Marc-CN","und-MC":"fr-Latn-MC","und-MD":"ro-Latn-MD","und-ME":"sr-Latn-ME","und-Medf":"mis-Medf-NG","und-Mend":"men-Mend-SL","und-Merc":"xmr-Merc-SD","und-Mero":"xmr-Mero-SD","und-MF":"fr-Latn-MF","und-MG":"mg-Latn-MG","und-MK":"mk-Cyrl-MK","und-ML":"bm-Latn-ML","und-Mlym":"ml-Mlym-IN","und-MM":"my-Mymr-MM","und-MN":"mn-Cyrl-MN","und-MO":"zh-Hant-MO","und-Modi":"mr-Modi-IN","und-Mong":"mn-Mong-CN","und-MQ":"fr-Latn-MQ","und-MR":"ar-Arab-MR","und-Mroo":"mro-Mroo-BD","und-MT":"mt-Latn-MT","und-Mtei":"mni-Mtei-IN","und-MU":"mfe-Latn-MU","und-Mult":"skr-Mult-PK","und-MV":"dv-Thaa-MV","und-MX":"es-Latn-MX","und-MY":"ms-Latn-MY","und-Mymr":"my-Mymr-MM","und-Mymr-IN":"kht-Mymr-IN","und-Mymr-TH":"mnw-Mymr-TH","und-MZ":"pt-Latn-MZ","und-NA":"af-Latn-NA","und-Nand":"sa-Nand-IN","und-Narb":"xna-Narb-SA","und-Nbat":"arc-Nbat-JO","und-NC":"fr-Latn-NC","und-NE":"ha-Latn-NE","und-Newa":"new-Newa-NP","und-NI":"es-Latn-NI","und-Nkoo":"man-Nkoo-GN","und-NL":"nl-Latn-NL","und-NO":"nb-Latn-NO","und-NP":"ne-Deva-NP","und-Nshu":"zhx-Nshu-CN","und-Ogam":"sga-Ogam-IE","und-Olck":"sat-Olck-IN","und-OM":"ar-Arab-OM","und-Orkh":"otk-Orkh-MN","und-Orya":"or-Orya-IN","und-Osge":"osa-Osge-US","und-Osma":"so-Osma-SO","und-PA":"es-Latn-PA","und-Palm":"arc-Palm-SY","und-Pauc":"ctd-Pauc-MM","und-PE":"es-Latn-PE","und-Perm":"kv-Perm-RU","und-PF":"fr-Latn-PF","und-PG":"tpi-Latn-PG","und-PH":"fil-Latn-PH","und-Phag":"lzh-Phag-CN","und-Phli":"pal-Phli-IR","und-Phlp":"pal-Phlp-CN","und-Phnx":"phn-Phnx-LB","und-PK":"ur-Arab-PK","und-PL":"pl-Latn-PL","und-Plrd":"hmd-Plrd-CN","und-PM":"fr-Latn-PM","und-PR":"es-Latn-PR","und-Prti":"xpr-Prti-IR","und-PS":"ar-Arab-PS","und-PT":"pt-Latn-PT","und-PW":"pau-Latn-PW","und-PY":"gn-Latn-PY","und-QA":"ar-Arab-QA","und-QO":"en-Latn-DG","und-RE":"fr-Latn-RE","und-Rjng":"rej-Rjng-ID","und-RO":"ro-Latn-RO","und-Rohg":"rhg-Rohg-MM","und-RS":"sr-Cyrl-RS","und-RU":"ru-Cyrl-RU","und-Runr":"non-Runr-SE","und-RW":"rw-Latn-RW","und-SA":"ar-Arab-SA","und-Samr":"smp-Samr-IL","und-Sarb":"xsa-Sarb-YE","und-Saur":"saz-Saur-IN","und-SC":"fr-Latn-SC","und-SD":"ar-Arab-SD","und-SE":"sv-Latn-SE","und-Sgnw":"ase-Sgnw-US","und-Shaw":"en-Shaw-GB","und-Shrd":"sa-Shrd-IN","und-SI":"sl-Latn-SI","und-Sidd":"sa-Sidd-IN","und-Sind":"sd-Sind-IN","und-Sinh":"si-Sinh-LK","und-SJ":"nb-Latn-SJ","und-SK":"sk-Latn-SK","und-SM":"it-Latn-SM","und-SN":"fr-Latn-SN","und-SO":"so-Latn-SO","und-Sogd":"sog-Sogd-UZ","und-Sogo":"sog-Sogo-UZ","und-Sora":"srb-Sora-IN","und-Soyo":"cmg-Soyo-MN","und-SR":"nl-Latn-SR","und-ST":"pt-Latn-ST","und-Sund":"su-Sund-ID","und-SV":"es-Latn-SV","und-SY":"ar-Arab-SY","und-Sylo":"syl-Sylo-BD","und-Syrc":"syr-Syrc-IQ","und-Tagb":"tbw-Tagb-PH","und-Takr":"doi-Takr-IN","und-Tale":"tdd-Tale-CN","und-Talu":"khb-Talu-CN","und-Taml":"ta-Taml-IN","und-Tang":"txg-Tang-CN","und-Tavt":"blt-Tavt-VN","und-TD":"fr-Latn-TD","und-Telu":"te-Telu-IN","und-TF":"fr-Latn-TF","und-Tfng":"zgh-Tfng-MA","und-TG":"fr-Latn-TG","und-Tglg":"fil-Tglg-PH","und-TH":"th-Thai-TH","und-Thaa":"dv-Thaa-MV","und-Thai":"th-Thai-TH","und-Thai-CN":"lcp-Thai-CN","und-Thai-KH":"kdt-Thai-KH","und-Thai-LA":"kdt-Thai-LA","und-Tibt":"bo-Tibt-CN","und-Tirh":"mai-Tirh-IN","und-TJ":"tg-Cyrl-TJ","und-TK":"tkl-Latn-TK","und-TL":"pt-Latn-TL","und-TM":"tk-Latn-TM","und-TN":"ar-Arab-TN","und-TO":"to-Latn-TO","und-TR":"tr-Latn-TR","und-TV":"tvl-Latn-TV","und-TW":"zh-Hant-TW","und-TZ":"sw-Latn-TZ","und-UA":"uk-Cyrl-UA","und-UG":"sw-Latn-UG","und-Ugar":"uga-Ugar-SY","und-UY":"es-Latn-UY","und-UZ":"uz-Latn-UZ","und-VA":"it-Latn-VA","und-Vaii":"vai-Vaii-LR","und-VE":"es-Latn-VE","und-VN":"vi-Latn-VN","und-VU":"bi-Latn-VU","und-Wara":"hoc-Wara-IN","und-Wcho":"nnp-Wcho-IN","und-WF":"fr-Latn-WF","und-WS":"sm-Latn-WS","und-XK":"sq-Latn-XK","und-Xpeo":"peo-Xpeo-IR","und-Xsux":"akk-Xsux-IQ","und-YE":"ar-Arab-YE","und-Yiii":"ii-Yiii-CN","und-YT":"fr-Latn-YT","und-Zanb":"cmg-Zanb-MN","und-ZW":"sn-Latn-ZW","unr":"unr-Beng-IN","unr-Deva":"unr-Deva-NP","unr-NP":"unr-Deva-NP","unx":"unx-Beng-IN","ur":"ur-Arab-PK","uri":"uri-Latn-ZZ","urt":"urt-Latn-ZZ","urw":"urw-Latn-ZZ","usa":"usa-Latn-ZZ","utr":"utr-Latn-ZZ","uvh":"uvh-Latn-ZZ","uvl":"uvl-Latn-ZZ","uz":"uz-Latn-UZ","uz-AF":"uz-Arab-AF","uz-Arab":"uz-Arab-AF","uz-CN":"uz-Cyrl-CN","vag":"vag-Latn-ZZ","vai":"vai-Vaii-LR","van":"van-Latn-ZZ","ve":"ve-Latn-ZA","vec":"vec-Latn-IT","vep":"vep-Latn-RU","vi":"vi-Latn-VN","vic":"vic-Latn-SX","viv":"viv-Latn-ZZ","vls":"vls-Latn-BE","vmf":"vmf-Latn-DE","vmw":"vmw-Latn-MZ","vo":"vo-Latn-001","vot":"vot-Latn-RU","vro":"vro-Latn-EE","vun":"vun-Latn-TZ","vut":"vut-Latn-ZZ","wa":"wa-Latn-BE","wae":"wae-Latn-CH","waj":"waj-Latn-ZZ","wal":"wal-Ethi-ET","wan":"wan-Latn-ZZ","war":"war-Latn-PH","wbp":"wbp-Latn-AU","wbq":"wbq-Telu-IN","wbr":"wbr-Deva-IN","wci":"wci-Latn-ZZ","wer":"wer-Latn-ZZ","wgi":"wgi-Latn-ZZ","whg":"whg-Latn-ZZ","wib":"wib-Latn-ZZ","wiu":"wiu-Latn-ZZ","wiv":"wiv-Latn-ZZ","wja":"wja-Latn-ZZ","wji":"wji-Latn-ZZ","wls":"wls-Latn-WF","wmo":"wmo-Latn-ZZ","wnc":"wnc-Latn-ZZ","wni":"wni-Arab-KM","wnu":"wnu-Latn-ZZ","wo":"wo-Latn-SN","wob":"wob-Latn-ZZ","wos":"wos-Latn-ZZ","wrs":"wrs-Latn-ZZ","wsg":"wsg-Gong-IN","wsk":"wsk-Latn-ZZ","wtm":"wtm-Deva-IN","wuu":"wuu-Hans-CN","wuv":"wuv-Latn-ZZ","wwa":"wwa-Latn-ZZ","xav":"xav-Latn-BR","xbi":"xbi-Latn-ZZ","xcr":"xcr-Cari-TR","xes":"xes-Latn-ZZ","xh":"xh-Latn-ZA","xla":"xla-Latn-ZZ","xlc":"xlc-Lyci-TR","xld":"xld-Lydi-TR","xmf":"xmf-Geor-GE","xmn":"xmn-Mani-CN","xmr":"xmr-Merc-SD","xna":"xna-Narb-SA","xnr":"xnr-Deva-IN","xog":"xog-Latn-UG","xon":"xon-Latn-ZZ","xpr":"xpr-Prti-IR","xrb":"xrb-Latn-ZZ","xsa":"xsa-Sarb-YE","xsi":"xsi-Latn-ZZ","xsm":"xsm-Latn-ZZ","xsr":"xsr-Deva-NP","xwe":"xwe-Latn-ZZ","yam":"yam-Latn-ZZ","yao":"yao-Latn-MZ","yap":"yap-Latn-FM","yas":"yas-Latn-ZZ","yat":"yat-Latn-ZZ","yav":"yav-Latn-CM","yay":"yay-Latn-ZZ","yaz":"yaz-Latn-ZZ","yba":"yba-Latn-ZZ","ybb":"ybb-Latn-CM","yby":"yby-Latn-ZZ","yer":"yer-Latn-ZZ","ygr":"ygr-Latn-ZZ","ygw":"ygw-Latn-ZZ","yi":"yi-Hebr-001","yko":"yko-Latn-ZZ","yle":"yle-Latn-ZZ","ylg":"ylg-Latn-ZZ","yll":"yll-Latn-ZZ","yml":"yml-Latn-ZZ","yo":"yo-Latn-NG","yon":"yon-Latn-ZZ","yrb":"yrb-Latn-ZZ","yre":"yre-Latn-ZZ","yrl":"yrl-Latn-BR","yss":"yss-Latn-ZZ","yua":"yua-Latn-MX","yue":"yue-Hant-HK","yue-CN":"yue-Hans-CN","yue-Hans":"yue-Hans-CN","yuj":"yuj-Latn-ZZ","yut":"yut-Latn-ZZ","yuw":"yuw-Latn-ZZ","za":"za-Latn-CN","zag":"zag-Latn-SD","zdj":"zdj-Arab-KM","zea":"zea-Latn-NL","zgh":"zgh-Tfng-MA","zh":"zh-Hans-CN","zh-AU":"zh-Hant-AU","zh-BN":"zh-Hant-BN","zh-Bopo":"zh-Bopo-TW","zh-GB":"zh-Hant-GB","zh-GF":"zh-Hant-GF","zh-Hanb":"zh-Hanb-TW","zh-Hant":"zh-Hant-TW","zh-HK":"zh-Hant-HK","zh-ID":"zh-Hant-ID","zh-MO":"zh-Hant-MO","zh-MY":"zh-Hant-MY","zh-PA":"zh-Hant-PA","zh-PF":"zh-Hant-PF","zh-PH":"zh-Hant-PH","zh-SR":"zh-Hant-SR","zh-TH":"zh-Hant-TH","zh-TW":"zh-Hant-TW","zh-US":"zh-Hant-US","zh-VN":"zh-Hant-VN","zhx":"zhx-Nshu-CN","zia":"zia-Latn-ZZ","zlm":"zlm-Latn-TG","zmi":"zmi-Latn-MY","zne":"zne-Latn-ZZ","zu":"zu-Latn-ZA","zza":"zza-Latn-TR"}}}, {"main":{"es":{"identity":{"version":{"_number":"$Revision: 14982 $","_cldrVersion":"35.1"},"language":"es"},"numbers":{"currencies":{"ADP":{"displayName":"peseta andorrana","displayName-count-one":"peseta andorrana","displayName-count-other":"pesetas andorranas","symbol":"ADP"},"AED":{"displayName":"d\xc3\xadrham de los Emiratos \xc3\x81rabes Unidos","displayName-count-one":"d\xc3\xadrham de los Emiratos \xc3\x81rabes Unidos","displayName-count-other":"d\xc3\xadrhams de los Emiratos \xc3\x81rabes Unidos","symbol":"AED"},"AFA":{"displayName":"afgani (1927\xe2\x80\x932002)","symbol":"AFA"},"AFN":{"displayName":"afgani","displayName-count-one":"afgani","displayName-count-other":"afganis","symbol":"AFN"},"ALK":{"displayName":"ALK","symbol":"ALK"},"ALL":{"displayName":"lek","displayName-count-one":"lek","displayName-count-other":"lekes","symbol":"ALL"},"AMD":{"displayName":"dram","displayName-count-one":"dram","displayName-count-other":"drams","symbol":"AMD"},"ANG":{"displayName":"flor\xc3\xadn de las Antillas Neerlandesas","displayName-count-one":"flor\xc3\xadn de las Antillas Neerlandesas","displayName-count-other":"florines de las Antillas Neerlandesas","symbol":"ANG"},"AOA":{"displayName":"kuanza","displayName-count-one":"kuanza","displayName-count-other":"kuanzas","symbol":"AOA","symbol-alt-narrow":"Kz"},"AOK":{"displayName":"kwanza angole\xc3\xb1o (1977\xe2\x80\x931990)","symbol":"AOK"},"AON":{"displayName":"nuevo kwanza angole\xc3\xb1o (1990\xe2\x80\x932000)","symbol":"AON"},"AOR":{"displayName":"kwanza reajustado angole\xc3\xb1o (1995\xe2\x80\x931999)","symbol":"AOR"},"ARA":{"displayName":"austral argentino","displayName-count-one":"austral argentino","displayName-count-other":"australes argentinos","symbol":"ARA"},"ARL":{"displayName":"ARL","symbol":"ARL"},"ARM":{"displayName":"ARM","symbol":"ARM"},"ARP":{"displayName":"peso argentino (1983\xe2\x80\x931985)","displayName-count-one":"peso argentino (ARP)","displayName-count-other":"pesos argentinos (ARP)","symbol":"ARP"},"ARS":{"displayName":"peso argentino","displayName-count-one":"peso argentino","displayName-count-other":"pesos argentinos","symbol":"ARS","symbol-alt-narrow":"$"},"ATS":{"displayName":"chel\xc3\xadn austriaco","displayName-count-one":"chel\xc3\xadn austriaco","displayName-count-other":"chelines austriacos","symbol":"ATS"},"AUD":{"displayName":"d\xc3\xb3lar australiano","displayName-count-one":"d\xc3\xb3lar australiano","displayName-count-other":"d\xc3\xb3lares australianos","symbol":"AUD","symbol-alt-narrow":"$"},"AWG":{"displayName":"flor\xc3\xadn arube\xc3\xb1o","displayName-count-one":"flor\xc3\xadn arube\xc3\xb1o","displayName-count-other":"florines arube\xc3\xb1os","symbol":"AWG"},"AZM":{"displayName":"manat azer\xc3\xad (1993\xe2\x80\x932006)","symbol":"AZM"},"AZN":{"displayName":"manat azerbaiyano","displayName-count-one":"manat azerbaiyano","displayName-count-other":"manat azerbaiyanos","symbol":"AZN"},"BAD":{"displayName":"dinar bosnio","displayName-count-one":"dinar bosnio","displayName-count-other":"dinares bosnios","symbol":"BAD"},"BAM":{"displayName":"marco convertible de Bosnia y Herzegovina","displayName-count-one":"marco convertible de Bosnia y Herzegovina","displayName-count-other":"marcos convertibles de Bosnia y Herzegovina","symbol":"BAM","symbol-alt-narrow":"KM"},"BAN":{"displayName":"BAN","symbol":"BAN"},"BBD":{"displayName":"d\xc3\xb3lar barbadense","displayName-count-one":"d\xc3\xb3lar barbadense","displayName-count-other":"d\xc3\xb3lares barbadenses","symbol":"BBD","symbol-alt-narrow":"$"},"BDT":{"displayName":"taka","displayName-count-one":"taka","displayName-count-other":"takas","symbol":"BDT","symbol-alt-narrow":"\xe0\xa7\xb3"},"BEC":{"displayName":"franco belga (convertible)","displayName-count-one":"franco belga (convertible)","displayName-count-other":"francos belgas (convertibles)","symbol":"BEC"},"BEF":{"displayName":"franco belga","displayName-count-one":"franco belga","displayName-count-other":"francos belgas","symbol":"BEF"},"BEL":{"displayName":"franco belga (financiero)","displayName-count-one":"franco belga (financiero)","displayName-count-other":"francos belgas (financieros)","symbol":"BEL"},"BGL":{"displayName":"lev fuerte b\xc3\xbalgaro","displayName-count-one":"lev fuerte b\xc3\xbalgaro","displayName-count-other":"leva fuertes b\xc3\xbalgaros","symbol":"BGL"},"BGM":{"displayName":"BGM","symbol":"BGM"},"BGN":{"displayName":"lev b\xc3\xbalgaro","displayName-count-one":"lev b\xc3\xbalgaro","displayName-count-other":"levas b\xc3\xbalgaras","symbol":"BGN"},"BGO":{"displayName":"BGO","symbol":"BGO"},"BHD":{"displayName":"dinar bahrein\xc3\xad","displayName-count-one":"dinar bahrein\xc3\xad","displayName-count-other":"dinares bahrein\xc3\xades","symbol":"BHD"},"BIF":{"displayName":"franco burund\xc3\xa9s","displayName-count-one":"franco burund\xc3\xa9s","displayName-count-other":"francos burundeses","symbol":"BIF"},"BMD":{"displayName":"d\xc3\xb3lar de Bermudas","displayName-count-one":"d\xc3\xb3lar de Bermudas","displayName-count-other":"d\xc3\xb3lares de Bermudas","symbol":"BMD","symbol-alt-narrow":"$"},"BND":{"displayName":"d\xc3\xb3lar bruneano","displayName-count-one":"d\xc3\xb3lar bruneano","displayName-count-other":"d\xc3\xb3lares bruneanos","symbol":"BND","symbol-alt-narrow":"$"},"BOB":{"displayName":"boliviano","displayName-count-one":"boliviano","displayName-count-other":"bolivianos","symbol":"BOB","symbol-alt-narrow":"Bs"},"BOL":{"displayName":"BOL","symbol":"BOL"},"BOP":{"displayName":"peso boliviano","displayName-count-one":"peso boliviano","displayName-count-other":"pesos bolivianos","symbol":"BOP"},"BOV":{"displayName":"MVDOL boliviano","displayName-count-one":"MVDOL boliviano","displayName-count-other":"MVDOL bolivianos","symbol":"BOV"},"BRB":{"displayName":"nuevo cruceiro brasile\xc3\xb1o (1967\xe2\x80\x931986)","displayName-count-one":"nuevo cruzado brasile\xc3\xb1o (BRB)","displayName-count-other":"nuevos cruzados brasile\xc3\xb1os (BRB)","symbol":"BRB"},"BRC":{"displayName":"cruzado brasile\xc3\xb1o","displayName-count-one":"cruzado brasile\xc3\xb1o","displayName-count-other":"cruzados brasile\xc3\xb1os","symbol":"BRC"},"BRE":{"displayName":"cruceiro brasile\xc3\xb1o (1990\xe2\x80\x931993)","displayName-count-one":"cruceiro brasile\xc3\xb1o (BRE)","displayName-count-other":"cruceiros brasile\xc3\xb1os (BRE)","symbol":"BRE"},"BRL":{"displayName":"real brasile\xc3\xb1o","displayName-count-one":"real brasile\xc3\xb1o","displayName-count-other":"reales brasile\xc3\xb1os","symbol":"BRL","symbol-alt-narrow":"R$"},"BRN":{"displayName":"nuevo cruzado brasile\xc3\xb1o","displayName-count-one":"nuevo cruzado brasile\xc3\xb1o","displayName-count-other":"nuevos cruzados brasile\xc3\xb1os","symbol":"BRN"},"BRR":{"displayName":"cruceiro brasile\xc3\xb1o","displayName-count-one":"cruceiro brasile\xc3\xb1o","displayName-count-other":"cruceiros brasile\xc3\xb1os","symbol":"BRR"},"BRZ":{"displayName":"BRZ","symbol":"BRZ"},"BSD":{"displayName":"d\xc3\xb3lar bahame\xc3\xb1o","displayName-count-one":"d\xc3\xb3lar bahame\xc3\xb1o","displayName-count-other":"d\xc3\xb3lares bahame\xc3\xb1os","symbol":"BSD","symbol-alt-narrow":"$"},"BTN":{"displayName":"gultrum","displayName-count-one":"gultrum","displayName-count-other":"gultrums","symbol":"BTN"},"BUK":{"displayName":"kyat birmano","displayName-count-one":"kyat birmano","displayName-count-other":"kyat birmanos","symbol":"BUK"},"BWP":{"displayName":"pula","displayName-count-one":"pula","displayName-count-other":"pulas","symbol":"BWP","symbol-alt-narrow":"P"},"BYB":{"displayName":"nuevo rublo bielorruso (1994\xe2\x80\x931999)","displayName-count-one":"nuevo rublo bielorruso","displayName-count-other":"nuevos rublos bielorrusos","symbol":"BYB"},"BYN":{"displayName":"rublo bielorruso","displayName-count-one":"rublo bielorruso","displayName-count-other":"rublos bielorrusos","symbol":"BYN","symbol-alt-narrow":"\xd1\x80."},"BYR":{"displayName":"rublo bielorruso (2000\xe2\x80\x932016)","displayName-count-one":"rublo bielorruso (2000\xe2\x80\x932016)","displayName-count-other":"rublos bielorrusos (2000\xe2\x80\x932016)","symbol":"BYR"},"BZD":{"displayName":"d\xc3\xb3lar belice\xc3\xb1o","displayName-count-one":"d\xc3\xb3lar belice\xc3\xb1o","displayName-count-other":"d\xc3\xb3lares belice\xc3\xb1os","symbol":"BZD","symbol-alt-narrow":"$"},"CAD":{"displayName":"d\xc3\xb3lar canadiense","displayName-count-one":"d\xc3\xb3lar canadiense","displayName-count-other":"d\xc3\xb3lares canadienses","symbol":"CA$","symbol-alt-narrow":"$"},"CDF":{"displayName":"franco congole\xc3\xb1o","displayName-count-one":"franco congole\xc3\xb1o","displayName-count-other":"francos congole\xc3\xb1os","symbol":"CDF"},"CHE":{"displayName":"euro WIR","displayName-count-one":"euro WIR","displayName-count-other":"euros WIR","symbol":"CHE"},"CHF":{"displayName":"franco suizo","displayName-count-one":"franco suizo","displayName-count-other":"francos suizos","symbol":"CHF"},"CHW":{"displayName":"franco WIR","displayName-count-one":"franco WIR","displayName-count-other":"francos WIR","symbol":"CHW"},"CLE":{"displayName":"CLE","symbol":"CLE"},"CLF":{"displayName":"unidad de fomento chilena","displayName-count-one":"unidad de fomento chilena","displayName-count-other":"unidades de fomento chilenas","symbol":"CLF"},"CLP":{"displayName":"peso chileno","displayName-count-one":"peso chileno","displayName-count-other":"pesos chilenos","symbol":"CLP","symbol-alt-narrow":"$"},"CNH":{"displayName":"yuan chino (extracontinental)","displayName-count-one":"yuan chino (extracontinental)","displayName-count-other":"yuan chino (extracontinental)","symbol":"CNH"},"CNX":{"displayName":"CNX","symbol":"CNX"},"CNY":{"displayName":"yuan","displayName-count-one":"yuan","displayName-count-other":"yuanes","symbol":"CNY","symbol-alt-narrow":"\xc2\xa5"},"COP":{"displayName":"peso colombiano","displayName-count-one":"peso colombiano","displayName-count-other":"pesos colombianos","symbol":"COP","symbol-alt-narrow":"$"},"COU":{"displayName":"unidad de valor real colombiana","displayName-count-one":"unidad de valor real","displayName-count-other":"unidades de valor reales","symbol":"COU"},"CRC":{"displayName":"col\xc3\xb3n costarricense","displayName-count-one":"col\xc3\xb3n costarricense","displayName-count-other":"colones costarricenses","symbol":"CRC","symbol-alt-narrow":"\xe2\x82\xa1"},"CSD":{"displayName":"antiguo dinar serbio","displayName-count-one":"antiguo dinar serbio","displayName-count-other":"antiguos dinares serbios","symbol":"CSD"},"CSK":{"displayName":"corona fuerte checoslovaca","displayName-count-one":"corona fuerte checoslovaca","displayName-count-other":"coronas fuertes checoslovacas","symbol":"CSK"},"CUC":{"displayName":"peso cubano convertible","displayName-count-one":"peso cubano convertible","displayName-count-other":"pesos cubanos convertibles","symbol":"CUC","symbol-alt-narrow":"$"},"CUP":{"displayName":"peso cubano","displayName-count-one":"peso cubano","displayName-count-other":"pesos cubanos","symbol":"CUP","symbol-alt-narrow":"$"},"CVE":{"displayName":"escudo de Cabo Verde","displayName-count-one":"escudo de Cabo Verde","displayName-count-other":"escudos de Cabo Verde","symbol":"CVE"},"CYP":{"displayName":"libra chipriota","displayName-count-one":"libra chipriota","displayName-count-other":"libras chipriotas","symbol":"CYP"},"CZK":{"displayName":"corona checa","displayName-count-one":"corona checa","displayName-count-other":"coronas checas","symbol":"CZK","symbol-alt-narrow":"K\xc4\x8d"},"DDM":{"displayName":"ostmark de Alemania del Este","displayName-count-one":"marco de la Rep\xc3\xbablica Democr\xc3\xa1tica Alemana","displayName-count-other":"marcos de la Rep\xc3\xbablica Democr\xc3\xa1tica Alemana","symbol":"DDM"},"DEM":{"displayName":"marco alem\xc3\xa1n","displayName-count-one":"marco alem\xc3\xa1n","displayName-count-other":"marcos alemanes","symbol":"DEM"},"DJF":{"displayName":"franco yibutiano","displayName-count-one":"franco yibutiano","displayName-count-other":"francos yibutianos","symbol":"DJF"},"DKK":{"displayName":"corona danesa","displayName-count-one":"corona danesa","displayName-count-other":"coronas danesas","symbol":"DKK","symbol-alt-narrow":"kr"},"DOP":{"displayName":"peso dominicano","displayName-count-one":"peso dominicano","displayName-count-other":"pesos dominicanos","symbol":"DOP","symbol-alt-narrow":"$"},"DZD":{"displayName":"dinar argelino","displayName-count-one":"dinar argelino","displayName-count-other":"dinares argelinos","symbol":"DZD"},"ECS":{"displayName":"sucre ecuatoriano","displayName-count-one":"sucre ecuatoriano","displayName-count-other":"sucres ecuatorianos","symbol":"ECS"},"ECV":{"displayName":"unidad de valor constante (UVC) ecuatoriana","displayName-count-one":"unidad de valor constante (UVC) ecuatoriana","displayName-count-other":"unidades de valor constante (UVC) ecuatorianas","symbol":"ECV"},"EEK":{"displayName":"corona estonia","displayName-count-one":"corona estonia","displayName-count-other":"coronas estonias","symbol":"EEK"},"EGP":{"displayName":"libra egipcia","displayName-count-one":"libra egipcia","displayName-count-other":"libras egipcias","symbol":"EGP","symbol-alt-narrow":"EGP"},"ERN":{"displayName":"nakfa","displayName-count-one":"nakfa","displayName-count-other":"nakfas","symbol":"ERN"},"ESA":{"displayName":"peseta espa\xc3\xb1ola (cuenta A)","displayName-count-one":"peseta espa\xc3\xb1ola (cuenta A)","displayName-count-other":"pesetas espa\xc3\xb1olas (cuenta A)","symbol":"ESA"},"ESB":{"displayName":"peseta espa\xc3\xb1ola (cuenta convertible)","displayName-count-one":"peseta espa\xc3\xb1ola (cuenta convertible)","displayName-count-other":"pesetas espa\xc3\xb1olas (cuenta convertible)","symbol":"ESB"},"ESP":{"displayName":"peseta espa\xc3\xb1ola","displayName-count-one":"peseta espa\xc3\xb1ola","displayName-count-other":"pesetas espa\xc3\xb1olas","symbol":"\xe2\x82\xa7","symbol-alt-narrow":"\xe2\x82\xa7"},"ETB":{"displayName":"bir","displayName-count-one":"bir","displayName-count-other":"bires","symbol":"ETB"},"EUR":{"displayName":"euro","displayName-count-one":"euro","displayName-count-other":"euros","symbol":"\xe2\x82\xac","symbol-alt-narrow":"\xe2\x82\xac"},"FIM":{"displayName":"marco finland\xc3\xa9s","displayName-count-one":"marco finland\xc3\xa9s","displayName-count-other":"marcos finlandeses","symbol":"FIM"},"FJD":{"displayName":"d\xc3\xb3lar fiyiano","displayName-count-one":"d\xc3\xb3lar fiyiano","displayName-count-other":"d\xc3\xb3lares fiyianos","symbol":"FJD","symbol-alt-narrow":"$"},"FKP":{"displayName":"libra malvinense","displayName-count-one":"libra malvinense","displayName-count-other":"libras malvinenses","symbol":"FKP","symbol-alt-narrow":"\xc2\xa3"},"FRF":{"displayName":"franco franc\xc3\xa9s","displayName-count-one":"franco franc\xc3\xa9s","displayName-count-other":"francos franceses","symbol":"FRF"},"GBP":{"displayName":"libra esterlina","displayName-count-one":"libra esterlina","displayName-count-other":"libras esterlinas","symbol":"GBP","symbol-alt-narrow":"\xc2\xa3"},"GEK":{"displayName":"kupon larit georgiano","symbol":"GEK"},"GEL":{"displayName":"lari","displayName-count-one":"lari","displayName-count-other":"laris","symbol":"GEL","symbol-alt-narrow":"\xe2\x82\xbe","symbol-alt-variant":"\xe2\x82\xbe"},"GHC":{"displayName":"cedi ghan\xc3\xa9s (1979\xe2\x80\x932007)","symbol":"GHC"},"GHS":{"displayName":"cedi","displayName-count-one":"cedi","displayName-count-other":"cedis","symbol":"GHS"},"GIP":{"displayName":"libra gibraltare\xc3\xb1a","displayName-count-one":"libra gibraltare\xc3\xb1a","displayName-count-other":"libras gibraltare\xc3\xb1as","symbol":"GIP","symbol-alt-narrow":"\xc2\xa3"},"GMD":{"displayName":"dalasi","displayName-count-one":"dalasi","displayName-count-other":"dalasis","symbol":"GMD"},"GNF":{"displayName":"franco guineano","displayName-count-one":"franco guineano","displayName-count-other":"francos guineanos","symbol":"GNF","symbol-alt-narrow":"FG"},"GNS":{"displayName":"syli guineano","symbol":"GNS"},"GQE":{"displayName":"ekuele de Guinea Ecuatorial","displayName-count-one":"ekuele de Guinea Ecuatorial","displayName-count-other":"ekueles de Guinea Ecuatorial","symbol":"GQE"},"GRD":{"displayName":"dracma griego","displayName-count-one":"dracma griego","displayName-count-other":"dracmas griegos","symbol":"GRD"},"GTQ":{"displayName":"quetzal guatemalteco","displayName-count-one":"quetzal guatemalteco","displayName-count-other":"quetzales guatemaltecos","symbol":"GTQ","symbol-alt-narrow":"Q"},"GWE":{"displayName":"escudo de Guinea Portuguesa","symbol":"GWE"},"GWP":{"displayName":"peso de Guinea-Biss\xc3\xa1u","symbol":"GWP"},"GYD":{"displayName":"d\xc3\xb3lar guyan\xc3\xa9s","displayName-count-one":"d\xc3\xb3lar guyan\xc3\xa9s","displayName-count-other":"d\xc3\xb3lares guyaneses","symbol":"GYD","symbol-alt-narrow":"$"},"HKD":{"displayName":"d\xc3\xb3lar hongkon\xc3\xa9s","displayName-count-one":"d\xc3\xb3lar hongkon\xc3\xa9s","displayName-count-other":"d\xc3\xb3lares hongkoneses","symbol":"HKD","symbol-alt-narrow":"$"},"HNL":{"displayName":"lempira hondure\xc3\xb1o","displayName-count-one":"lempira hondure\xc3\xb1o","displayName-count-other":"lempiras hondure\xc3\xb1os","symbol":"HNL","symbol-alt-narrow":"L"},"HRD":{"displayName":"dinar croata","displayName-count-one":"dinar croata","displayName-count-other":"dinares croatas","symbol":"HRD"},"HRK":{"displayName":"kuna","displayName-count-one":"kuna","displayName-count-other":"kunas","symbol":"HRK","symbol-alt-narrow":"kn"},"HTG":{"displayName":"gourde haitiano","displayName-count-one":"gourde haitiano","displayName-count-other":"gourdes haitianos","symbol":"HTG"},"HUF":{"displayName":"forinto h\xc3\xbangaro","displayName-count-one":"forinto h\xc3\xbangaro","displayName-count-other":"forintos h\xc3\xbangaros","symbol":"HUF","symbol-alt-narrow":"Ft"},"IDR":{"displayName":"rupia indonesia","displayName-count-one":"rupia indonesia","displayName-count-other":"rupias indonesias","symbol":"IDR","symbol-alt-narrow":"Rp"},"IEP":{"displayName":"libra irlandesa","displayName-count-one":"libra irlandesa","displayName-count-other":"libras irlandesas","symbol":"IEP"},"ILP":{"displayName":"libra israel\xc3\xad","displayName-count-one":"libra israel\xc3\xad","displayName-count-other":"libras israel\xc3\xades","symbol":"ILP"},"ILR":{"displayName":"ILR","symbol":"ILR"},"ILS":{"displayName":"nuevo s\xc3\xa9quel israel\xc3\xad","displayName-count-one":"nuevo s\xc3\xa9quel israel\xc3\xad","displayName-count-other":"nuevos s\xc3\xa9queles israel\xc3\xades","symbol":"ILS","symbol-alt-narrow":"\xe2\x82\xaa"},"INR":{"displayName":"rupia india","displayName-count-one":"rupia india","displayName-count-other":"rupias indias","symbol":"INR","symbol-alt-narrow":"\xe2\x82\xb9"},"IQD":{"displayName":"dinar iraqu\xc3\xad","displayName-count-one":"dinar iraqu\xc3\xad","displayName-count-other":"dinares iraqu\xc3\xades","symbol":"IQD"},"IRR":{"displayName":"rial iran\xc3\xad","displayName-count-one":"rial iran\xc3\xad","displayName-count-other":"riales iran\xc3\xades","symbol":"IRR"},"ISJ":{"displayName":"ISJ","symbol":"ISJ"},"ISK":{"displayName":"corona islandesa","displayName-count-one":"corona islandesa","displayName-count-other":"coronas islandesas","symbol":"ISK","symbol-alt-narrow":"kr"},"ITL":{"displayName":"lira italiana","displayName-count-one":"lira italiana","displayName-count-other":"liras italianas","symbol":"ITL"},"JMD":{"displayName":"d\xc3\xb3lar jamaicano","displayName-count-one":"d\xc3\xb3lar jamaicano","displayName-count-other":"d\xc3\xb3lares jamaicanos","symbol":"JMD","symbol-alt-narrow":"$"},"JOD":{"displayName":"dinar jordano","displayName-count-one":"dinar jordano","displayName-count-other":"dinares jordanos","symbol":"JOD"},"JPY":{"displayName":"yen","displayName-count-one":"yen","displayName-count-other":"yenes","symbol":"JPY","symbol-alt-narrow":"\xc2\xa5"},"KES":{"displayName":"chel\xc3\xadn keniano","displayName-count-one":"chel\xc3\xadn keniano","displayName-count-other":"chelines kenianos","symbol":"KES"},"KGS":{"displayName":"som","displayName-count-one":"som","displayName-count-other":"soms","symbol":"KGS"},"KHR":{"displayName":"riel","displayName-count-one":"riel","displayName-count-other":"rieles","symbol":"KHR","symbol-alt-narrow":"\xe1\x9f\x9b"},"KMF":{"displayName":"franco comorense","displayName-count-one":"franco comorense","displayName-count-other":"francos comorenses","symbol":"KMF","symbol-alt-narrow":"CF"},"KPW":{"displayName":"won norcoreano","displayName-count-one":"won norcoreano","displayName-count-other":"wons norcoreanos","symbol":"KPW","symbol-alt-narrow":"\xe2\x82\xa9"},"KRH":{"displayName":"KRH","symbol":"KRH"},"KRO":{"displayName":"KRO","symbol":"KRO"},"KRW":{"displayName":"won surcoreano","displayName-count-one":"won surcoreano","displayName-count-other":"wons surcoreanos","symbol":"KRW","symbol-alt-narrow":"\xe2\x82\xa9"},"KWD":{"displayName":"dinar kuwait\xc3\xad","displayName-count-one":"dinar kuwait\xc3\xad","displayName-count-other":"dinares kuwait\xc3\xades","symbol":"KWD"},"KYD":{"displayName":"d\xc3\xb3lar de las Islas Caim\xc3\xa1n","displayName-count-one":"d\xc3\xb3lar de las Islas Caim\xc3\xa1n","displayName-count-other":"d\xc3\xb3lares de las Islas Caim\xc3\xa1n","symbol":"KYD","symbol-alt-narrow":"$"},"KZT":{"displayName":"tenge kazako","displayName-count-one":"tenge kazako","displayName-count-other":"tenges kazakos","symbol":"KZT","symbol-alt-narrow":"\xe2\x82\xb8"},"LAK":{"displayName":"kip","displayName-count-one":"kip","displayName-count-other":"kips","symbol":"LAK","symbol-alt-narrow":"\xe2\x82\xad"},"LBP":{"displayName":"libra libanesa","displayName-count-one":"libra libanesa","displayName-count-other":"libras libanesas","symbol":"LBP","symbol-alt-narrow":"L\xc2\xa3"},"LKR":{"displayName":"rupia esrilanquesa","displayName-count-one":"rupia esrilanquesa","displayName-count-other":"rupias esrilanquesas","symbol":"LKR","symbol-alt-narrow":"Rs"},"LRD":{"displayName":"d\xc3\xb3lar liberiano","displayName-count-one":"d\xc3\xb3lar liberiano","displayName-count-other":"d\xc3\xb3lares liberianos","symbol":"LRD","symbol-alt-narrow":"$"},"LSL":{"displayName":"loti lesothense","symbol":"LSL"},"LTL":{"displayName":"litas lituano","displayName-count-one":"litas lituana","displayName-count-other":"litas lituanas","symbol":"LTL","symbol-alt-narrow":"Lt"},"LTT":{"displayName":"talonas lituano","displayName-count-one":"talonas lituana","displayName-count-other":"talonas lituanas","symbol":"LTT"},"LUC":{"displayName":"franco convertible luxemburgu\xc3\xa9s","displayName-count-one":"franco convertible luxemburgu\xc3\xa9s","displayName-count-other":"francos convertibles luxemburgueses","symbol":"LUC"},"LUF":{"displayName":"franco luxemburgu\xc3\xa9s","displayName-count-one":"franco luxemburgu\xc3\xa9s","displayName-count-other":"francos luxemburgueses","symbol":"LUF"},"LUL":{"displayName":"franco financiero luxemburgu\xc3\xa9s","displayName-count-one":"franco financiero luxemburgu\xc3\xa9s","displayName-count-other":"francos financieros luxemburgueses","symbol":"LUL"},"LVL":{"displayName":"lats let\xc3\xb3n","displayName-count-one":"lats let\xc3\xb3n","displayName-count-other":"lats let\xc3\xb3nes","symbol":"LVL","symbol-alt-narrow":"Ls"},"LVR":{"displayName":"rublo let\xc3\xb3n","displayName-count-one":"rublo let\xc3\xb3n","displayName-count-other":"rublos letones","symbol":"LVR"},"LYD":{"displayName":"dinar libio","displayName-count-one":"dinar libio","displayName-count-other":"dinares libios","symbol":"LYD"},"MAD":{"displayName":"d\xc3\xadrham marroqu\xc3\xad","displayName-count-one":"d\xc3\xadrham marroqu\xc3\xad","displayName-count-other":"d\xc3\xadrhams marroqu\xc3\xades","symbol":"MAD"},"MAF":{"displayName":"franco marroqu\xc3\xad","displayName-count-one":"franco marroqu\xc3\xad","displayName-count-other":"francos marroqu\xc3\xades","symbol":"MAF"},"MCF":{"displayName":"MCF","symbol":"MCF"},"MDC":{"displayName":"MDC","symbol":"MDC"},"MDL":{"displayName":"leu moldavo","displayName-count-one":"leu moldavo","displayName-count-other":"lei moldavos","symbol":"MDL"},"MGA":{"displayName":"ariari","displayName-count-one":"ariari","displayName-count-other":"ariaris","symbol":"MGA","symbol-alt-narrow":"Ar"},"MGF":{"displayName":"franco malgache","symbol":"MGF"},"MKD":{"displayName":"dinar macedonio","displayName-count-one":"dinar macedonio","displayName-count-other":"dinares macedonios","symbol":"MKD"},"MKN":{"displayName":"MKN","symbol":"MKN"},"MLF":{"displayName":"franco mal\xc3\xad","symbol":"MLF"},"MMK":{"displayName":"kiat","displayName-count-one":"kiat","displayName-count-other":"kiats","symbol":"MMK","symbol-alt-narrow":"K"},"MNT":{"displayName":"tugrik","displayName-count-one":"tugrik","displayName-count-other":"tugriks","symbol":"MNT","symbol-alt-narrow":"\xe2\x82\xae"},"MOP":{"displayName":"pataca de Macao","displayName-count-one":"pataca de Macao","displayName-count-other":"patacas de Macao","symbol":"MOP"},"MRO":{"displayName":"uguiya (1973\xe2\x80\x932017)","displayName-count-one":"uguiya (1973\xe2\x80\x932017)","displayName-count-other":"uguiyas (1973\xe2\x80\x932017)","symbol":"MRO"},"MRU":{"displayName":"uguiya","displayName-count-one":"uguiya","displayName-count-other":"uguiyas","symbol":"MRU"},"MTL":{"displayName":"lira maltesa","displayName-count-one":"lira maltesa","displayName-count-other":"liras maltesas","symbol":"MTL"},"MTP":{"displayName":"libra maltesa","displayName-count-one":"libra maltesa","displayName-count-other":"libras maltesas","symbol":"MTP"},"MUR":{"displayName":"rupia mauriciana","displayName-count-one":"rupia mauriciana","displayName-count-other":"rupias mauricianas","symbol":"MUR","symbol-alt-narrow":"Rs"},"MVP":{"displayName":"MVP","symbol":"MVP"},"MVR":{"displayName":"rufiya","displayName-count-one":"rufiya","displayName-count-other":"rufiyas","symbol":"MVR"},"MWK":{"displayName":"kwacha malau\xc3\xad","displayName-count-one":"kwacha malau\xc3\xad","displayName-count-other":"kwachas malau\xc3\xads","symbol":"MWK"},"MXN":{"displayName":"peso mexicano","displayName-count-one":"peso mexicano","displayName-count-other":"pesos mexicanos","symbol":"MXN","symbol-alt-narrow":"$"},"MXP":{"displayName":"peso de plata mexicano (1861\xe2\x80\x931992)","displayName-count-one":"peso de plata mexicano (MXP)","displayName-count-other":"pesos de plata mexicanos (MXP)","symbol":"MXP"},"MXV":{"displayName":"unidad de inversi\xc3\xb3n (UDI) mexicana","displayName-count-one":"unidad de inversi\xc3\xb3n (UDI) mexicana","displayName-count-other":"unidades de inversi\xc3\xb3n (UDI) mexicanas","symbol":"MXV"},"MYR":{"displayName":"ringit","displayName-count-one":"ringit","displayName-count-other":"ringits","symbol":"MYR","symbol-alt-narrow":"RM"},"MZE":{"displayName":"escudo mozambique\xc3\xb1o","displayName-count-one":"escudo mozambique\xc3\xb1o","displayName-count-other":"escudos mozambique\xc3\xb1os","symbol":"MZE"},"MZM":{"displayName":"antiguo metical mozambique\xc3\xb1o","symbol":"MZM"},"MZN":{"displayName":"metical","displayName-count-one":"metical","displayName-count-other":"meticales","symbol":"MZN"},"NAD":{"displayName":"d\xc3\xb3lar namibio","displayName-count-one":"d\xc3\xb3lar namibio","displayName-count-other":"d\xc3\xb3lares namibios","symbol":"NAD","symbol-alt-narrow":"$"},"NGN":{"displayName":"naira","displayName-count-one":"naira","displayName-count-other":"nairas","symbol":"NGN","symbol-alt-narrow":"\xe2\x82\xa6"},"NIC":{"displayName":"c\xc3\xb3rdoba nicarag\xc3\xbcense (1988\xe2\x80\x931991)","displayName-count-one":"c\xc3\xb3rdoba nicarag\xc3\xbcense (1988\xe2\x80\x931991)","displayName-count-other":"c\xc3\xb3rdobas nicarag\xc3\xbcenses (1988\xe2\x80\x931991)","symbol":"NIC"},"NIO":{"displayName":"c\xc3\xb3rdoba nicarag\xc3\xbcense","displayName-count-one":"c\xc3\xb3rdoba nicarag\xc3\xbcense","displayName-count-other":"c\xc3\xb3rdobas nicarag\xc3\xbcenses","symbol":"NIO","symbol-alt-narrow":"C$"},"NLG":{"displayName":"flor\xc3\xadn neerland\xc3\xa9s","displayName-count-one":"flor\xc3\xadn neerland\xc3\xa9s","displayName-count-other":"florines neerlandeses","symbol":"NLG"},"NOK":{"displayName":"corona noruega","displayName-count-one":"corona noruega","displayName-count-other":"coronas noruegas","symbol":"NOK","symbol-alt-narrow":"kr"},"NPR":{"displayName":"rupia nepal\xc3\xad","displayName-count-one":"rupia nepal\xc3\xad","displayName-count-other":"rupias nepal\xc3\xades","symbol":"NPR","symbol-alt-narrow":"Rs"},"NZD":{"displayName":"d\xc3\xb3lar neozeland\xc3\xa9s","displayName-count-one":"d\xc3\xb3lar neozeland\xc3\xa9s","displayName-count-other":"d\xc3\xb3lares neozelandeses","symbol":"NZD","symbol-alt-narrow":"$"},"OMR":{"displayName":"rial oman\xc3\xad","displayName-count-one":"rial oman\xc3\xad","displayName-count-other":"riales oman\xc3\xades","symbol":"OMR"},"PAB":{"displayName":"balboa paname\xc3\xb1o","displayName-count-one":"balboa paname\xc3\xb1o","displayName-count-other":"balboas paname\xc3\xb1os","symbol":"PAB"},"PEI":{"displayName":"inti peruano","displayName-count-one":"inti peruano","displayName-count-other":"intis peruanos","symbol":"PEI"},"PEN":{"displayName":"sol peruano","displayName-count-one":"sol peruano","displayName-count-other":"soles peruanos","symbol":"PEN"},"PES":{"displayName":"sol peruano (1863\xe2\x80\x931965)","displayName-count-one":"sol peruano (1863\xe2\x80\x931965)","displayName-count-other":"soles peruanos (1863\xe2\x80\x931965)","symbol":"PES"},"PGK":{"displayName":"kina","displayName-count-one":"kina","displayName-count-other":"kinas","symbol":"PGK"},"PHP":{"displayName":"peso filipino","displayName-count-one":"peso filipino","displayName-count-other":"pesos filipinos","symbol":"PHP","symbol-alt-narrow":"\xe2\x82\xb1"},"PKR":{"displayName":"rupia pakistan\xc3\xad","displayName-count-one":"rupia pakistan\xc3\xad","displayName-count-other":"rupias pakistan\xc3\xades","symbol":"PKR","symbol-alt-narrow":"Rs"},"PLN":{"displayName":"esloti","displayName-count-one":"esloti","displayName-count-other":"eslotis","symbol":"PLN","symbol-alt-narrow":"z\xc5\x82"},"PLZ":{"displayName":"zloty polaco (1950\xe2\x80\x931995)","displayName-count-one":"zloty polaco (PLZ)","displayName-count-other":"zlotys polacos (PLZ)","symbol":"PLZ"},"PTE":{"displayName":"escudo portugu\xc3\xa9s","displayName-count-one":"escudo portugu\xc3\xa9s","displayName-count-other":"escudos portugueses","symbol":"PTE"},"PYG":{"displayName":"guaran\xc3\xad paraguayo","displayName-count-one":"guaran\xc3\xad paraguayo","displayName-count-other":"guaran\xc3\xades paraguayos","symbol":"PYG","symbol-alt-narrow":"\xe2\x82\xb2"},"QAR":{"displayName":"rial catar\xc3\xad","displayName-count-one":"rial catar\xc3\xad","displayName-count-other":"riales catar\xc3\xades","symbol":"QAR"},"RHD":{"displayName":"d\xc3\xb3lar rodesiano","symbol":"RHD"},"ROL":{"displayName":"antiguo leu rumano","displayName-count-one":"antiguo leu rumano","displayName-count-other":"antiguos lei rumanos","symbol":"ROL"},"RON":{"displayName":"leu rumano","displayName-count-one":"leu rumano","displayName-count-other":"lei rumanos","symbol":"RON","symbol-alt-narrow":"L"},"RSD":{"displayName":"dinar serbio","displayName-count-one":"dinar serbio","displayName-count-other":"dinares serbios","symbol":"RSD"},"RUB":{"displayName":"rublo ruso","displayName-count-one":"rublo ruso","displayName-count-other":"rublos rusos","symbol":"RUB","symbol-alt-narrow":"\xe2\x82\xbd"},"RUR":{"displayName":"rublo ruso (1991\xe2\x80\x931998)","displayName-count-one":"rublo ruso (RUR)","displayName-count-other":"rublos rusos (RUR)","symbol":"RUR","symbol-alt-narrow":"\xd1\x80."},"RWF":{"displayName":"franco ruand\xc3\xa9s","displayName-count-one":"franco ruand\xc3\xa9s","displayName-count-other":"francos ruandeses","symbol":"RWF","symbol-alt-narrow":"RF"},"SAR":{"displayName":"rial saud\xc3\xad","displayName-count-one":"rial saud\xc3\xad","displayName-count-other":"riales saud\xc3\xades","symbol":"SAR"},"SBD":{"displayName":"d\xc3\xb3lar salomonense","displayName-count-one":"d\xc3\xb3lar salomonense","displayName-count-other":"d\xc3\xb3lares salomonenses","symbol":"SBD","symbol-alt-narrow":"$"},"SCR":{"displayName":"rupia seychellense","displayName-count-one":"rupia seychellense","displayName-count-other":"rupias seychellenses","symbol":"SCR"},"SDD":{"displayName":"dinar sudan\xc3\xa9s","displayName-count-one":"dinar sudan\xc3\xa9s","displayName-count-other":"dinares sudaneses","symbol":"SDD"},"SDG":{"displayName":"libra sudanesa","displayName-count-one":"libra sudanesa","displayName-count-other":"libras sudanesas","symbol":"SDG"},"SDP":{"displayName":"libra sudanesa antigua","displayName-count-one":"libra sudanesa antigua","displayName-count-other":"libras sudanesas antiguas","symbol":"SDP"},"SEK":{"displayName":"corona sueca","displayName-count-one":"corona sueca","displayName-count-other":"coronas suecas","symbol":"SEK","symbol-alt-narrow":"kr"},"SGD":{"displayName":"d\xc3\xb3lar singapurense","displayName-count-one":"d\xc3\xb3lar singapurense","displayName-count-other":"d\xc3\xb3lares singapurenses","symbol":"SGD","symbol-alt-narrow":"$"},"SHP":{"displayName":"libra de Santa Elena","displayName-count-one":"libra de Santa Elena","displayName-count-other":"libras de Santa Elena","symbol":"SHP","symbol-alt-narrow":"\xc2\xa3"},"SIT":{"displayName":"t\xc3\xb3lar esloveno","displayName-count-one":"t\xc3\xb3lar esloveno","displayName-count-other":"t\xc3\xb3lares eslovenos","symbol":"SIT"},"SKK":{"displayName":"corona eslovaca","displayName-count-one":"corona eslovaca","displayName-count-other":"coronas eslovacas","symbol":"SKK"},"SLL":{"displayName":"leona","displayName-count-one":"leona","displayName-count-other":"leonas","symbol":"SLL"},"SOS":{"displayName":"chel\xc3\xadn somal\xc3\xad","displayName-count-one":"chel\xc3\xadn somal\xc3\xad","displayName-count-other":"chelines somal\xc3\xades","symbol":"SOS"},"SRD":{"displayName":"d\xc3\xb3lar surinam\xc3\xa9s","displayName-count-one":"d\xc3\xb3lar surinam\xc3\xa9s","displayName-count-other":"d\xc3\xb3lares surinameses","symbol":"SRD","symbol-alt-narrow":"$"},"SRG":{"displayName":"flor\xc3\xadn surinam\xc3\xa9s","symbol":"SRG"},"SSP":{"displayName":"libra sursudanesa","displayName-count-one":"libra sursudanesa","displayName-count-other":"libras sursudanesas","symbol":"SSP","symbol-alt-narrow":"\xc2\xa3"},"STD":{"displayName":"dobra (1977\xe2\x80\x932017)","displayName-count-one":"dobra (1977\xe2\x80\x932017)","displayName-count-other":"dobras (1977\xe2\x80\x932017)","symbol":"STD"},"STN":{"displayName":"dobra","displayName-count-one":"dobra","displayName-count-other":"dobras","symbol":"STN","symbol-alt-narrow":"Db"},"SUR":{"displayName":"rublo sovi\xc3\xa9tico","displayName-count-one":"rublo sovi\xc3\xa9tico","displayName-count-other":"rublos sovi\xc3\xa9ticos","symbol":"SUR"},"SVC":{"displayName":"col\xc3\xb3n salvadore\xc3\xb1o","displayName-count-one":"col\xc3\xb3n salvadore\xc3\xb1o","displayName-count-other":"colones salvadore\xc3\xb1os","symbol":"SVC"},"SYP":{"displayName":"libra siria","displayName-count-one":"libra siria","displayName-count-other":"libras sirias","symbol":"SYP","symbol-alt-narrow":"\xc2\xa3"},"SZL":{"displayName":"lilangeni","displayName-count-one":"lilangeni","displayName-count-other":"lilangenis","symbol":"SZL"},"THB":{"displayName":"bat","displayName-count-one":"bat","displayName-count-other":"bats","symbol":"\xe0\xb8\xbf","symbol-alt-narrow":"\xe0\xb8\xbf"},"TJR":{"displayName":"rublo tayiko","symbol":"TJR"},"TJS":{"displayName":"somoni tayiko","displayName-count-one":"somoni tayiko","displayName-count-other":"somonis tayikos","symbol":"TJS"},"TMM":{"displayName":"manat turcomano (1993\xe2\x80\x932009)","displayName-count-one":"manat turcomano (1993\xe2\x80\x932009)","displayName-count-other":"manats turcomanos (1993\xe2\x80\x932009)","symbol":"TMM"},"TMT":{"displayName":"manat turcomano","displayName-count-one":"manat turcomano","displayName-count-other":"manat turcomanos","symbol":"TMT"},"TND":{"displayName":"dinar tunecino","displayName-count-one":"dinar tunecino","displayName-count-other":"dinares tunecinos","symbol":"TND"},"TOP":{"displayName":"paanga","displayName-count-one":"paanga","displayName-count-other":"paangas","symbol":"TOP","symbol-alt-narrow":"T$"},"TPE":{"displayName":"escudo timorense","symbol":"TPE"},"TRL":{"displayName":"lira turca (1922\xe2\x80\x932005)","displayName-count-one":"lira turca (1922\xe2\x80\x932005)","displayName-count-other":"liras turcas (1922\xe2\x80\x932005)","symbol":"TRL"},"TRY":{"displayName":"lira turca","displayName-count-one":"lira turca","displayName-count-other":"liras turcas","symbol":"TRY","symbol-alt-narrow":"\xe2\x82\xba","symbol-alt-variant":"TL"},"TTD":{"displayName":"d\xc3\xb3lar de Trinidad y Tobago","displayName-count-one":"d\xc3\xb3lar de Trinidad y Tobago","displayName-count-other":"d\xc3\xb3lares de Trinidad y Tobago","symbol":"TTD","symbol-alt-narrow":"$"},"TWD":{"displayName":"nuevo d\xc3\xb3lar taiwan\xc3\xa9s","displayName-count-one":"nuevo d\xc3\xb3lar taiwan\xc3\xa9s","displayName-count-other":"nuevos d\xc3\xb3lares taiwaneses","symbol":"TWD","symbol-alt-narrow":"NT$"},"TZS":{"displayName":"chel\xc3\xadn tanzano","displayName-count-one":"chel\xc3\xadn tanzano","displayName-count-other":"chelines tanzanos","symbol":"TZS"},"UAH":{"displayName":"grivna","displayName-count-one":"grivna","displayName-count-other":"grivnas","symbol":"UAH","symbol-alt-narrow":"\xe2\x82\xb4"},"UAK":{"displayName":"karbovanet ucraniano","displayName-count-one":"karbovanet ucraniano","displayName-count-other":"karbovanets ucranianos","symbol":"UAK"},"UGS":{"displayName":"chel\xc3\xadn ugand\xc3\xa9s (1966\xe2\x80\x931987)","symbol":"UGS"},"UGX":{"displayName":"chel\xc3\xadn ugand\xc3\xa9s","displayName-count-one":"chel\xc3\xadn ugand\xc3\xa9s","displayName-count-other":"chelines ugandeses","symbol":"UGX"},"USD":{"displayName":"d\xc3\xb3lar estadounidense","displayName-count-one":"d\xc3\xb3lar estadounidense","displayName-count-other":"d\xc3\xb3lares estadounidenses","symbol":"US$","symbol-alt-narrow":"$"},"USN":{"displayName":"d\xc3\xb3lar estadounidense (d\xc3\xada siguiente)","displayName-count-one":"d\xc3\xb3lar estadounidense (d\xc3\xada siguiente)","displayName-count-other":"d\xc3\xb3lares estadounidenses (d\xc3\xada siguiente)","symbol":"USN"},"USS":{"displayName":"d\xc3\xb3lar estadounidense (mismo d\xc3\xada)","displayName-count-one":"d\xc3\xb3lar estadounidense (mismo d\xc3\xada)","displayName-count-other":"d\xc3\xb3lares estadounidenses (mismo d\xc3\xada)","symbol":"USS"},"UYI":{"displayName":"peso uruguayo en unidades indexadas","displayName-count-one":"peso uruguayo en unidades indexadas","displayName-count-other":"pesos uruguayos en unidades indexadas","symbol":"UYI"},"UYP":{"displayName":"peso uruguayo (1975\xe2\x80\x931993)","displayName-count-one":"peso uruguayo (UYP)","displayName-count-other":"pesos uruguayos (UYP)","symbol":"UYP"},"UYU":{"displayName":"peso uruguayo","displayName-count-one":"peso uruguayo","displayName-count-other":"pesos uruguayos","symbol":"UYU","symbol-alt-narrow":"$"},"UYW":{"displayName":"unidad previsional uruguayo","displayName-count-one":"unidad previsional uruguayo","displayName-count-other":"unidades previsionales uruguayos","symbol":"UYW"},"UZS":{"displayName":"sum","displayName-count-one":"sum","displayName-count-other":"sums","symbol":"UZS"},"VEB":{"displayName":"bol\xc3\xadvar venezolano (1871\xe2\x80\x932008)","displayName-count-one":"bol\xc3\xadvar venezolano (1871\xe2\x80\x932008)","displayName-count-other":"bol\xc3\xadvares venezolanos (1871\xe2\x80\x932008)","symbol":"VEB"},"VEF":{"displayName":"bol\xc3\xadvar venezolano (2008\xe2\x80\x932018)","displayName-count-one":"bol\xc3\xadvar venezolano (2008\xe2\x80\x932018)","displayName-count-other":"bol\xc3\xadvares venezolanos (2008\xe2\x80\x932018)","symbol":"VEF","symbol-alt-narrow":"Bs"},"VES":{"displayName":"bol\xc3\xadvar venezolano","displayName-count-one":"bol\xc3\xadvar venezolano","displayName-count-other":"bol\xc3\xadvares venezolanos","symbol":"VES"},"VND":{"displayName":"dong","displayName-count-one":"dong","displayName-count-other":"dongs","symbol":"\xe2\x82\xab","symbol-alt-narrow":"\xe2\x82\xab"},"VNN":{"displayName":"VNN","symbol":"VNN"},"VUV":{"displayName":"vatu","displayName-count-one":"vatu","displayName-count-other":"vatus","symbol":"VUV"},"WST":{"displayName":"tala","displayName-count-one":"tala","displayName-count-other":"talas","symbol":"WST"},"XAF":{"displayName":"franco CFA de \xc3\x81frica Central","displayName-count-one":"franco CFA de \xc3\x81frica Central","displayName-count-other":"francos CFA de \xc3\x81frica Central","symbol":"XAF"},"XAG":{"displayName":"plata","displayName-count-one":"plata","displayName-count-other":"plata","symbol":"XAG"},"XAU":{"displayName":"oro","displayName-count-one":"oro","displayName-count-other":"oro","symbol":"XAU"},"XBA":{"displayName":"unidad compuesta europea","displayName-count-one":"unidad compuesta europea","displayName-count-other":"unidades compuestas europeas","symbol":"XBA"},"XBB":{"displayName":"unidad monetaria europea","displayName-count-one":"unidad monetaria europea","displayName-count-other":"unidades monetarias europeas","symbol":"XBB"},"XBC":{"displayName":"unidad de cuenta europea (XBC)","displayName-count-one":"unidad de cuenta europea (XBC)","displayName-count-other":"unidades de cuenta europeas (XBC)","symbol":"XBC"},"XBD":{"displayName":"unidad de cuenta europea (XBD)","displayName-count-one":"unidad de cuenta europea (XBD)","displayName-count-other":"unidades de cuenta europeas (XBD)","symbol":"XBD"},"XCD":{"displayName":"d\xc3\xb3lar del Caribe Oriental","displayName-count-one":"d\xc3\xb3lar del Caribe Oriental","displayName-count-other":"d\xc3\xb3lares del Caribe Oriental","symbol":"XCD","symbol-alt-narrow":"$"},"XDR":{"displayName":"derechos especiales de giro","symbol":"XDR"},"XEU":{"displayName":"unidad de moneda europea","displayName-count-one":"unidad de moneda europea","displayName-count-other":"unidades de moneda europeas","symbol":"XEU"},"XFO":{"displayName":"franco oro franc\xc3\xa9s","displayName-count-one":"franco oro franc\xc3\xa9s","displayName-count-other":"francos oro franceses","symbol":"XFO"},"XFU":{"displayName":"franco UIC franc\xc3\xa9s","displayName-count-one":"franco UIC franc\xc3\xa9s","displayName-count-other":"francos UIC franceses","symbol":"XFU"},"XOF":{"displayName":"franco CFA de \xc3\x81frica Occidental","displayName-count-one":"franco CFA de \xc3\x81frica Occidental","displayName-count-other":"francos CFA de \xc3\x81frica Occidental","symbol":"XOF"},"XPD":{"displayName":"paladio","displayName-count-one":"paladio","displayName-count-other":"paladio","symbol":"XPD"},"XPF":{"displayName":"franco CFP","displayName-count-one":"franco CFP","displayName-count-other":"francos CFP","symbol":"CFPF"},"XPT":{"displayName":"platino","displayName-count-one":"platino","displayName-count-other":"platino","symbol":"XPT"},"XRE":{"displayName":"fondos RINET","symbol":"XRE"},"XSU":{"displayName":"XSU","symbol":"XSU"},"XTS":{"displayName":"c\xc3\xb3digo reservado para pruebas","symbol":"XTS"},"XUA":{"displayName":"XUA","symbol":"XUA"},"XXX":{"displayName":"moneda desconocida","displayName-count-one":"(moneda desconocida)","displayName-count-other":"(moneda desconocida)","symbol":"\xc2\xa4"},"YDD":{"displayName":"dinar yemen\xc3\xad","symbol":"YDD"},"YER":{"displayName":"rial yemen\xc3\xad","displayName-count-one":"rial yemen\xc3\xad","displayName-count-other":"riales yemen\xc3\xades","symbol":"YER"},"YUD":{"displayName":"dinar fuerte yugoslavo","symbol":"YUD"},"YUM":{"displayName":"super dinar yugoslavo","symbol":"YUM"},"YUN":{"displayName":"dinar convertible yugoslavo","displayName-count-one":"dinar convertible yugoslavo","displayName-count-other":"dinares convertibles yugoslavos","symbol":"YUN"},"YUR":{"displayName":"YUR","symbol":"YUR"},"ZAL":{"displayName":"rand sudafricano (financiero)","symbol":"ZAL"},"ZAR":{"displayName":"rand","displayName-count-one":"rand","displayName-count-other":"rands","symbol":"ZAR","symbol-alt-narrow":"R"},"ZMK":{"displayName":"kwacha zambiano (1968\xe2\x80\x932012)","displayName-count-one":"kwacha zambiano (1968\xe2\x80\x932012)","displayName-count-other":"kwachas zambianos (1968\xe2\x80\x932012)","symbol":"ZMK"},"ZMW":{"displayName":"kwacha zambiano","displayName-count-one":"kwacha zambiano","displayName-count-other":"kwachas zambianos","symbol":"ZMW","symbol-alt-narrow":"ZK"},"ZRN":{"displayName":"nuevo zaire zaire\xc3\xb1o","symbol":"ZRN"},"ZRZ":{"displayName":"zaire zaire\xc3\xb1o","symbol":"ZRZ"},"ZWD":{"displayName":"d\xc3\xb3lar de Zimbabue","symbol":"ZWD"},"ZWL":{"displayName":"d\xc3\xb3lar zimbabuense","symbol":"ZWL"},"ZWR":{"displayName":"ZWR","symbol":"ZWR"}}}}}}, {"main":{"es":{"identity":{"version":{"_number":"$Revision: 14982 $","_cldrVersion":"35.1"},"language":"es"},"numbers":{"defaultNumberingSystem":"latn","otherNumberingSystems":{"native":"latn"},"minimumGroupingDigits":"2","symbols-numberSystem-latn":{"decimal":",","group":".","list":";","percentSign":"%","plusSign":"+","minusSign":"-","exponential":"E","superscriptingExponent":"\xc3\x97","perMille":"\xe2\x80\xb0","infinity":"\xe2\x88\x9e","nan":"NaN","timeSeparator":":"},"decimalFormats-numberSystem-latn":{"standard":"#,##0.###","long":{"decimalFormat":{"1000-count-one":"0 mil","1000-count-other":"0 mil","10000-count-one":"00 mil","10000-count-other":"00 mil","100000-count-one":"000 mil","100000-count-other":"000 mil","1000000-count-one":"0 mill\xc3\xb3n","1000000-count-other":"0 millones","10000000-count-one":"00 millones","10000000-count-other":"00 millones","100000000-count-one":"000 millones","100000000-count-other":"000 millones","1000000000-count-one":"0 mil millones","1000000000-count-other":"0 mil millones","10000000000-count-one":"00 mil millones","10000000000-count-other":"00 mil millones","100000000000-count-one":"000 mil millones","100000000000-count-other":"000 mil millones","1000000000000-count-one":"0 bill\xc3\xb3n","1000000000000-count-other":"0 billones","10000000000000-count-one":"00 billones","10000000000000-count-other":"00 billones","100000000000000-count-one":"000 billones","100000000000000-count-other":"000 billones"}},"short":{"decimalFormat":{"1000-count-one":"0\xc2\xa0mil","1000-count-other":"0\xc2\xa0mil","10000-count-one":"00\xc2\xa0mil","10000-count-other":"00\xc2\xa0mil","100000-count-one":"000\xc2\xa0mil","100000-count-other":"000\xc2\xa0mil","1000000-count-one":"0\xc2\xa0M","1000000-count-other":"0\xc2\xa0M","10000000-count-one":"00\xc2\xa0M","10000000-count-other":"00\xc2\xa0M","100000000-count-one":"000\xc2\xa0M","100000000-count-other":"000\xc2\xa0M","1000000000-count-one":"0000\xc2\xa0M","1000000000-count-other":"0000\xc2\xa0M","10000000000-count-one":"00\xc2\xa0mil\xc2\xa0M","10000000000-count-other":"00\xc2\xa0mil\xc2\xa0M","100000000000-count-one":"000\xc2\xa0mil\xc2\xa0M","100000000000-count-other":"000\xc2\xa0mil\xc2\xa0M","1000000000000-count-one":"0\xc2\xa0B","1000000000000-count-other":"0\xc2\xa0B","10000000000000-count-one":"00\xc2\xa0B","10000000000000-count-other":"00\xc2\xa0B","100000000000000-count-one":"000\xc2\xa0B","100000000000000-count-other":"000\xc2\xa0B"}}},"scientificFormats-numberSystem-latn":{"standard":"#E0"},"percentFormats-numberSystem-latn":{"standard":"#,##0\xc2\xa0%"},"currencyFormats-numberSystem-latn":{"currencySpacing":{"beforeCurrency":{"currencyMatch":"[:^S:]","surroundingMatch":"[:digit:]","insertBetween":"\xc2\xa0"},"afterCurrency":{"currencyMatch":"[:^S:]","surroundingMatch":"[:digit:]","insertBetween":"\xc2\xa0"}},"standard":"#,##0.00\xc2\xa0\xc2\xa4","accounting":"#,##0.00\xc2\xa0\xc2\xa4","short":{"standard":{"1000-count-one":"0\xc2\xa0mil\xc2\xa0\xc2\xa4","1000-count-other":"0\xc2\xa0mil\xc2\xa0\xc2\xa4","10000-count-one":"00\xc2\xa0mil\xc2\xa0\xc2\xa4","10000-count-other":"00\xc2\xa0mil\xc2\xa0\xc2\xa4","100000-count-one":"000\xc2\xa0mil\xc2\xa0\xc2\xa4","100000-count-other":"000\xc2\xa0mil\xc2\xa0\xc2\xa4","1000000-count-one":"0\xc2\xa0M\xc2\xa4","1000000-count-other":"0\xc2\xa0M\xc2\xa4","10000000-count-one":"00\xc2\xa0M\xc2\xa4","10000000-count-other":"00\xc2\xa0M\xc2\xa4","100000000-count-one":"000\xc2\xa0M\xc2\xa4","100000000-count-other":"000\xc2\xa0M\xc2\xa4","1000000000-count-one":"0000\xc2\xa0M\xc2\xa4","1000000000-count-other":"0000\xc2\xa0M\xc2\xa4","10000000000-count-one":"00\xc2\xa0mil\xc2\xa0M\xc2\xa4","10000000000-count-other":"00\xc2\xa0mil\xc2\xa0M\xc2\xa4","100000000000-count-one":"000\xc2\xa0mil\xc2\xa0M\xc2\xa4","100000000000-count-other":"000\xc2\xa0mil\xc2\xa0M\xc2\xa4","1000000000000-count-one":"0\xc2\xa0B\xc2\xa4","1000000000000-count-other":"0\xc2\xa0B\xc2\xa4","10000000000000-count-one":"00\xc2\xa0B\xc2\xa4","10000000000000-count-other":"00\xc2\xa0B\xc2\xa4","100000000000000-count-one":"000\xc2\xa0B\xc2\xa4","100000000000000-count-other":"000\xc2\xa0B\xc2\xa4"}},"unitPattern-count-one":"{0} {1}","unitPattern-count-other":"{0} {1}"},"miscPatterns-numberSystem-latn":{"approximately":"~{0}","atLeast":"M\xc3\xa1s de {0}","atMost":"\xe2\x89\xa4{0}","range":"{0}-{1}"},"minimalPairs":{"pluralMinimalPairs-count-one":"{0}\xc2\xa0d\xc3\xada","pluralMinimalPairs-count-other":"{0}\xc2\xa0d\xc3\xadas","other":"Toma\xc2\xa0la\xc2\xa0{0}.\xc2\xaa\xc2\xa0a\xc2\xa0la\xc2\xa0derecha."}}}}}, {"supplemental":{"version":{"_number":"$Revision: 14982 $","_unicodeVersion":"12.1.0","_cldrVersion":"35.1"},"timeData":{"AX":{"_allowed":"H","_preferred":"H"},"BQ":{"_allowed":"H","_preferred":"H"},"CP":{"_allowed":"H","_preferred":"H"},"CZ":{"_allowed":"H","_preferred":"H"},"DK":{"_allowed":"H","_preferred":"H"},"FI":{"_allowed":"H","_preferred":"H"},"ID":{"_allowed":"H","_preferred":"H"},"IS":{"_allowed":"H","_preferred":"H"},"ML":{"_allowed":"H","_preferred":"H"},"NE":{"_allowed":"H","_preferred":"H"},"RU":{"_allowed":"H","_preferred":"H"},"SE":{"_allowed":"H","_preferred":"H"},"SJ":{"_allowed":"H","_preferred":"H"},"SK":{"_allowed":"H","_preferred":"H"},"AS":{"_allowed":"h H","_preferred":"h"},"BT":{"_allowed":"h H","_preferred":"h"},"DJ":{"_allowed":"h H","_preferred":"h"},"ER":{"_allowed":"h H","_preferred":"h"},"GH":{"_allowed":"h H","_preferred":"h"},"IN":{"_allowed":"h H","_preferred":"h"},"LS":{"_allowed":"h H","_preferred":"h"},"PG":{"_allowed":"h H","_preferred":"h"},"PW":{"_allowed":"h H","_preferred":"h"},"SO":{"_allowed":"h H","_preferred":"h"},"TO":{"_allowed":"h H","_preferred":"h"},"VU":{"_allowed":"h H","_preferred":"h"},"WS":{"_allowed":"h H","_preferred":"h"},"001":{"_allowed":"H h","_preferred":"H"},"AL":{"_allowed":"h H hB","_preferred":"h"},"TD":{"_allowed":"h H hB","_preferred":"h"},"ca_ES":{"_allowed":"H h hB","_preferred":"H"},"CF":{"_allowed":"H h hB","_preferred":"H"},"CM":{"_allowed":"H h hB","_preferred":"H"},"fr_CA":{"_allowed":"H h hB","_preferred":"H"},"gl_ES":{"_allowed":"H h hB","_preferred":"H"},"it_CH":{"_allowed":"H h hB","_preferred":"H"},"it_IT":{"_allowed":"H h hB","_preferred":"H"},"LU":{"_allowed":"H h hB","_preferred":"H"},"NP":{"_allowed":"H h hB","_preferred":"H"},"PF":{"_allowed":"H h hB","_preferred":"H"},"SC":{"_allowed":"H h hB","_preferred":"H"},"SM":{"_allowed":"H h hB","_preferred":"H"},"SN":{"_allowed":"H h hB","_preferred":"H"},"TF":{"_allowed":"H h hB","_preferred":"H"},"VA":{"_allowed":"H h hB","_preferred":"H"},"CY":{"_allowed":"h H hb hB","_preferred":"h"},"GR":{"_allowed":"h H hb hB","_preferred":"h"},"CO":{"_allowed":"h H hB hb","_preferred":"h"},"DO":{"_allowed":"h H hB hb","_preferred":"h"},"KP":{"_allowed":"h H hB hb","_preferred":"h"},"KR":{"_allowed":"h H hB hb","_preferred":"h"},"NA":{"_allowed":"h H hB hb","_preferred":"h"},"PA":{"_allowed":"h H hB hb","_preferred":"h"},"PR":{"_allowed":"h H hB hb","_preferred":"h"},"VE":{"_allowed":"h H hB hb","_preferred":"h"},"AC":{"_allowed":"H h hb hB","_preferred":"H"},"AI":{"_allowed":"H h hb hB","_preferred":"H"},"BW":{"_allowed":"H h hb hB","_preferred":"H"},"BZ":{"_allowed":"H h hb hB","_preferred":"H"},"CC":{"_allowed":"H h hb hB","_preferred":"H"},"CK":{"_allowed":"H h hb hB","_preferred":"H"},"CX":{"_allowed":"H h hb hB","_preferred":"H"},"DG":{"_allowed":"H h hb hB","_preferred":"H"},"FK":{"_allowed":"H h hb hB","_preferred":"H"},"GB":{"_allowed":"H h hb hB","_preferred":"H"},"GG":{"_allowed":"H h hb hB","_preferred":"H"},"GI":{"_allowed":"H h hb hB","_preferred":"H"},"IE":{"_allowed":"H h hb hB","_preferred":"H"},"IM":{"_allowed":"H h hb hB","_preferred":"H"},"IO":{"_allowed":"H h hb hB","_preferred":"H"},"JE":{"_allowed":"H h hb hB","_preferred":"H"},"LT":{"_allowed":"H h hb hB","_preferred":"H"},"MK":{"_allowed":"H h hb hB","_preferred":"H"},"MN":{"_allowed":"H h hb hB","_preferred":"H"},"MS":{"_allowed":"H h hb hB","_preferred":"H"},"NF":{"_allowed":"H h hb hB","_preferred":"H"},"NG":{"_allowed":"H h hb hB","_preferred":"H"},"NR":{"_allowed":"H h hb hB","_preferred":"H"},"NU":{"_allowed":"H h hb hB","_preferred":"H"},"PN":{"_allowed":"H h hb hB","_preferred":"H"},"SH":{"_allowed":"H h hb hB","_preferred":"H"},"SX":{"_allowed":"H h hb hB","_preferred":"H"},"TA":{"_allowed":"H h hb hB","_preferred":"H"},"ZA":{"_allowed":"H h hb hB","_preferred":"H"},"af_ZA":{"_allowed":"H h hB hb","_preferred":"H"},"AR":{"_allowed":"H h hB hb","_preferred":"H"},"CL":{"_allowed":"H h hB hb","_preferred":"H"},"CR":{"_allowed":"H h hB hb","_preferred":"H"},"CU":{"_allowed":"H h hB hb","_preferred":"H"},"EA":{"_allowed":"H h hB hb","_preferred":"H"},"es_BO":{"_allowed":"H h hB hb","_preferred":"H"},"es_BR":{"_allowed":"H h hB hb","_preferred":"H"},"es_EC":{"_allowed":"H h hB hb","_preferred":"H"},"es_ES":{"_allowed":"H h hB hb","_preferred":"H"},"es_GQ":{"_allowed":"H h hB hb","_preferred":"H"},"es_PE":{"_allowed":"H h hB hb","_preferred":"H"},"GT":{"_allowed":"H h hB hb","_preferred":"H"},"HN":{"_allowed":"H h hB hb","_preferred":"H"},"IC":{"_allowed":"H h hB hb","_preferred":"H"},"KG":{"_allowed":"H h hB hb","_preferred":"H"},"KM":{"_allowed":"H h hB hb","_preferred":"H"},"LK":{"_allowed":"H h hB hb","_preferred":"H"},"MA":{"_allowed":"H h hB hb","_preferred":"H"},"MX":{"_allowed":"H h hB hb","_preferred":"H"},"NI":{"_allowed":"H h hB hb","_preferred":"H"},"PY":{"_allowed":"H h hB hb","_preferred":"H"},"SV":{"_allowed":"H h hB hb","_preferred":"H"},"UY":{"_allowed":"H h hB hb","_preferred":"H"},"JP":{"_allowed":"H h K","_preferred":"H"},"AD":{"_allowed":"H hB","_preferred":"H"},"AM":{"_allowed":"H hB","_preferred":"H"},"AO":{"_allowed":"H hB","_preferred":"H"},"AT":{"_allowed":"H hB","_preferred":"H"},"AW":{"_allowed":"H hB","_preferred":"H"},"BE":{"_allowed":"H hB","_preferred":"H"},"BF":{"_allowed":"H hB","_preferred":"H"},"BJ":{"_allowed":"H hB","_preferred":"H"},"BL":{"_allowed":"H hB","_preferred":"H"},"BR":{"_allowed":"H hB","_preferred":"H"},"CG":{"_allowed":"H hB","_preferred":"H"},"CI":{"_allowed":"H hB","_preferred":"H"},"CV":{"_allowed":"H hB","_preferred":"H"},"DE":{"_allowed":"H hB","_preferred":"H"},"EE":{"_allowed":"H hB","_preferred":"H"},"FR":{"_allowed":"H hB","_preferred":"H"},"GA":{"_allowed":"H hB","_preferred":"H"},"GF":{"_allowed":"H hB","_preferred":"H"},"GN":{"_allowed":"H hB","_preferred":"H"},"GP":{"_allowed":"H hB","_preferred":"H"},"GW":{"_allowed":"H hB","_preferred":"H"},"HR":{"_allowed":"H hB","_preferred":"H"},"IL":{"_allowed":"H hB","_preferred":"H"},"IT":{"_allowed":"H hB","_preferred":"H"},"KZ":{"_allowed":"H hB","_preferred":"H"},"MC":{"_allowed":"H hB","_preferred":"H"},"MD":{"_allowed":"H hB","_preferred":"H"},"MF":{"_allowed":"H hB","_preferred":"H"},"MQ":{"_allowed":"H hB","_preferred":"H"},"MZ":{"_allowed":"H hB","_preferred":"H"},"NC":{"_allowed":"H hB","_preferred":"H"},"NL":{"_allowed":"H hB","_preferred":"H"},"PM":{"_allowed":"H hB","_preferred":"H"},"PT":{"_allowed":"H hB","_preferred":"H"},"RE":{"_allowed":"H hB","_preferred":"H"},"RO":{"_allowed":"H hB","_preferred":"H"},"SI":{"_allowed":"H hB","_preferred":"H"},"SR":{"_allowed":"H hB","_preferred":"H"},"ST":{"_allowed":"H hB","_preferred":"H"},"TG":{"_allowed":"H hB","_preferred":"H"},"TR":{"_allowed":"H hB","_preferred":"H"},"WF":{"_allowed":"H hB","_preferred":"H"},"YT":{"_allowed":"H hB","_preferred":"H"},"BD":{"_allowed":"h hB H","_preferred":"h"},"PK":{"_allowed":"h hB H","_preferred":"h"},"AZ":{"_allowed":"H hB h","_preferred":"H"},"BA":{"_allowed":"H hB h","_preferred":"H"},"BG":{"_allowed":"H hB h","_preferred":"H"},"CH":{"_allowed":"H hB h","_preferred":"H"},"GE":{"_allowed":"H hB h","_preferred":"H"},"LI":{"_allowed":"H hB h","_preferred":"H"},"ME":{"_allowed":"H hB h","_preferred":"H"},"RS":{"_allowed":"H hB h","_preferred":"H"},"UA":{"_allowed":"H hB h","_preferred":"H"},"UZ":{"_allowed":"H hB h","_preferred":"H"},"XK":{"_allowed":"H hB h","_preferred":"H"},"AG":{"_allowed":"h hb H hB","_preferred":"h"},"AU":{"_allowed":"h hb H hB","_preferred":"h"},"BB":{"_allowed":"h hb H hB","_preferred":"h"},"BM":{"_allowed":"h hb H hB","_preferred":"h"},"BS":{"_allowed":"h hb H hB","_preferred":"h"},"CA":{"_allowed":"h hb H hB","_preferred":"h"},"DM":{"_allowed":"h hb H hB","_preferred":"h"},"en_001":{"_allowed":"h hb H hB","_preferred":"h"},"FJ":{"_allowed":"h hb H hB","_preferred":"h"},"FM":{"_allowed":"h hb H hB","_preferred":"h"},"GD":{"_allowed":"h hb H hB","_preferred":"h"},"GM":{"_allowed":"h hb H hB","_preferred":"h"},"GU":{"_allowed":"h hb H hB","_preferred":"h"},"GY":{"_allowed":"h hb H hB","_preferred":"h"},"JM":{"_allowed":"h hb H hB","_preferred":"h"},"KI":{"_allowed":"h hb H hB","_preferred":"h"},"KN":{"_allowed":"h hb H hB","_preferred":"h"},"KY":{"_allowed":"h hb H hB","_preferred":"h"},"LC":{"_allowed":"h hb H hB","_preferred":"h"},"LR":{"_allowed":"h hb H hB","_preferred":"h"},"MH":{"_allowed":"h hb H hB","_preferred":"h"},"MP":{"_allowed":"h hb H hB","_preferred":"h"},"MW":{"_allowed":"h hb H hB","_preferred":"h"},"NZ":{"_allowed":"h hb H hB","_preferred":"h"},"SB":{"_allowed":"h hb H hB","_preferred":"h"},"SG":{"_allowed":"h hb H hB","_preferred":"h"},"SL":{"_allowed":"h hb H hB","_preferred":"h"},"SS":{"_allowed":"h hb H hB","_preferred":"h"},"SZ":{"_allowed":"h hb H hB","_preferred":"h"},"TC":{"_allowed":"h hb H hB","_preferred":"h"},"TT":{"_allowed":"h hb H hB","_preferred":"h"},"UM":{"_allowed":"h hb H hB","_preferred":"h"},"US":{"_allowed":"h hb H hB","_preferred":"h"},"VC":{"_allowed":"h hb H hB","_preferred":"h"},"VG":{"_allowed":"h hb H hB","_preferred":"h"},"VI":{"_allowed":"h hb H hB","_preferred":"h"},"ZM":{"_allowed":"h hb H hB","_preferred":"h"},"BO":{"_allowed":"H hB h hb","_preferred":"H"},"EC":{"_allowed":"H hB h hb","_preferred":"H"},"ES":{"_allowed":"H hB h hb","_preferred":"H"},"GQ":{"_allowed":"H hB h hb","_preferred":"H"},"PE":{"_allowed":"H hB h hb","_preferred":"H"},"AE":{"_allowed":"h hB hb H","_preferred":"h"},"ar_001":{"_allowed":"h hB hb H","_preferred":"h"},"BH":{"_allowed":"h hB hb H","_preferred":"h"},"DZ":{"_allowed":"h hB hb H","_preferred":"h"},"EG":{"_allowed":"h hB hb H","_preferred":"h"},"EH":{"_allowed":"h hB hb H","_preferred":"h"},"IQ":{"_allowed":"h hB hb H","_preferred":"h"},"JO":{"_allowed":"h hB hb H","_preferred":"h"},"KW":{"_allowed":"h hB hb H","_preferred":"h"},"LB":{"_allowed":"h hB hb H","_preferred":"h"},"LY":{"_allowed":"h hB hb H","_preferred":"h"},"MR":{"_allowed":"h hB hb H","_preferred":"h"},"OM":{"_allowed":"h hB hb H","_preferred":"h"},"PH":{"_allowed":"h hB hb H","_preferred":"h"},"PS":{"_allowed":"h hB hb H","_preferred":"h"},"QA":{"_allowed":"h hB hb H","_preferred":"h"},"SA":{"_allowed":"h hB hb H","_preferred":"h"},"SD":{"_allowed":"h hB hb H","_preferred":"h"},"SY":{"_allowed":"h hB hb H","_preferred":"h"},"TN":{"_allowed":"h hB hb H","_preferred":"h"},"YE":{"_allowed":"h hB hb H","_preferred":"h"},"AF":{"_allowed":"H hb hB h","_preferred":"H"},"LA":{"_allowed":"H hb hB h","_preferred":"H"},"LV":{"_allowed":"H hB hb h","_preferred":"H"},"TL":{"_allowed":"H hB hb h","_preferred":"H"},"zu_ZA":{"_allowed":"H hB hb h","_preferred":"H"},"CD":{"_allowed":"hB H","_preferred":"H"},"IR":{"_allowed":"hB H","_preferred":"H"},"hi_IN":{"_allowed":"hB h H","_preferred":"h"},"kn_IN":{"_allowed":"hB h H","_preferred":"h"},"ml_IN":{"_allowed":"hB h H","_preferred":"h"},"te_IN":{"_allowed":"hB h H","_preferred":"h"},"KH":{"_allowed":"hB h H hb","_preferred":"h"},"ta_IN":{"_allowed":"hB h hb H","_preferred":"h"},"BN":{"_allowed":"hb hB h H","_preferred":"h"},"MY":{"_allowed":"hb hB h H","_preferred":"h"},"CN":{"_allowed":"hB hb h H","_preferred":"h"},"ET":{"_allowed":"hB hb h H","_preferred":"h"},"gu_IN":{"_allowed":"hB hb h H","_preferred":"h"},"HK":{"_allowed":"hB hb h H","_preferred":"h"},"MO":{"_allowed":"hB hb h H","_preferred":"h"},"mr_IN":{"_allowed":"hB hb h H","_preferred":"h"},"pa_IN":{"_allowed":"hB hb h H","_preferred":"h"},"TW":{"_allowed":"hB hb h H","_preferred":"h"},"KE":{"_allowed":"hB hb H h","_preferred":"H"},"MM":{"_allowed":"hB hb H h","_preferred":"H"},"TZ":{"_allowed":"hB hb H h","_preferred":"H"},"UG":{"_allowed":"hB hb H h","_preferred":"H"}}}}, {"supplemental":{"version":{"_number":"$Revision: 14982 $","_unicodeVersion":"12.1.0","_cldrVersion":"35.1"},"weekData":{"minDays":{"001":"1","AD":"4","AN":"4","AT":"4","AX":"4","BE":"4","BG":"4","CH":"4","CZ":"4","DE":"4","DK":"4","EE":"4","ES":"4","FI":"4","FJ":"4","FO":"4","FR":"4","GB":"4","GF":"4","GG":"4","GI":"4","GP":"4","GR":"4","GU":"1","HU":"4","IE":"4","IM":"4","IS":"4","IT":"4","JE":"4","LI":"4","LT":"4","LU":"4","MC":"4","MQ":"4","NL":"4","NO":"4","PL":"4","PT":"4","RE":"4","RU":"4","SE":"4","SJ":"4","SK":"4","SM":"4","UM":"1","US":"1","VA":"4","VI":"1"},"firstDay":{"001":"mon","AD":"mon","AE":"sat","AF":"sat","AG":"sun","AI":"mon","AL":"mon","AM":"mon","AN":"mon","AR":"sun","AS":"sun","AT":"mon","AU":"sun","AX":"mon","AZ":"mon","BA":"mon","BD":"sun","BE":"mon","BG":"mon","BH":"sat","BM":"mon","BN":"mon","BR":"sun","BS":"sun","BT":"sun","BW":"sun","BY":"mon","BZ":"sun","CA":"sun","CH":"mon","CL":"mon","CM":"mon","CN":"sun","CO":"sun","CR":"mon","CY":"mon","CZ":"mon","DE":"mon","DJ":"sat","DK":"mon","DM":"sun","DO":"sun","DZ":"sat","EC":"mon","EE":"mon","EG":"sat","ES":"mon","ET":"sun","FI":"mon","FJ":"mon","FO":"mon","FR":"mon","GB":"mon","GB-alt-variant":"sun","GE":"mon","GF":"mon","GP":"mon","GR":"mon","GT":"sun","GU":"sun","HK":"sun","HN":"sun","HR":"mon","HU":"mon","ID":"sun","IE":"mon","IL":"sun","IN":"sun","IQ":"sat","IR":"sat","IS":"mon","IT":"mon","JM":"sun","JO":"sat","JP":"sun","KE":"sun","KG":"mon","KH":"sun","KR":"sun","KW":"sat","KZ":"mon","LA":"sun","LB":"mon","LI":"mon","LK":"mon","LT":"mon","LU":"mon","LV":"mon","LY":"sat","MC":"mon","MD":"mon","ME":"mon","MH":"sun","MK":"mon","MM":"sun","MN":"mon","MO":"sun","MQ":"mon","MT":"sun","MV":"fri","MX":"sun","MY":"mon","MZ":"sun","NI":"sun","NL":"mon","NO":"mon","NP":"sun","NZ":"mon","OM":"sat","PA":"sun","PE":"sun","PH":"sun","PK":"sun","PL":"mon","PR":"sun","PT":"sun","PY":"sun","QA":"sat","RE":"mon","RO":"mon","RS":"mon","RU":"mon","SA":"sun","SD":"sat","SE":"mon","SG":"sun","SI":"mon","SK":"mon","SM":"mon","SV":"sun","SY":"sat","TH":"sun","TJ":"mon","TM":"mon","TR":"mon","TT":"sun","TW":"sun","UA":"mon","UM":"sun","US":"sun","UY":"mon","UZ":"mon","VA":"mon","VE":"sun","VI":"sun","VN":"mon","WS":"sun","XK":"mon","YE":"sun","ZA":"sun","ZW":"sun"},"weekendStart":{"001":"sat","AE":"fri","AF":"thu","BH":"fri","DZ":"fri","EG":"fri","IL":"fri","IN":"sun","IQ":"fri","IR":"fri","JO":"fri","KW":"fri","LY":"fri","OM":"fri","QA":"fri","SA":"fri","SD":"fri","SY":"fri","YE":"fri"},"weekendEnd":{"001":"sun","AE":"sat","AF":"fri","BH":"sat","DZ":"sat","EG":"sat","IL":"sat","IQ":"sat","IR":"fri","JO":"sat","KW":"sat","LY":"sat","OM":"sat","QA":"sat","SA":"sat","SD":"sat","SY":"sat","YE":"sat"},"af":{"_ordering":"weekOfDate weekOfInterval weekOfMonth"},"am az bs cs cy da el et hi ky lt mk sk ta th":{"_ordering":"weekOfYear weekOfMonth"},"ar fil gu hu hy id kk ko":{"_ordering":"weekOfMonth"},"be ro ru":{"_ordering":"weekOfInterval weekOfMonth"},"bg de iw pt ur zh":{"_ordering":"weekOfDate weekOfMonth weekOfInterval"},"ca es fr gl":{"_ordering":"weekOfDate"},"en bn ja ka":{"_ordering":"weekOfDate weekOfMonth"},"eu":{"_ordering":"weekOfMonth weekOfDate"},"fa hr it lv pl si sr uk uz":{"_ordering":"weekOfMonth weekOfInterval"},"fi zh-TW":{"_ordering":"weekOfYear weekOfDate weekOfMonth"},"is mn no sv vi":{"_ordering":"weekOfYear weekOfMonth weekOfInterval"},"km mr":{"_ordering":"weekOfMonth weekOfYear"},"kn ml pa":{"_ordering":"weekOfMonth weekOfDate weekOfYear"},"lo sq":{"_ordering":"weekOfMonth weekOfInterval weekOfDate weekOfYear"},"ms tr":{"_ordering":"weekOfMonth weekOfYear weekOfInterval weekOfDate"},"nl":{"_ordering":"weekOfDate weekOfYear weekOfMonth"},"sl":{"_ordering":"weekOfInterval"},"sw te":{"_ordering":"weekOfMonth weekOfInterval weekOfYear"},"und":{"_ordering":"weekOfYear"},"zu":{"_ordering":"weekOfYear weekOfInterval"}}}}
+    ], "es");
+</script>
+</body>
+</html>'

@@ -1,0 +1,20 @@
+﻿{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "Jwt": {
+    "Issuer": "WebApiJwt.com",
+    "Audience": "localhost",
+    "Key": "c9824c78-2d04-4da2-9657-4877b8fec3f0",
+    "Auth": "b801e9a8-bf78-4252-8588-4dbde3d8a655"
+  },
+  "ConnectionStrings": {
+    "NWindConnectionString": "XpoProvider=SQLite;Data Source=|DataDirectory|Data/nwind.db",
+    "ReportsDataConnectionString": "Filename=Data/reportsData.db",
+    "SqlConnectionString": "User ID=sa;Password=Asd123$%;Initial Catalog=INSPECTION_API_DB;Data Source=ANIER-PC\\A3ERP;TrustServerCertificate=True;"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "root": true,
+  "env": {
+    "node": true,
+    "vue/setup-compiler-macros": true
+  },
+  "extends": ["plugin:vue/vue3-essential", "eslint:recommended", "@vue/eslint-config-prettier"],
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["vue"],
+  "rules": {
+    "vue/multi-word-component-names": "off",
+    "vue/no-reserved-component-names": "off",
+    "no-unused-vars": "warn",
+    "no-console": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["*.vue"],
+      "rules": {
+        "react-hooks/rules-of-hooks": "off",
+        "react-hooks/exhaustive-deps": "off"
+      }
+    }
+  ]
+}
