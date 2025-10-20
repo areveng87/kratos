@@ -175,6 +175,36 @@ export const api = {
   acciones: {
     getDisponibles: () => axios.get("/acciones"),
   },
+  
+  estadoRoles: {
+    getByEstado: (idproceso, idestado) => axios.get(`/procesos/${idproceso}/estados/${idestado}/roles`),
+    create: (idproceso, idestado, data) => axios.post(`/procesos/${idproceso}/estados/${idestado}/roles`, data),
+    update: (idproceso, idestado, idrol, data) =>
+      axios.put(`/procesos/${idproceso}/estados/${idestado}/roles/${idrol}`, data),
+    delete: (idproceso, idestado, idrol) =>
+      axios.delete(`/procesos/${idproceso}/estados/${idestado}/roles/${idrol}`),
+    saveAll: (idproceso, idestado, data) =>
+      axios.post(`/procesos/${idproceso}/estados/${idestado}/roles/batch`, data),
+  },
+
+  
+  // Catálogos de tareas endpoints
+  catalogos: {
+    getTiposActivos: () => axios.get("/catalogos/tipos-activos"),
+    getTiposOperaciones: () => axios.get("/catalogos/tipos-operaciones"),
+    getClientes: () => axios.get("/catalogos/clientes"),
+    getPaises: () => axios.get("/catalogos/paises"),
+    getProvincias: (countryCode) => axios.get(`/catalogos/provincias/${countryCode}`),
+    getAnalistasPBC: () => axios.get("/catalogos/analistas-pbc"),
+    getOperadores: () => axios.get("/catalogos/operadores"),
+  },
+
+  // Tareas endpoints
+  tareas: {
+    getById: (idtarea) => axios.get(`/tareas/${idtarea}`),
+    create: (data) => axios.post("/tareas", data),
+    update: (idtarea, data) => axios.put(`/tareas/${idtarea}`, data),
+  },
 }
 
 export default api

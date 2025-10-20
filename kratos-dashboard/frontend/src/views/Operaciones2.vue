@@ -8,7 +8,7 @@
           <p class="text-gray-400">Gestión de operaciones comerciales</p>
         </div>
         <button
-          @click="showCreateModal = true"
+          @click="router.push('/operaciones/nueva')"
           class="btn-primary flex items-center space-x-2"
         >
           <Plus class="h-4 w-4" />
@@ -209,7 +209,10 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div class="flex items-center space-x-2">
-                    <button class="text-indigo-400 hover:text-indigo-300">
+                    <button 
+                    class="text-indigo-400 hover:text-indigo-300"
+                     @click="router.push('/operaciones/' + operacion.id + '/editar/')"
+                    >
                       <Edit class="h-4 w-4" />
                     </button>
                     <button class="text-red-400 hover:text-red-300">
@@ -227,7 +230,7 @@
           <div class="text-gray-500">Cargando operaciones...</div>
         </div>
 
-<!-- Empty state -->
+        <!-- Empty state -->
         <div v-else-if="filteredOperaciones.length === 0" class="flex justify-center items-center py-8">
           <div class="text-gray-500">No se encontraron operaciones</div>
         </div>

@@ -22,6 +22,7 @@ import TiposAlerta from "../views/admin/auxiliares/TiposAlerta.vue"
 import DefinicionProcesos from "../views/admin/DefinicionProcesos.vue"
 import EstructuraEditor from "../views/admin/EstructuraEditor.vue"
 import ProcesoForm from "../views/admin/ProcesoForm.vue"
+import TareaForm from "../views/TareaForm.vue"
 
 const routes = [
   {
@@ -46,6 +47,18 @@ const routes = [
     path: "/operaciones/:id",
     name: "DetallesOperacion",
     component: DetallesOperacion,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/operaciones/nueva",
+    name: "NuevaOperacion",
+    component: TareaForm,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/operaciones/:id/editar",
+    name: "EditarOperacion",
+    component: TareaForm,
     meta: { requiresAuth: true },
   },
   {

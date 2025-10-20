@@ -14,7 +14,7 @@ import shutil
 from pathlib import Path
 
 from models import *
-from services import CountryService, UserService, DashboardService, OperacionService, EmpresaService, SociedadService, RoleService, AuditorSociedadService, AuditorOperacionService, EstructuraCarpetaService, TipoRelacionService, TipoAlertaService, ProcesoService, AccionService, ProcesoEstadoService
+from services import CountryService, UserService, DashboardService, OperacionService, EmpresaService, SociedadService, RoleService, AuditorSociedadService, AuditorOperacionService, EstructuraCarpetaService, TipoRelacionService, TipoAlertaService, ProcesoService, AccionService, ProcesoEstadoService, ProcesoEstadoRolService, CatalogoService, TareaService
 from auth import auth_manager
 
 import shutil
@@ -168,6 +168,7 @@ async def get_planner_operaciones(
 @app.get("/api/empresas", response_model=List[EmpresaResponse])
 async def get_empresas(user_id: int = Depends(verify_token)):
     empresas = EmpresaService.get_all_empresas()
+
     return [EmpresaResponse(**emp) for emp in empresas]
 
 @app.get("/api/empresas-clientes")
@@ -1223,6 +1224,20 @@ async def delete_proceso_estado(
         data=None
     )
 
+@app.get("/api/procesos/{idproceso}/estados")
+async def get_proceso_estados(
+    idproceso: int,
+    user_id: int = Depends(verify_token)
+):
+    """Obtiene los estados de un proceso"""
+    estados = ProcesoEstadoService.get_estados_by_proceso(idproceso)
+    
+    return APIResponse(
+        code=200,
+        detail="Estados obtenidos correctamente",
+        data=estados
+    )
+
 @app.post("/api/procesos-completo")
 async def create_proceso_with_estados(
     data: CreateProcesoWithEstadosRequest,
@@ -1243,6 +1258,7 @@ async def create_proceso_with_estados(
         accion = next((a for a in acciones if a["idaccion"] == estado_data.idaccion), None)
         if accion:
             ProcesoEstadoService.create_estado(
+                accion["idaccion"],
                 idproceso,
                 accion["descripcion"],
                 estado_data.visibilidad,
@@ -1280,7 +1296,8 @@ async def update_proceso_with_estados(
     acciones = AccionService.get_acciones_for_proceso()
     for estado_dict in data.estados:
         # estado_dict can have either idaccion (new) or idestado (existing, but we're recreating all)
-        idaccion = estado_dict.get("idaccion")
+
+        idaccion = estado_dict.get("idestado")
         titulo = estado_dict.get("titulo")
         
         # If we have idaccion, get the accion descripcion
@@ -1290,7 +1307,11 @@ async def update_proceso_with_estados(
                 titulo = accion["descripcion"]
         
         if titulo:
+
+            print("Creating estado for proceso:", idproceso, "with titulo:", titulo, "and idaccion:", idaccion)
+
             ProcesoEstadoService.create_estado(
+                idaccion,
                 idproceso,
                 titulo,
                 estado_dict.get("visibilidad", True),
@@ -1305,6 +1326,80 @@ async def update_proceso_with_estados(
         code=200,
         detail="Proceso actualizado correctamente",
         data=proceso
+    )
+
+
+# New endpoints for gestion de roles de estados
+@app.get("/api/procesos/{idproceso}/estados/{idestado}/roles")
+async def get_estado_roles(
+    idproceso: int,
+    idestado: int,
+    user_id: int = Depends(verify_token)
+):
+    """Obtiene los roles asignados a un estado"""
+    roles = ProcesoEstadoRolService.get_roles_by_estado(idproceso, idestado)
+    
+    return APIResponse(
+        code=200,
+        detail="Roles obtenidos correctamente",
+        data=roles
+    )
+
+@app.post("/api/procesos/{idproceso}/estados/{idestado}/roles")
+async def create_estado_rol(
+    idproceso: int,
+    idestado: int,
+    data: CreateEstadoRolRequest,
+    user_id: int = Depends(verify_token)
+):
+    """Crea un nuevo rol para un estado"""
+    id_rol = ProcesoEstadoRolService.create_estado_rol(
+        idproceso,
+        idestado,
+        data.idrol,
+        data.lectura,
+        data.escritura,
+        data.cambioestado
+    )
+    
+    return APIResponse(
+        code=201,
+        detail="Rol agregado correctamente",
+        data={"id": id_rol}
+    )
+
+@app.put("/api/procesos/estados/roles/{id}")
+async def update_estado_rol(
+    id: int,
+    data: UpdateEstadoRolRequest,
+    user_id: int = Depends(verify_token)
+):
+    """Actualiza un rol de estado"""
+    ProcesoEstadoRolService.update_estado_rol(
+        id,
+        data.lectura,
+        data.escritura,
+        data.cambioestado
+    )
+    
+    return APIResponse(
+        code=200,
+        detail="Rol actualizado correctamente",
+        data=None
+    )
+
+@app.delete("/api/procesos/estados/roles/{id}")
+async def delete_estado_rol(
+    id: int,
+    user_id: int = Depends(verify_token)
+):
+    """Elimina un rol de estado"""
+    ProcesoEstadoRolService.delete_estado_rol(id)
+    
+    return APIResponse(
+        code=200,
+        detail="Rol eliminado correctamente",
+        data=None
     )
 
 # Health check endpoint
@@ -1328,8 +1423,269 @@ async def get_subdivisions(countryiso: str):
     except Exception as e:
         return APIResponse(code=500, detail="Database connection error: " + str(e), data=None)
     
-    
 
+# New endpoints for gestion de roles de estados
+@app.get("/api/procesos/{idproceso}/estados/{idestado}/roles")
+async def get_estado_roles(
+    idproceso: int,
+    idestado: int,
+    user_id: int = Depends(verify_token)
+):
+    try:
+        """Obtiene los roles asignados a un estado"""
+        roles = ProcesoEstadoRolService.get_roles_by_estado(idproceso, idestado)
+        
+        return APIResponse(
+            code=200,
+            detail="Roles obtenidos correctamente",
+            data=roles
+        )
+    except Exception as e:
+        print("Error al obtener roles de estado:", e)
+        return APIResponse(
+            code=500,
+            detail="Error al obtener los roles: " + str(e),
+            data=None
+        )
+
+@app.post("/api/procesos/{idproceso}/estados/{idestado}/roles")
+async def create_estado_rol(
+    idproceso: int,
+    idestado: int,
+    data: CreateEstadoRolRequest,
+    user_id: int = Depends(verify_token)
+):
+    try:
+            """Crea un nuevo rol para un estado"""
+            id_rol = ProcesoEstadoRolService.create_estado_rol(
+                idproceso,
+                idestado,
+                data.idrol,
+                data.lectura,
+                data.escritura,
+                data.cambioestado
+            )
+            
+            return APIResponse(
+                code=201,
+                detail="Rol agregado correctamente",
+                data={"id": id_rol}
+            )
+    except Exception as e:
+        print("Error al crear rol de estado:", e)
+        return APIResponse(
+            code=500,
+            detail="Error al agregar el rol: " + str(e),
+            data=None
+        )
+
+@app.put("/api/procesos/estados/roles/{id}")
+async def update_estado_rol(
+    id: int,
+    data: UpdateEstadoRolRequest,
+    user_id: int = Depends(verify_token)
+):
+    try:
+        """Actualiza un rol de estado"""
+        ProcesoEstadoRolService.update_estado_rol(
+            id,
+            data.lectura,
+            data.escritura,
+            data.cambioestado
+        )
+        
+        return APIResponse(
+            code=200,
+            detail="Rol actualizado correctamente",
+            data=None
+        )
+    except Exception as e:
+        print("Error al actualizar rol de estado:", e)
+        return APIResponse(
+            code=500,
+            detail="Error al actualizar el rol: " + str(e),
+            data=None
+        )
+
+@app.delete("/api/procesos/estados/roles/{id}")
+async def delete_estado_rol(
+    id: int,
+    user_id: int = Depends(verify_token)
+):
+    try:
+        """Elimina un rol de estado"""
+        ProcesoEstadoRolService.delete_estado_rol(id)
+        
+        return APIResponse(
+            code=200,
+            detail="Rol eliminado correctamente",
+            data=None
+        )
+    except Exception as e:
+        print("Error al eliminar rol de estado:", e)
+        return APIResponse(
+            code=500,
+            detail="Error al eliminar el rol: " + str(e),
+            data=None
+        )
+
+@app.post("/api/procesos/{idproceso}/estados/{idestado}/roles/batch")
+async def save_estado_roles_batch(
+    idproceso: int,
+    idestado: int,
+    data: SaveEstadoRolesBatchRequest,
+    user_id: int = Depends(verify_token)
+):
+    try:
+        """Guarda múltiples roles para un estado en una sola operación"""
+        ProcesoEstadoRolService.save_roles_batch(
+            idproceso,
+            idestado,
+            data.roles
+        )
+        
+        return APIResponse(
+            code=200,
+            detail="Roles guardados correctamente",
+            data=None
+        )
+    except Exception as e:
+        print("Error al guardar roles en batch:", e)
+        return APIResponse(
+            code=500,
+            detail="Error al guardar los roles: " + str(e),
+            data=None
+        )
+
+
+# Catalogos endpoints for tareas (operaciones)
+@app.get("/api/catalogos/tipos-activos")
+async def get_tipos_activos(user_id: int = Depends(verify_token)):
+    """Obtiene todos los tipos de activos"""
+    tipos = CatalogoService.get_tipos_activos()
+    return APIResponse(
+        code=200,
+        detail="Tipos de activos obtenidos correctamente",
+        data=tipos
+    )
+
+@app.get("/api/catalogos/tipos-operaciones")
+async def get_tipos_operaciones(user_id: int = Depends(verify_token)):
+    """Obtiene todos los tipos de operaciones"""
+    tipos = CatalogoService.get_tipos_operaciones()
+    return APIResponse(
+        code=200,
+        detail="Tipos de operaciones obtenidos correctamente",
+        data=tipos
+    )
+
+@app.get("/api/catalogos/clientes")
+async def get_clientes(user_id: int = Depends(verify_token)):
+    """Obtiene todos los clientes (sociedades)"""
+    clientes = CatalogoService.get_clientes()
+    return APIResponse(
+        code=200,
+        detail="Clientes obtenidos correctamente",
+        data=clientes
+    )
+
+@app.get("/api/catalogos/paises")
+async def get_paises(user_id: int = Depends(verify_token)):
+    """Obtiene todos los países"""
+    paises = CatalogoService.get_paises()
+    return APIResponse(
+        code=200,
+        detail="Países obtenidos correctamente",
+        data=paises
+    )
+
+@app.get("/api/catalogos/provincias/{country_code}")
+async def get_provincias(
+    country_code: str,
+    user_id: int = Depends(verify_token)
+):
+    """Obtiene las provincias de un país"""
+    provincias = CatalogoService.get_provincias(country_code)
+    return APIResponse(
+        code=200,
+        detail="Provincias obtenidas correctamente",
+        data=provincias
+    )
+
+@app.get("/api/catalogos/analistas-pbc")
+async def get_analistas_pbc(user_id: int = Depends(verify_token)):
+    """Obtiene los analistas PBC (usuarios con perfil 2)"""
+    analistas = CatalogoService.get_analistas_pbc()
+    return APIResponse(
+        code=200,
+        detail="Analistas PBC obtenidos correctamente",
+        data=analistas
+    )
+
+@app.get("/api/catalogos/operadores")
+async def get_operadores(user_id: int = Depends(verify_token)):
+    """Obtiene los operadores (usuarios con perfil 7)"""
+    operadores = CatalogoService.get_operadores()
+    return APIResponse(
+        code=200,
+        detail="Operadores obtenidos correctamente",
+        data=operadores
+    )
+
+# Tareas (operaciones) endpoints
+@app.get("/api/tareas/{idtarea}")
+async def get_tarea_by_id(
+    idtarea: int,
+    user_id: int = Depends(verify_token)
+):
+    """Obtiene una tarea por ID"""
+    tarea = TareaService.get_tarea_by_id(idtarea)
+    
+    if not tarea:
+        raise HTTPException(status_code=404, detail="Tarea no encontrada")
+    
+    #print("Tarea fetched:", tarea)
+    
+    return APIResponse(
+        code=200,
+        detail="Tarea obtenida correctamente",
+        data=tarea
+    )
+
+@app.post("/api/tareas")
+async def create_tarea(
+    data: CreateTareaRequest,
+    user_id: int = Depends(verify_token)
+):
+    """Crea una nueva tarea (operación)"""
+    idtarea = TareaService.create_tarea(data.model_dump(), user_id)
+    
+    # Get the created tarea
+    tarea = TareaService.get_tarea_by_id(idtarea)
+    
+    return APIResponse(
+        code=201,
+        detail="Tarea creada correctamente",
+        data=tarea
+    )
+
+@app.put("/api/tareas/{idtarea}")
+async def update_tarea(
+    idtarea: int,
+    data: UpdateTareaRequest,
+    user_id: int = Depends(verify_token)
+):
+    """Actualiza una tarea"""
+    TareaService.update_tarea(idtarea, data, user_id)
+    
+    # Get the updated tarea
+    tarea = TareaService.get_tarea_by_id(idtarea)
+    
+    return APIResponse(
+        code=200,
+        detail="Tarea actualizada correctamente",
+        data=tarea
+    )
 
 # for r in app.routes:
 #     try:

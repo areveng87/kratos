@@ -11,6 +11,18 @@
         <button @click="navegarACrear" class="btn-primary">
           Nuevo Proceso
         </button>
+        <!-- Modal -->
+        <div v-if="show" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div class="rounded-lg p-6 w-96"
+              style="background-color: var(--color-bg-secondary); border:1px solid var(--color-border);">
+            <h3 class="text-lg font-semibold theme-text mb-3">Confirmar acción</h3>
+            <p class="theme-text mb-6">{{ message }}</p>
+            <div class="flex justify-end gap-2">
+              <button @click="cancel" class="btn-secondary">Cancelar</button>
+              <button @click="accept" class="btn-primary">Sí, eliminar</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Buscador -->
@@ -69,6 +81,12 @@ import { Edit, Trash2, Eye, EyeOff } from 'lucide-vue-next'
 import Sidebar from '../../components/Sidebar.vue'
 import PaginatedTable from '../../components/PaginatedTable.vue'
 import api from '../../api'
+import { useToastStore } from '../../stores/toast'
+import { useConfirm } from '../../composables/useConfirm'
+
+const { show, message, confirmar, accept, cancel } = useConfirm()
+
+const toast = useToastStore()
 
 const router = useRouter()
 const procesos = ref([])
@@ -98,8 +116,9 @@ const cargarProcesos = async () => {
     const response = await api.procesos.getAll()
     procesos.value = response.data.data || []
   } catch (error) {
-    console.error('Error al cargar procesos:', error)
-    alert('Error al cargar los procesos')
+
+    toast.push('Error al cargar los procesos', 'error')
+
   } finally {
     loading.value = false
   }
@@ -114,17 +133,17 @@ const navegarAEditar = (idproceso) => {
 }
 
 const eliminarProceso = async (proceso) => {
-  if (!confirm(`¿Está seguro de eliminar el proceso "${proceso.descripcion}"?`)) {
-    return
-  }
+
+  const ok = await confirmar(`¿Está seguro de eliminar el proceso "${proceso.descripcion}"?`)
+  
+  if (!ok) return
   
   try {
     await api.procesos.delete(proceso.idproceso)
-    alert('Proceso eliminado correctamente')
+    toast.push('Proceso eliminado correctamente', 'success')
     await cargarProcesos()
   } catch (error) {
-    console.error('Error al eliminar proceso:', error)
-    alert(error.response?.data?.detail || 'Error al eliminar el proceso')
+    toast.push(error.response?.data?.detail || 'Error al eliminar el proceso', 'error')
   }
 }
 

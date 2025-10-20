@@ -99,7 +99,7 @@
         </template>
       </PaginatedTable>
 
-       Modal crear/editar 
+      Modal crear/editar 
       <div
         v-if="showModal"
         class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
@@ -207,8 +207,7 @@ const cargarRelaciones = async () => {
     relaciones.value = response.data.data
     
   } catch (error) {
-      toast.push('Error al cargar las relaciones', 'error'
-    )
+      toast.push('Error al cargar las relaciones', 'error')
   } finally {
     loading.value = false
   }
@@ -279,24 +278,25 @@ const guardarRelacion = async () => {
     
   } catch (error) {
     console.error('Error al guardar relación:', error)
-    toast.push(error.response?.data?.detail || 'Error al guardar la relación')
+    toast.push(error.response?.data?.detail || 'Error al guardar la relación', 'error')
   }
 }
 
 const eliminarRelacion = async (idtiporelacion) => {
 
   const ok = await confirmar('¿Está seguro de que desea eliminar este fondo?')
-    if (!ok) return
-  
+
+  if (!ok) return
+
   try {
     await api.tiposRelacion.delete(idtiporelacion)
     await cargarRelaciones()
   } catch (error) {
     console.error('Error al eliminar relación:', error)
     if (error.response?.status === 400) {
-      alert('No se puede eliminar la relación porque está en uso')
+      toast.push('No se puede eliminar la relación porque está en uso', 'error')
     } else {
-      alert('Error al eliminar la relación')
+      toast.push('Error al eliminar la relación', 'error')
     }
   }
 }

@@ -26,7 +26,6 @@ export const useAuthStore = defineStore("auth", () => {
 
   const login = async (credentials) => {
     try {
-      console.log("login store auth", credentials)
       loading.value = true
       error.value = null
 
@@ -60,7 +59,8 @@ export const useAuthStore = defineStore("auth", () => {
     if (!token.value) return
 
     try {
-      const response = await axios.get("/api/auth/me")
+      //const response = await axios.get("/api/auth/me")
+      const response = await axios.get("/auth/me")
       user.value = response.data
     } catch (err) {
       // Token inválido o expirado

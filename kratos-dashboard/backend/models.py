@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional, List
+from typing import Dict, Optional, List
 from datetime import datetime, date
 from enum import Enum
 
@@ -159,6 +159,7 @@ class LoginResponse(BaseModel):
 class EmpresaResponse(BaseModel):
     id: int
     nombre: str
+    codigo: int
     rut: Optional[str] = None
     direccion: Optional[str] = None
     telefono: Optional[str] = None
@@ -386,7 +387,7 @@ class ProcesoEstadoResponse(BaseModel):
 
 class CreateProcesoEstadoRequest(BaseModel):
     #idproceso: int
-    idaccion: int
+    idestado: int
     #idaccion: int
     titulo:str
     visibilidad: bool
@@ -409,3 +410,237 @@ class UpdateProcesoWithEstadosRequest(BaseModel):
     prefijo: Optional[str] = None
     visibilidad: int
     estados: List[dict] = []  # Can include idestado for updates or idaccion for new ones
+
+    
+# Models for Proceso Estado Roles
+class EstadoRolResponse(BaseModel):
+    id: int
+    idproceso: int
+    idestado: int
+    idrol: int
+    rol_nombre: Optional[str] = None
+    lectura: bool
+    escritura: bool
+    cambioestado: bool
+
+class CreateEstadoRolRequest(BaseModel):
+    idproceso: int
+    idestado: int
+    idrol: int
+    lectura: bool = False
+    escritura: bool = False
+    cambioestado: bool = False
+
+class UpdateEstadoRolRequest(BaseModel):
+    lectura: bool
+    escritura: bool
+    cambioestado: bool
+
+
+# Models for Proceso Estado Roles
+class EstadoRolResponse(BaseModel):
+    id: int
+    idproceso: int
+    idestado: int
+    idrol: int
+    rol_nombre: Optional[str] = None
+    lectura: bool
+    escritura: bool
+    cambioestado: bool
+
+class CreateEstadoRolRequest(BaseModel):
+    idproceso: int
+    idestado: int
+    idrol: int
+    lectura: bool = False
+    escritura: bool = False
+    cambioestado: bool = False
+
+class UpdateEstadoRolRequest(BaseModel):
+    idrol: int
+    lectura: bool
+    escritura: bool
+    cambioestado: bool
+
+class SaveEstadoRolesBatchRequest(BaseModel):
+    idproceso: int
+    idestado: int
+    roles: List[dict]  # List of role objects with idrol, lectura, escritura, cambioestado
+
+
+# Models for TipoAlerta CRUD operations
+class TipoAlertaResponse(BaseModel):
+    idtipoalerta: int
+    descripcion: str
+
+class CreateTipoAlertaRequest(BaseModel):
+    descripcion: str
+
+class UpdateTipoAlertaRequest(BaseModel):
+    descripcion: str
+
+# Models for Proceso CRUD operations
+class ProcesoResponse(BaseModel):
+    idproceso: int
+    descripcion: str
+    prefijo: Optional[str] = None
+    visibilidad: int
+
+class CreateProcesoRequest(BaseModel):
+    descripcion: str
+    prefijo: Optional[str] = None
+    visibilidad: int = 0
+
+class UpdateProcesoRequest(BaseModel):
+    descripcion: str
+    prefijo: Optional[str] = None
+    visibilidad: int
+
+# Models for Acciones and ProcesoEstados
+class AccionResponse(BaseModel):
+    idaccion: int
+    descripcion: str
+    activa: bool
+    proceso: bool
+
+class ProcesoEstadoResponse(BaseModel):
+    idestado: int  # This is the reference to ACCIONES.IDACCION
+    idproceso: int
+    visibilidad: bool
+    titulo: str
+    orden: int
+    finaliza: bool
+    idestadopadre: Optional[int] = None
+
+class CreateProcesoEstadoRequest(BaseModel):
+    idproceso: int
+    idestado: int  # This is the IDACCION from ACCIONES table
+    visibilidad: bool
+    orden: int
+    finaliza: bool = False
+
+class UpdateProcesoEstadoRequest(BaseModel):
+    visibilidad: bool
+    orden: int
+    finaliza: bool
+
+class CreateProcesoWithEstadosRequest(BaseModel):
+    descripcion: str
+    prefijo: Optional[str] = None
+    visibilidad: int = 0
+    estados: List[CreateProcesoEstadoRequest] = []
+
+class UpdateProcesoWithEstadosRequest(BaseModel):
+    descripcion: str
+    prefijo: Optional[str] = None
+    visibilidad: int
+    estados: List[dict] = []  # Can include idestado for updates or idaccion for new ones
+
+# Models for Proceso Estado Roles
+class EstadoRolResponse(BaseModel):
+    id: int
+    idproceso: int
+    idestado: int
+    idrol: int
+    rol_nombre: Optional[str] = None
+    lectura: bool
+    escritura: bool
+    cambioestado: bool
+
+class CreateEstadoRolRequest(BaseModel):
+    idproceso: int
+    idestado: int
+    idrol: int
+    lectura: bool = False
+    escritura: bool = False
+    cambioestado: bool = False
+
+class UpdateEstadoRolRequest(BaseModel):
+    lectura: bool
+    escritura: bool
+    cambioestado: bool
+
+class SaveEstadoRolesBatchRequest(BaseModel):
+    idproceso: int
+    idestado: int
+    roles: List[Dict]  # List of role objects with idrol, lectura, escritura, cambioestado
+
+# APIResponse model for consistent API responses
+class APIResponse(BaseModel):
+    code: int
+    detail: str = ""
+    data: Optional[object] = None
+
+# Models for Tarea (operation) management
+class TareaInmuebleRequest(BaseModel):
+    # idcliente: Optional[int] = None  # Sociedad
+    # ext_tipoactivo: Optional[str] = None  # Tipo de activo
+    # ext_activosotros: Optional[str] = None  # Otros (tipo activo)
+    # localidad: Optional[str] = None
+    # pais: Optional[str] = None
+    # provincia: Optional[str] = None
+    # ext_analistapbc: Optional[int] = None
+    # codempresa: Optional[str] = None  # Servicer
+    # referencia: Optional[str] = None
+    # ext_asignador_analistapbc: Optional[int] = None  # Read-only, set by system
+    # ext_operador: Optional[int] = None
+    # ext_urgente: bool = False
+    idcliente: Optional[int] = None
+    tipo_operacion: Optional[int] = None          # ← añadir si lo necesitas
+    ext_tipoactivo: Optional[int] = None         # ← int (id del tipo)
+    ext_activosotros: Optional[str] = None
+    localidad: Optional[str] = None
+    pais: Optional[str] = None
+    provincia: Optional[str] = None
+    ext_analistapbc: Optional[int] = None
+    codempresa: Optional[int] = None             # ← int (id/código servicer)
+    referencia: Optional[str] = None
+    ext_asignador_analistapbc: Optional[int] = None
+    ext_operador: Optional[int] = None
+    ext_urgente: bool = False
+
+CreateTareaRequest = TareaInmuebleRequest
+UpdateTareaRequest = TareaInmuebleRequest
+class TareaResponse(BaseModel):
+    idtarea: int
+    idcliente: Optional[int] = None
+    cliente_nombre: Optional[str] = None
+    ext_tipoactivo: Optional[str] = None
+    tipoactivo_nombre: Optional[str] = None
+    ext_activosotros: Optional[str] = None
+    localidad: Optional[str] = None
+    pais: Optional[int] = None
+    pais_nombre: Optional[str] = None
+    provincia: Optional[int] = None
+    provincia_nombre: Optional[str] = None
+    ext_analistapbc: Optional[int] = None
+    analistapbc_nombre: Optional[str] = None
+    codempresa: Optional[str] = None
+    servicer_nombre: Optional[str] = None
+    referencia: Optional[str] = None
+    ext_asignador_analistapbc: Optional[int] = None
+    asignador_nombre: Optional[str] = None
+    ext_operador: Optional[int] = None
+    operador_nombre: Optional[str] = None
+    ext_urgente: bool = False
+    fecha_alta: Optional[datetime] = None
+
+class TipoActivoResponse(BaseModel):
+    id: int
+    descripcion: str
+
+class ClienteResponse(BaseModel):
+    idcliente: int
+    nomcli: str
+
+class PaisResponse(BaseModel):
+    codigo: str
+    nombre: str
+
+class ProvinciaResponse(BaseModel):
+    codigo: str
+    nombre: str
+
+class OperadorResponse(BaseModel):
+    id: int
+    nombre: str

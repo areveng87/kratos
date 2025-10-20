@@ -17,9 +17,9 @@ class UserService:
             WHERE u.email = ? AND u.activo = 1
         """
         
-        user = db_manager.execute_query(query, (email,), fetch_one=True)
+        user = db_manager.execute_query(query, (email.strip(),), fetch_one=True)
         
-        if not user or not auth_manager.verify_password(password, user.password_hash):
+        if not user or not auth_manager.verify_password(password.strip(), user.password_hash):
             return None
         
         # Actualizar último login
@@ -28,10 +28,10 @@ class UserService:
         
         return {
             "id": user.id,
-            "email": user.email,
-            "nombre": user.nombre,
-            "apellido": user.apellido,
-            "rol": user.rol,
+            "email": user.email.strip(),
+            "nombre": user.nombre.strip(),
+            "apellido": user.apellido.strip(),
+            "rol": user.rol.strip(),
             "rol_id": user.rol_id,
             "activo": user.activo,
             "ultimo_login": user.ultimo_login,
@@ -319,7 +319,7 @@ class OperacionService:
                 PLANNER_TAREAS.IDPROCESO,
                 PLANNER_TAREAS.IDCLIENTE,
                 PLANNER_TAREAS.CODEMPRESA,
-                PLANNER_PROCESOS.TITULO AS PROCESO,
+                PLANNER_PROCESOS.DESCRIPCION AS PROCESO,
                 ERP_CLIENTES.NOMCLI AS CLIENTE,
                 EMPRESAS_CLIENTES.NOMEMPRESA AS SERVICER,
                 USUARIOS.NOMBRE AS ANALISTA_NOMBRE,
@@ -395,8 +395,6 @@ class OperacionService:
         
         base_query += " ORDER BY PLANNER_TAREAS.FECHA_PREVISTA DESC"
 
-        print("Executing query:", base_query)
-        
         try:
             operaciones = db_manager.execute_query(base_query, params if params else None)
             result = []
@@ -447,7 +445,7 @@ class EmpresaService:
     def get_all_empresas() -> List[Dict]:
         """Obtiene todas las empresas activas"""
         query = """
-            SELECT id, NOMEMPRESA AS nombre, RUTAEMPRESA AS rut, direccion, tlf as telefono, email, activo, fecha_creacion
+            SELECT id, NOMEMPRESA AS nombre, codempresa, RUTAEMPRESA AS rut, direccion, tlf as telefono, email, activo, fecha_creacion
             FROM EMPRESAS_CLIENTES 
             ORDER BY nombre
         """
@@ -459,6 +457,7 @@ class EmpresaService:
             result.append({
                 "id": emp.id,
                 "nombre": emp.nombre,
+                "codigo": emp.codempresa,
                 "rut": emp.rut,
                 "direccion": emp.direccion,
                 "telefono": emp.telefono,
@@ -467,6 +466,8 @@ class EmpresaService:
                 "fecha_creacion": emp.fecha_creacion
             })
         
+        #print("Empresas obtenidas:", result)
+
         return result
     
     @staticmethod
@@ -1686,16 +1687,16 @@ class ProcesoEstadoService:
         return result
     
     @staticmethod
-    def create_estado(idproceso: int, titulo: str, visibilidad: bool, orden: int, finaliza: bool) -> int:
+    def create_estado(idaccion: int, idproceso: int, titulo: str, visibilidad: bool, orden: int, finaliza: bool) -> int:
         """Crea un nuevo estado para un proceso"""
         query = """
-            INSERT INTO PLANNER_PROCESOS_ESTADOS (IDPROCESO, VISIBILIDAD, TITULO, ORDEN, FINALIZA)
-            VALUES (?, ?, ?, ?, ?);
+            INSERT INTO PLANNER_PROCESOS_ESTADOS (IDESTADO, IDPROCESO, VISIBILIDAD, TITULO, ORDEN, FINALIZA)
+            VALUES (?, ?, ?, ?, ?, ?);
             SELECT SCOPE_IDENTITY() as id;
         """
         
-        result = db_manager.execute_query(query, (idproceso, visibilidad, titulo, orden, finaliza), fetch_one=True)
-        return int(result.id)
+        result = db_manager.execute_query(query, (idaccion, idproceso, visibilidad, titulo, orden, finaliza), fetch_one=True)
+        return int(result)
     
     @staticmethod
     def update_estado(idestado: int, visibilidad: bool, orden: int, finaliza: bool) -> None:
@@ -1732,3 +1733,610 @@ class ProcesoEstadoService:
             WHERE IDPROCESO = ?
         """
         db_manager.execute_query(query, (idproceso,))
+
+
+class ProcesoEstadoRolService:
+    @staticmethod
+    def get_roles_by_estado(idproceso: int, idestado: int) -> List[Dict]:
+        """Obtiene todos los roles asignados a un estado"""
+        query = """
+            SELECT 
+                PER.ID, PER.IDPROCESO, PER.IDESTADO, PER.IDROL,
+                R.NOMBRE as rol_nombre,
+                PER.LECTURA, PER.ESCRITURA, PER.CAMBIOESTADO
+            FROM PLANNER_PROCESOS_ESTADOS_ROLES PER
+            INNER JOIN ROLES R ON PER.IDROL = R.ID
+            WHERE PER.IDPROCESO = ? AND PER.IDESTADO = ?
+            ORDER BY R.NOMBRE
+        """
+        
+        roles = db_manager.execute_query(query, (idproceso, idestado))
+        result = []
+        
+        for rol in roles:
+            result.append({
+                "id": rol.ID,
+                "idproceso": rol.IDPROCESO,
+                "idestado": rol.IDESTADO,
+                "idrol": rol.IDROL,
+                "rol_nombre": rol.rol_nombre,
+                "lectura": bool(rol.LECTURA),
+                "escritura": bool(rol.ESCRITURA),
+                "cambioestado": bool(rol.CAMBIOESTADO)
+            })
+        
+        return result
+    
+    @staticmethod
+    def create_estado_rol(idproceso: int, idestado: int, idrol: int, lectura: bool, escritura: bool, cambioestado: bool) -> int:
+        """Crea un nuevo rol para un estado"""
+        query = """
+            INSERT INTO PLANNER_PROCESOS_ESTADOS_ROLES (IDPROCESO, IDESTADO, IDROL, LECTURA, ESCRITURA, CAMBIOESTADO)
+            VALUES (?, ?, ?, ?, ?, ?);
+            SELECT SCOPE_IDENTITY() as id;
+        """
+        
+        result = db_manager.execute_query(query, (idproceso, idestado, idrol, lectura, escritura, cambioestado), fetch_one=True)
+        return int(result)
+    
+    @staticmethod
+    def update_estado_rol(id: int, lectura: bool, escritura: bool, cambioestado: bool) -> None:
+        """Actualiza un rol de estado"""
+        query = """
+            UPDATE PLANNER_PROCESOS_ESTADOS_ROLES
+            SET LECTURA = ?, ESCRITURA = ?, CAMBIOESTADO = ?
+            WHERE ID = ?
+        """
+        
+        db_manager.execute_query(query, (lectura, escritura, cambioestado, id))
+    
+    @staticmethod
+    def delete_estado_rol(id: int) -> None:
+        """Elimina un rol de estado"""
+        query = """
+            DELETE FROM PLANNER_PROCESOS_ESTADOS_ROLES
+            WHERE ID = ?
+        """
+        db_manager.execute_query(query, (id,))
+    
+    @staticmethod
+    def delete_roles_by_estado(idproceso: int, idestado: int) -> None:
+        """Elimina todos los roles de un estado"""
+        query = """
+            DELETE FROM PLANNER_PROCESOS_ESTADOS_ROLES
+            WHERE IDPROCESO = ? AND IDESTADO = ?
+        """
+        db_manager.execute_query(query, (idproceso, idestado))
+    
+    @staticmethod
+    def save_roles_batch(idproceso: int, idestado: int, roles: List[Dict]) -> None:
+        """Guarda múltiples roles para un estado (elimina existentes y crea nuevos)"""
+        # First, delete all existing roles for this estado
+        ProcesoEstadoRolService.delete_roles_by_estado(idproceso, idestado)
+        
+        # Then, insert new roles
+        for rol_data in roles:
+            ProcesoEstadoRolService.create_estado_rol(
+                idproceso,
+                idestado,
+                rol_data.get("idrol"),
+                rol_data.get("lectura", False),
+                rol_data.get("escritura", False),
+                rol_data.get("cambioestado", False)
+            )
+
+
+class CatalogoService:
+    @staticmethod
+    def get_tipos_activos() -> List[Dict]:
+        """Obtiene todos los tipos de activos"""
+        query = """
+            SELECT ID, DESCRIPCION
+            FROM TIPOS_ACTIVOS
+            ORDER BY DESCRIPCION
+        """
+        
+        tipos = db_manager.execute_query(query)
+        result = []
+        
+        for tipo in tipos:
+            result.append({
+                "id": tipo.ID,
+                "descripcion": tipo.DESCRIPCION
+            })
+        
+        return result
+    
+    def get_tipos_operaciones() -> List[Dict]:
+        """Obtiene todos los tipos de operaciones"""
+        query = """
+            SELECT IDPROCESO AS ID, DESCRIPCION
+            FROM PLANNER_PROCESOS
+            ORDER BY DESCRIPCION
+        """
+        
+        tipos = db_manager.execute_query(query)
+        result = []
+        
+        for tipo in tipos:
+            result.append({
+                "id": tipo.ID,
+                "descripcion": tipo.DESCRIPCION
+            })
+        
+        return result
+    
+    @staticmethod
+    def get_clientes() -> List[Dict]:
+        """Obtiene todos los clientes (sociedades)"""
+        query = """
+            SELECT IDCLIENTE, NOMCLI
+            FROM ERP_CLIENTES
+            ORDER BY NOMCLI
+        """
+        
+        clientes = db_manager.execute_query(query)
+        result = []
+        
+        for cliente in clientes:
+            result.append({
+                "idcliente": cliente.IDCLIENTE,
+                "nomcli": cliente.NOMCLI
+            })
+        
+        return result
+    
+    @staticmethod
+    def get_paises() -> List[Dict]:
+        """Obtiene todos los países"""
+        query = """
+            SELECT COUNTRY_CODE AS CODIGO, NAME AS NOMBRE
+            FROM COUNTRIES
+            ORDER BY NAME
+        """
+        
+        paises = db_manager.execute_query(query)
+        result = []
+        
+        for pais in paises:
+            result.append({
+                "codigo": pais.CODIGO,
+                "nombre": pais.NOMBRE
+            })
+        
+        return result
+    
+    @staticmethod
+    def get_provincias(country_code: str) -> List[Dict]:
+        """Obtiene las provincias de un país"""
+        query = """
+            SELECT subdivision_code as codigo, name as nombre
+            FROM SUBDIVISIONS
+            WHERE country_code = ?
+            ORDER BY name
+        """
+        
+        provincias = db_manager.execute_query(query, (country_code,))
+        result = []
+        
+        for provincia in provincias:
+            result.append({
+                "codigo": provincia.codigo,
+                "nombre": provincia.nombre
+            })
+        
+        return result
+    
+    @staticmethod
+    def get_analistas_pbc() -> List[Dict]:
+        """Obtiene analistas PBC (IDPERFIL=2)"""
+        query = """
+            SELECT ID, NOMBRE
+            FROM USUARIOS
+            WHERE IDPERFIL = 2
+            ORDER BY NOMBRE
+        """
+        
+        analistas = db_manager.execute_query(query)
+        result = []
+        
+        for analista in analistas:
+            result.append({
+                "id": analista.ID,
+                "nombre": analista.NOMBRE
+            })
+        
+        return result
+    
+    @staticmethod
+    def get_operadores() -> List[Dict]:
+        """Obtiene operadores (IDPERFIL=7)"""
+        query = """
+            SELECT ID, NOMBRE
+            FROM USUARIOS
+            WHERE IDPERFIL = 7
+            ORDER BY NOMBRE
+        """
+        
+        operadores = db_manager.execute_query(query)
+        result = []
+        
+        for operador in operadores:
+            result.append({
+                "id": operador.ID,
+                "nombre": operador.NOMBRE
+            })
+        
+        return result
+
+class TareaService:
+    @staticmethod
+    def create_tarea(data: Dict, user_id: int) -> int:
+        """Crea una nueva tarea (operación)"""
+        query = """
+            INSERT INTO PLANNER_TAREAS (
+                CODEMPRESA, IDPROCESO, IDESTADO, VISIBILIDAD,
+                IDCLIENTE, EXT_TIPOACTIVO, EXT_ACTIVOSOTROS,
+                LOCALIDAD, PAIS, PROVINCIA, EXT_ANALISTAPBC,
+                REFERENCIA, EXT_ASIGNADOR_ANALISTAPBC, EXT_OPERADOR,
+                EXT_URGENTE, FECHA_ALTA, IDUSUARIO_ALTA
+            )
+            VALUES (?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, GETDATE(), ?);
+            SELECT SCOPE_IDENTITY() as id;
+        """
+
+        print("Creating tarea with data:", data)
+        
+        # Set asignador if analista is being assigned
+        asignador = user_id if data.get('ext_analistapbc') else None
+        
+        result = db_manager.execute_query(query, (
+            data.get('codempresa'),
+            data.get('tipo_operacion'),
+            data.get('idcliente'),            
+            data.get('ext_tipoactivo'),
+            data.get('ext_activosotros'),
+            data.get('localidad'),
+            data.get('pais'),
+            data.get('provincia'),
+            data.get('ext_analistapbc'),
+            data.get('referencia'),
+            asignador,
+            data.get('ext_operador'),
+            data.get('ext_urgente', False),
+            user_id
+        ), fetch_one=True)
+        
+        return int(result)
+    
+    @staticmethod
+    def get_tarea_by_id(idtarea: int) -> Optional[Dict]:
+        """Obtiene una tarea por ID con información relacionada"""
+        query = """
+            SELECT 
+                T.IDTAREA, T.IDCLIENTE, T.EXT_TIPOACTIVO, T.EXT_ACTIVOSOTROS,
+                T.LOCALIDAD, T.PAIS, T.PROVINCIA, T.EXT_ANALISTAPBC,
+                T.CODEMPRESA, T.REFERENCIA, T.EXT_ASIGNADOR_ANALISTAPBC,
+                T.EXT_OPERADOR, T.EXT_URGENTE, T.FECHA_ALTA,
+                C.NOMCLI as cliente_nombre,
+                TA.DESCRIPCION as tipoactivo_nombre,
+                P.NAME as pais_nombre,
+                S.name as provincia_nombre,
+                A.NOMBRE as analistapbc_nombre,
+                E.NOMEMPRESA as servicer_nombre,
+                AS_USER.NOMBRE as asignador_nombre,
+                O.NOMBRE as operador_nombre
+            FROM PLANNER_TAREAS T
+            LEFT JOIN ERP_CLIENTES C ON T.IDCLIENTE = C.IDCLIENTE
+            LEFT JOIN TIPOS_ACTIVOS TA ON T.EXT_TIPOACTIVO = TA.ID
+            LEFT JOIN COUNTRIES P ON T.PAIS = P.COUNTRY_CODE
+            LEFT JOIN SUBDIVISIONS S ON T.PROVINCIA = S.subdivision_code
+            LEFT JOIN USUARIOS A ON T.EXT_ANALISTAPBC = A.ID
+            LEFT JOIN EMPRESAS_CLIENTES E ON T.CODEMPRESA = E.CODEMPRESA
+            LEFT JOIN USUARIOS AS_USER ON T.EXT_ASIGNADOR_ANALISTAPBC = AS_USER.ID
+            LEFT JOIN USUARIOS O ON T.EXT_OPERADOR = O.ID
+            WHERE T.IDTAREA = ?
+        """
+
+        query = """
+            SELECT 
+            P.COUNTRY_CODE as 'pais',
+            t.idtarea,
+        T.[codempresa]
+        ,T.[idproceso]
+        ,T.[idestado]
+        ,T.[idetiqueta]
+        ,T.[visibilidad]
+        ,T.[titulo]
+        ,T.[descripcion]
+        ,T.[orden]
+        ,T.[fecha_alta]
+        ,T.[fecha_prevista]
+        ,T.[fecha_realizacion]
+        ,T.[fecha_cierre]
+        ,T.[idsolicitud]
+        ,T.[idusuario_alta]
+        ,T.[idusuario_realizacion]
+        ,T.[idcliente]
+        ,T.[facturacion]
+        ,T.[idcuotalin]
+        ,T.[numdoc]
+        ,T.[idserie]
+        ,T.[cancelada]
+        ,T.[archivada]
+        ,T.[idtareaorigen]
+        ,T.[idcontacto]
+        ,T.[finalizada]
+        ,T.[contador]
+        ,T.[prefijo]
+        ,T.[seleccionar]
+        ,T.[ext_objeto]
+        ,T.[ext_tipoactivo]
+        ,T.[ext_localidadinmueble]
+        ,T.[ext_codprovi_inmueble]
+        ,T.[ext_importe]
+        ,T.[ext_bloqueo]
+        ,T.[ext_tributacion]
+        ,T.[ext_activosotros]
+        ,T.[ext_analistapbc]
+        ,T.[idhitoactivo]
+        ,T.[riesgo]
+        ,T.[idrepresen]
+        ,T.[upsize_ts]
+        ,T.[estado]
+        ,T.[ext_asignador_analistapbc]
+        ,T.[ext_operador]
+        ,T.[referencia]
+        ,T.[ext_enviado_pbc]
+        ,T.[ext_urgente]
+        ,T.[localidad]
+        ,T.[provincia]
+        ,
+                C.NOMCLI as cliente_nombre,
+                TA.DESCRIPCION as tipoactivo_nombre,
+				P.country_code AS pais_codigo,
+                P.NAME as pais_nombre,
+				S.subdivision_code as provincia_codigo,
+                S.name as provincia_nombre,
+                A.NOMBRE as analistapbc_nombre,
+                E.NOMEMPRESA as servicer_nombre,
+                AS_USER.NOMBRE as asignador_nombre,
+                O.NOMBRE as operador_nombre
+            FROM PLANNER_TAREAS T
+            LEFT JOIN ERP_CLIENTES C ON T.IDCLIENTE = C.IDCLIENTE
+            LEFT JOIN TIPOS_ACTIVOS TA ON T.EXT_TIPOACTIVO = TA.ID
+            LEFT JOIN COUNTRIES P ON T.PAIS = P.COUNTRY_CODE
+            LEFT JOIN SUBDIVISIONS S ON T.PROVINCIA = S.subdivision_code
+            LEFT JOIN USUARIOS A ON T.EXT_ANALISTAPBC = A.ID
+            LEFT JOIN EMPRESAS_CLIENTES E ON T.CODEMPRESA = E.CODEMPRESA
+            LEFT JOIN USUARIOS AS_USER ON T.EXT_ASIGNADOR_ANALISTAPBC = AS_USER.ID
+            LEFT JOIN USUARIOS O ON T.EXT_OPERADOR = O.ID
+            WHERE T.IDTAREA = ?
+            """
+        
+        tarea = db_manager.execute_query(query, (idtarea,), fetch_one=True)
+        
+        if not tarea:
+            return None
+
+        #print("Fetched tarea:", tarea.pais)
+        
+        payload = {
+            # Identificadores / básicos
+            "idtarea": getattr(tarea, "idtarea", None),
+            "codempresa": getattr(tarea, "codempresa", None),
+            "idproceso": getattr(tarea, "idproceso", None),
+            "idestado": getattr(tarea, "idestado", None),
+            "idetiqueta": getattr(tarea, "idetiqueta", None),
+            "idcliente": getattr(tarea, "idcliente", None),
+
+            # Texto / metadatos
+            "visibilidad": getattr(tarea, "visibilidad", None),
+            "titulo": getattr(tarea, "titulo", None),
+            "descripcion": getattr(tarea, "descripcion", None),
+            "orden": getattr(tarea, "orden", None),
+            "fecha_alta": getattr(tarea, "fecha_alta", None),
+            "fecha_prevista": getattr(tarea, "fecha_prevista", None),
+            "fecha_realizacion": getattr(tarea, "fecha_realizacion", None),
+            "fecha_cierre": getattr(tarea, "fecha_cierre", None),
+            "idsolicitud": getattr(tarea, "idsolicitud", None),
+            "idusuario_alta": getattr(tarea, "idusuario_alta", None),
+            "idusuario_realizacion": getattr(tarea, "idusuario_realizacion", None),
+
+            # Facturación / docs (si aplica en tu SELECT)
+            "facturacion": getattr(tarea, "facturacion", None),
+            "idcuotalin": getattr(tarea, "idcuotalin", None),
+            "numdoc": getattr(tarea, "numdoc", None),
+            "idserie": getattr(tarea, "idserie", None),
+
+            # Estados booleanos
+            "cancelada": getattr(tarea, "cancelada", None),
+            "archivada": getattr(tarea, "archivada", None),
+            "finalizada": getattr(tarea, "finalizada", None),
+            "ext_bloqueo": getattr(tarea, "ext_bloqueo", None),
+            "ext_enviado_pbc": getattr(tarea, "ext_enviado_pbc", None),
+            "ext_urgente": bool(getattr(tarea, "ext_urgente", False)),
+
+            # Vinculaciones
+            "idtareaorigen": getattr(tarea, "idtareaorigen", None),
+            "idcontacto": getattr(tarea, "idcontacto", None),
+            "idrepresen": getattr(tarea, "idrepresen", None),
+            "idhitoactivo": getattr(tarea, "idhitoactivo", None),
+
+            # Extras/extendidos
+            "contador": getattr(tarea, "contador", None),
+            "prefijo": getattr(tarea, "prefijo", None),
+            "seleccionar": getattr(tarea, "seleccionar", None),
+            "ext_objeto": getattr(tarea, "ext_objeto", None),
+            "ext_tipoactivo": getattr(tarea, "ext_tipoactivo", None),
+            "ext_localidadinmueble": getattr(tarea, "ext_localidadinmueble", None),
+            "ext_codprovi_inmueble": getattr(tarea, "ext_codprovi_inmueble", None),
+            "ext_importe": getattr(tarea, "ext_importe", None),
+            "ext_tributacion": getattr(tarea, "ext_tributacion", None),
+            "ext_activosotros": getattr(tarea, "ext_activosotros", None),
+            "ext_analistapbc": getattr(tarea, "ext_analistapbc", None),
+            "ext_asignador_analistapbc": getattr(tarea, "ext_asignador_analistapbc", None),
+            "ext_operador": getattr(tarea, "ext_operador", None),
+
+            # Localización “plana”
+            "localidad": getattr(tarea, "localidad", None),
+            "provincia": getattr(tarea, "provincia", None),
+            "pais": getattr(tarea, "pais", None),
+
+            # Catálogos / “nombres bonitos”
+            "cliente_nombre": getattr(tarea, "cliente_nombre", None),
+            "tipoactivo_nombre": getattr(tarea, "tipoactivo_nombre", None),
+            "pais_nombre": getattr(tarea, "pais_nombre", None),
+            "provincia_nombre": getattr(tarea, "provincia_nombre", None),
+            "analistapbc_nombre": getattr(tarea, "analistapbc_nombre", None),
+            "asignador_nombre": getattr(tarea, "asignador_nombre", None),
+            "operador_nombre": getattr(tarea, "operador_nombre", None),
+            "servicer_nombre": getattr(tarea, "servicer_nombre", None),
+
+            # Otros del modelo (si los has incluido en el SELECT)
+            "riesgo": getattr(tarea, "riesgo", None),
+            "estado": getattr(tarea, "estado", None),
+            "referencia": getattr(tarea, "referencia", None),
+        }
+
+        #print("pais: ", tarea.pais)
+        #print("Tarea payload:", payload)
+
+        return payload
+
+        
+        return {
+            "idtarea": tarea.IDTAREA,
+            "idcliente": tarea.IDCLIENTE,
+            "cliente_nombre": tarea.cliente_nombre,
+            "ext_tipoactivo": tarea.EXT_TIPOACTIVO,
+            "tipoactivo_nombre": tarea.tipoactivo_nombre,
+            "ext_activosotros": tarea.EXT_ACTIVOSOTROS,
+            "localidad": tarea.LOCALIDAD,
+            "pais": tarea.PAIS,
+            "pais_nombre": tarea.pais_nombre,
+            "provincia": tarea.PROVINCIA,
+            "provincia_nombre": tarea.provincia_nombre,
+            "ext_analistapbc": tarea.EXT_ANALISTAPBC,
+            "analistapbc_nombre": tarea.analistapbc_nombre,
+            "codempresa": tarea.CODEMPRESA,
+            "servicer_nombre": tarea.servicer_nombre,
+            "referencia": tarea.REFERENCIA,
+            "ext_asignador_analistapbc": tarea.EXT_ASIGNADOR_ANALISTAPBC,
+            "asignador_nombre": tarea.asignador_nombre,
+            "ext_operador": tarea.EXT_OPERADOR,
+            "operador_nombre": tarea.operador_nombre,
+            "ext_urgente": bool(tarea.EXT_URGENTE),
+            "fecha_alta": tarea.FECHA_ALTA
+        }
+    
+    @staticmethod
+    def update_tarea(idtarea: int, data: Dict, user_id: int) -> None:
+        """Actualiza una tarea existente"""
+        # Get current tarea to check if analista is being changed
+        current_query = "SELECT EXT_ANALISTAPBC FROM PLANNER_TAREAS WHERE IDTAREA = ?"
+        current = db_manager.execute_query(current_query, (idtarea,), fetch_one=True)
+        
+        # Update asignador if analista is being changed
+        asignador = data.ext_asignador_analistapbc
+        if current and current.EXT_ANALISTAPBC != data.ext_analistapbc:
+            asignador = user_id
+        
+        query = """
+            UPDATE PLANNER_TAREAS
+            SET CODEMPRESA = ?, IDCLIENTE = ?, EXT_TIPOACTIVO = ?,
+                EXT_ACTIVOSOTROS = ?, LOCALIDAD = ?, PAIS = ?,
+                PROVINCIA = ?, EXT_ANALISTAPBC = ?, REFERENCIA = ?,
+                EXT_ASIGNADOR_ANALISTAPBC = ?, EXT_OPERADOR = ?,
+                EXT_URGENTE = ?
+            WHERE IDTAREA = ?
+        """
+        
+        db_manager.execute_query(query, (
+            data.codempresa,
+            data.idcliente,
+            data.ext_tipoactivo,
+            data.ext_activosotros,
+            data.localidad,
+            data.pais,
+            data.provincia,
+            data.ext_analistapbc,
+            data.referencia,
+            asignador,
+            data.ext_operador,
+            data.ext_urgente if data.ext_urgente else False,
+            idtarea
+        ))
+
+# class ProcesoEstadoRolService:
+#     @staticmethod
+#     def get_roles_by_estado(idproceso: int, idestado: int) -> List[Dict]:
+#         """Obtiene todos los roles asignados a un estado"""
+#         query = """
+#             SELECT 
+#                 PER.ID, PER.IDPROCESO, PER.IDESTADO, PER.IDROL,
+#                 R.NOMBRE as rol_nombre,
+#                 PER.LECTURA, PER.ESCRITURA, PER.CAMBIOESTADO
+#             FROM PLANNER_PROCESOS_ESTADOS_ROLES PER
+#             INNER JOIN ROLES R ON PER.IDROL = R.ID
+#             WHERE PER.IDPROCESO = ? AND PER.IDESTADO = ?
+#             ORDER BY R.NOMBRE
+#         """
+        
+#         roles = db_manager.execute_query(query, (idproceso, idestado))
+#         result = []
+        
+#         for rol in roles:
+#             result.append({
+#                 "id": rol.ID,
+#                 "idproceso": rol.IDPROCESO,
+#                 "idestado": rol.IDESTADO,
+#                 "idrol": rol.IDROL,
+#                 "rol_nombre": rol.rol_nombre,
+#                 "lectura": bool(rol.LECTURA),
+#                 "escritura": bool(rol.ESCRITURA),
+#                 "cambioestado": bool(rol.CAMBIOESTADO)
+#             })
+        
+#         return result
+    
+#     @staticmethod
+#     def create_estado_rol(idproceso: int, idestado: int, idrol: int, lectura: bool, escritura: bool, cambioestado: bool) -> int:
+#         """Crea un nuevo rol para un estado"""
+#         query = """
+#             INSERT INTO PLANNER_PROCESOS_ESTADOS_ROLES (IDPROCESO, IDESTADO, IDROL, LECTURA, ESCRITURA, CAMBIOESTADO)
+#             VALUES (?, ?, ?, ?, ?, ?);
+#             SELECT SCOPE_IDENTITY() as id;
+#         """
+        
+#         result = db_manager.execute_query(query, (idproceso, idestado, idrol, lectura, escritura, cambioestado), fetch_one=True)
+#         return int(result.id)
+    
+#     @staticmethod
+#     def update_estado_rol(id: int, lectura: bool, escritura: bool, cambioestado: bool) -> None:
+#         """Actualiza un rol de estado"""
+#         query = """
+#             UPDATE PLANNER_PROCESOS_ESTADOS_ROLES
+#             SET LECTURA = ?, ESCRITURA = ?, CAMBIOESTADO = ?
+#             WHERE ID = ?
+#         """
+        
+#         db_manager.execute_query(query, (lectura, escritura, cambioestado, id))
+    
+#     @staticmethod
+#     def delete_estado_rol(id: int) -> None:
+#         """Elimina un rol de estado"""
+#         query = """
+#             DELETE FROM PLANNER_PROCESOS_ESTADOS_ROLES
+#             WHERE ID = ?
+#         """
+#         db_manager.execute_query(query, (id,))
+    
+#     @staticmethod
+#     def delete_roles_by_estado(idproceso: int, idestado: int) -> None:
+#         """Elimina todos los roles de un estado"""
+#         query = """
+#             DELETE FROM PLANNER_PROCESOS_ESTADOS_ROLES
+#             WHERE IDPROCESO = ? AND IDESTADO = ?
+#         """
+#         db_manager.execute_query(query, (idproceso, idestado))

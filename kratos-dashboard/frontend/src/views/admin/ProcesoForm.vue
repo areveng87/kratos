@@ -8,7 +8,21 @@
         <p class="mt-1" style="color: var(--color-text-secondary)">
           {{ isNew ? 'Crear un nuevo proceso' : 'Modificar proceso existente' }}
         </p>
+        <!-- Modal -->
+        <div v-if="show" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div class="rounded-lg p-6 w-96"
+              style="background-color: var(--color-bg-secondary); border:1px solid var(--color-border);">
+            <h3 class="text-lg font-semibold theme-text mb-3">Confirmar acción</h3>
+            <p class="theme-text mb-6">{{ message }}</p>
+            <div class="flex justify-end gap-2">
+              <button @click="cancel" class="btn-secondary">Cancelar</button>
+              <button @click="accept" class="btn-primary">Sí, eliminar</button>
+            </div>
+          </div>
+        </div>
       </div>
+
+      
 
       <!-- Formulario principal -->
       <div class="rounded-lg p-6 mb-6" style="background-color: var(--color-bg-secondary); border: 1px solid var(--color-border)">
@@ -132,11 +146,13 @@
                   </td>
                   <td class="p-3">
                     <div class="flex space-x-2 justify-center">
-                      <button class="btn-secondary-sm" title="Roles">
+                      <button @click="abrirModalRoles(estado)" 
+                      class="text-indigo-400 hover:text-indigo-300" 
+                      title="Roles">
                         <Users :size="16" />
                       </button>
                       <button @click="eliminarEstado(index)" 
-                      class="btn-danger-sm" 
+                      class="text-red-400 hover:text-red-300"
                       title="Eliminar">
                         <Trash2 :size="16" />
                       </button>
@@ -184,6 +200,17 @@
         <button @click="cancelar" class="btn-secondary">Cancelar</button>
         <button @click="guardar" class="btn-primary" :disabled="!proceso.descripcion">Guardar</button>
       </div>
+
+      <!-- Modal de Roles -->
+      <RolesModal
+        v-if="modalRoles.show"
+        :idproceso="modalRoles.idproceso"
+        :idestado="modalRoles.idestado"
+        :estadoNombre="modalRoles.estadoNombre"
+        @close="cerrarModalRoles"
+        @saved="onRolesGuardados"
+      />
+
     </div>
   </Sidebar>
 </template>
@@ -194,6 +221,13 @@ import { useRouter, useRoute } from 'vue-router'
 import { Plus, Trash2, Users, Eye, EyeOff, CheckCircle2, Circle, ArrowUp, ArrowDown } from 'lucide-vue-next'
 import Sidebar from '../../components/Sidebar.vue'
 import api from '../../api'
+import { useToastStore } from '../../stores/toast'
+import { useConfirm } from '../../composables/useConfirm'
+import RolesModal from '../../components/RolesModal.vue'
+
+const { show, message, confirmar, accept, cancel } = useConfirm()
+
+const toast = useToastStore()
 
 const router = useRouter()
 const route = useRoute()
@@ -204,6 +238,13 @@ const proceso = ref({
   descripcion: '',
   prefijo: '',
   visibilidad: true
+})
+
+const modalRoles = ref({
+  show: false,
+  idproceso: null,
+  idestado: null,
+  estadoNombre: ''
 })
 
 const acciones = ref([])
@@ -218,8 +259,8 @@ const menuContextual = ref({
 })
 
 const accionesDisponibles = computed(() => {
-  const accionesAgregadas = new Set(estados.value.map(e => e.idaccion))
-  return acciones.value.filter(accion => !accionesAgregadas.has(accion.idaccion))
+  const estadosAgregados = new Set(estados.value.map(e => e.idestado))
+  return acciones.value.filter(accion => !estadosAgregados.has(accion.idaccion))
 })
 
 const cargarAcciones = async () => {
@@ -253,15 +294,17 @@ const cargarProceso = async () => {
       tempId: `estado-${index}-${Date.now()}`
     }))
   } catch (error) {
-    console.error('Error al cargar proceso:', error)
-    alert('Error al cargar el proceso')
+
+    toast.push(error.response?.data?.detail || 'Error al guardar el proceso', 'error')
+
   }
 }
 
 const agregarAccion = (accion) => {
   estados.value.push({
     tempId: `estado-${Date.now()}`,
-    idaccion: accion.idaccion,
+    //idaccion: accion.idaccion,
+    idestado: accion.idaccion, // IDESTADO = IDACCION from ACCIONES table
     titulo: accion.descripcion,
     visibilidad: true,
     finaliza: false,
@@ -269,10 +312,12 @@ const agregarAccion = (accion) => {
   })
 }
 
-const eliminarEstado = (index) => {
-  if (confirm('¿Está seguro de eliminar esta acción?')) {
-    estados.value.splice(index, 1)
-  }
+const eliminarEstado = async (index) => {
+  const ok = await confirmar('¿Está seguro de eliminar esta acción?')
+  if (!ok) 
+    return
+
+  estados.value.splice(index, 1)
 }
 
 const toggleFinaliza = (index) => {
@@ -331,18 +376,16 @@ const moverAbajo = () => {
 
 const guardar = async () => {
   if (!proceso.value.descripcion) {
-    alert('La descripción es obligatoria')
+    toast.push('La descripción es obligatoria', 'error')
     return
   }
-
-  console.log('estados:', estados.value )
   
   const data = {
     descripcion: proceso.value.descripcion,
     prefijo: proceso.value.prefijo || '',
     visibilidad: proceso.value.visibilidad ? 1 : 0,
     estados: estados.value.map((estado, index) => ({
-      idaccion: estado.idaccion,
+      idestado: estado.idestado,
       titulo: estado.titulo,
       visibilidad: estado.visibilidad,
       finaliza: estado.finaliza,
@@ -353,23 +396,47 @@ const guardar = async () => {
   try {
     if (isNew.value) {
 
-      console.log(data)
-
       await api.procesos.createCompleto(data)
-      alert('Proceso creado correctamente')
+
+      toast.push('Proceso creado correctamente', 'success')
     } else {
-      await api.procesos.updateCompleto(route.params.id, data)
-      alert('Proceso actualizado correctamente')
+
+        await api.procesos.updateCompleto(route.params.id, data)
+
+        toast.push('Proceso actualizado correctamente', 'success')
     }
     router.push('/admin/definicion-procesos')
   } catch (error) {
-    console.error('Error al guardar proceso:', error)
-    alert(error.response?.data?.detail || 'Error al guardar el proceso')
+
+    toast.push(error.response?.data?.detail || 'Error al guardar el proceso', 'error')
   }
 }
 
 const cancelar = () => {
   router.push('/admin/definicion-procesos')
+}
+
+const abrirModalRoles = (estado) => {
+  if (!route.params.id || route.params.id === 'nuevo') {
+    alert('Debe guardar el proceso antes de asignar roles')
+    return
+  }
+   console.log('Abriendo modal de roles para estado:', route.params.id)
+
+  modalRoles.value = {
+    show: true,
+    idproceso: parseInt(route.params.id),
+    idestado: estado.idestado,
+    estadoNombre: estado.titulo
+  }
+}
+
+const cerrarModalRoles = () => {
+  modalRoles.value.show = false
+}
+
+const onRolesGuardados = () => {
+  // Opcional: recargar datos si es necesario
 }
 
 onMounted(async () => {
