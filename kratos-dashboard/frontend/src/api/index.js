@@ -205,6 +205,32 @@ export const api = {
     create: (data) => axios.post("/tareas", data),
     update: (idtarea, data) => axios.put(`/tareas/${idtarea}`, data),
   },
+
+  
+  // Catálogos de hitos endpoints
+  hitos: {
+    getMonedas: () => axios.get("/catalogos/monedas"),
+    getTributaciones: () => axios.get("/catalogos/tributaciones"),
+    getTiposPago: () => axios.get("/catalogos/tipos-pago"),
+    getByTarea: (idtarea) => axios.get(`/tareas/${idtarea}/hitos`),
+    create: (idtarea, data) => axios.post(`/tareas/${idtarea}/hitos`, data),
+    update: (idhito, data) => axios.put(`/tareas/hitos/${idhito}`, data),
+    delete: (idhito) => axios.delete(`/tareas/hitos/${idhito}`),
+    reorder: (idtarea, data) => axios.put(`/tareas/${idtarea}/hitos/reorder`, data),
+
+    activate: (idtarea, idhito) => axios.put(`/tareas/${idtarea}/hitos/activate/${idhito}`),
+  },
+  logs: {
+    crearLogTarea: (idtarea, idhito, data) => axios.post(`/tareas/${idtarea}/hitos/logs/${idhito}`, data),
+  },
+
+  // Personas Naturales endpoints
+  personasNaturales: {
+    getAll: () => axios.get("/personas-naturales"),
+    getById: (id) => axios.get(`/personas-naturales/${id}`),
+    getTiposDocumento: () => axios.get("/catalogos/tipos-documento"),
+  },
+
 }
 
 export default api

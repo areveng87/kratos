@@ -14,7 +14,7 @@ import shutil
 from pathlib import Path
 
 from models import *
-from services import CountryService, UserService, DashboardService, OperacionService, EmpresaService, SociedadService, RoleService, AuditorSociedadService, AuditorOperacionService, EstructuraCarpetaService, TipoRelacionService, TipoAlertaService, ProcesoService, AccionService, ProcesoEstadoService, ProcesoEstadoRolService, CatalogoService, TareaService
+from services import CountryService, UserService, DashboardService, OperacionService, EmpresaService, SociedadService, RoleService, AuditorSociedadService, AuditorOperacionService, EstructuraCarpetaService, TipoRelacionService, TipoAlertaService, ProcesoService, AccionService, ProcesoEstadoService, ProcesoEstadoRolService, CatalogoService, TareaService, HitoService, ImportesHitosService, LogService, PersonasNaturalesService
 from auth import auth_manager
 
 import shutil
@@ -1669,22 +1669,324 @@ async def create_tarea(
         data=tarea
     )
 
+# @app.put("/api/tareas/{idtarea}")
+# async def update_tarea(
+#     idtarea: int,
+#     data: UpdateTareaRequest,
+#     user_id: int = Depends(verify_token)
+# ):
+#     """Actualiza una tarea"""
+#     TareaService.update_tarea(idtarea, data, user_id)
+    
+#     # Get the updated tarea
+#     tarea = TareaService.get_tarea_by_id(idtarea)
+    
+#     return APIResponse(
+#         code=200,
+#         detail="Tarea actualizada correctamente",
+#         data=tarea
+#     )
+
+@app.put("/api/tareas/{idtarea}/hitos/activate/{idhito}")
+async def activate_hito(
+    idtarea: int,
+    idhito: int,
+    user_id: int = Depends(verify_token)
+):
+    #If gIdrol = 2 Then
+    role = UserService.get_user_by_id(user_id)["rol_id"]
+    print("User role for activating hito:", role)
+    
+    """Activa un hito"""
+    result = HitoService.activate_hito(idtarea, idhito)    
+    
+    #TODO: ENVIAR CORREO AL OPERADOR
+    #Tipo de envíos de correos para Analista:
+    #Solicitada Documentacion, Aprobado PBC, Fallido PBC y Denegado pbc envia un correo al operador
+
+    return APIResponse(
+        code=200,
+        detail="Hito activado correctamente",
+        data=result
+    )
+
+# New endpoints for catalogos de hitos
+@app.get("/api/catalogos/monedas")
+async def get_monedas(user_id: int = Depends(verify_token)):
+    """Obtiene todas las monedas"""
+    monedas = ImportesHitosService.get_monedas()
+    return APIResponse(
+        code=200,
+        detail="Monedas obtenidas correctamente",
+        data=monedas
+    )
+
+@app.get("/api/catalogos/tributaciones")
+async def get_tributaciones(user_id: int = Depends(verify_token)):
+    """Obtiene todas las tributaciones"""
+    tributaciones = ImportesHitosService.get_tributaciones()
+    return APIResponse(
+        code=200,
+        detail="Tributaciones obtenidas correctamente",
+        data=tributaciones
+    )
+
+@app.get("/api/catalogos/tipos-pago")
+async def get_tipos_pago(user_id: int = Depends(verify_token)):
+    """Obtiene todos los tipos de pago (hitos)"""
+    tipos = ImportesHitosService.get_tipos_pago()
+    return APIResponse(
+        code=200,
+        detail="Tipos de pago obtenidos correctamente",
+        data=tipos
+    )
+
+# New endpoints CRUD for hitos
+@app.get("/api/tareas/{idtarea}/hitos")
+async def get_hitos_by_tarea(
+    idtarea: int,
+    user_id: int = Depends(verify_token)
+):
+    """Obtiene todos los hitos de una tarea"""
+    hitos = HitoService.get_hitos_by_tarea(idtarea)
+    
+    return APIResponse(
+        code=200,
+        detail="Hitos obtenidos correctamente",
+        data=hitos
+    )
+
+@app.post("/api/tareas/{idtarea}/hitos")
+async def create_hito(
+    idtarea: int,
+    data: CreateHitoRequest,
+    user_id: int = Depends(verify_token)
+):
+    """Crea un nuevo hito para una tarea"""
+    
+    # Check if any hito is activated
+    if HitoService.has_activated_hitos(idtarea):
+        raise HTTPException(
+            status_code=400,
+            detail="No se pueden agregar hitos cuando ya hay hitos activados"
+        )
+    
+    data.fecha = data.fecha or datetime.utcnow().date()
+    
+    idtareaplazo = HitoService.create_hito(idtarea, data.numhito, data.descripcion, data.importe, data.fecha)
+    
+    # Get the created hito
+    hitos = HitoService.get_hitos_by_tarea(idtarea)
+    created = next((h for h in hitos if h["idtareaplazo"] == idtareaplazo), None)
+    
+    return APIResponse(
+        code=201,
+        detail="Hito creado correctamente",
+        data=created
+    )
+
+@app.put("/api/tareas/hitos/{idtareaplazo}")
+async def update_hito(
+    idtareaplazo: int,
+    data: UpdateHitoRequest,
+    user_id: int = Depends(verify_token)
+):
+    """Actualiza un hito"""
+    
+    # Check if any hito is activated in this tarea
+    hito_info = HitoService.get_hito_by_id(idtareaplazo)
+    if not hito_info:
+        raise HTTPException(status_code=404, detail="Hito no encontrado")
+    
+    if HitoService.has_activated_hitos(hito_info["idtarea"]):
+        raise HTTPException(
+            status_code=400,
+            detail="No se pueden editar hitos cuando ya hay hitos activados"
+        )
+    
+    HitoService.update_hito(idtareaplazo, data)
+    
+    # Get the updated hito
+    updated = HitoService.get_hito_by_id(idtareaplazo)
+    
+    return APIResponse(
+        code=200,
+        detail="Hito actualizado correctamente",
+        data=updated
+    )
+
+@app.delete("/api/tareas/hitos/{idtareaplazo}")
+async def delete_hito(
+    idtareaplazo: int,
+    user_id: int = Depends(verify_token)
+):
+    """Elimina un hito"""
+    
+    # Check if any hito is activated in this tarea
+    hito_info = HitoService.get_hito_by_id(idtareaplazo)
+    if not hito_info:
+        raise HTTPException(status_code=404, detail="Hito no encontrado")
+    
+    if HitoService.has_activated_hitos(hito_info["idtarea"]):
+        raise HTTPException(
+            status_code=400,
+            detail="No se pueden eliminar hitos cuando ya hay hitos activados"
+        )
+    
+    HitoService.delete_hito(idtareaplazo)
+    
+    return APIResponse(
+        code=200,
+        detail="Hito eliminado correctamente",
+        data=None
+    )
+
+@app.put("/api/tareas/{idtarea}/hitos/reorder")
+async def reorder_hitos(
+    idtarea: int,
+    data: ReorderHitosRequest,
+    user_id: int = Depends(verify_token)
+):
+    """Reordena los hitos de una tarea"""
+    
+    # Check if any hito is activated
+    if HitoService.has_activated_hitos(idtarea):
+        raise HTTPException(
+            status_code=400,
+            detail="No se pueden reordenar hitos cuando ya hay hitos activados"
+        )
+    
+    # HitoService.reorder_hitos(idtarea, data.hitos)
+    HitoService.reorder_hitos(data.hitos)
+    
+    return APIResponse(
+        code=200,
+        detail="Hitos reordenados correctamente",
+        data=None
+    )
+
+# Tareas (operaciones) endpoints
+@app.get("/api/tareas/{idtarea}")
+async def get_tarea_by_id(
+    idtarea: int,
+    user_id: int = Depends(verify_token)
+):
+    """Obtiene una tarea por ID"""
+    tarea = TareaService.get_tarea_by_id(idtarea)
+    
+    if not tarea:
+        raise APIResponse(code=404, detail="Tarea no encontrada", data=None)
+    
+    return APIResponse(
+        code=200,
+        detail="Tarea obtenida correctamente",
+        data=tarea
+    )
+
+@app.post("/api/tareas")
+async def create_tarea(
+    data: CreateTareaRequest,
+    user_id: int = Depends(verify_token)
+):
+    """Crea una nueva tarea (operación)"""
+    idtarea = TareaService.create_tarea(data, user_id)
+    
+    # Get the created tarea
+    tarea = TareaService.get_tarea_by_id(idtarea)
+
+    if not tarea:
+        raise APIResponse(code=404, detail="No ha sido posible crear la tarea", data=None)
+    
+    return APIResponse(
+        code=201,
+        detail="Tarea creada correctamente",
+        data=tarea
+    )
+
 @app.put("/api/tareas/{idtarea}")
 async def update_tarea(
     idtarea: int,
     data: UpdateTareaRequest,
     user_id: int = Depends(verify_token)
 ):
+    print("Updating tarea ID:", idtarea, "with data:", data)
     """Actualiza una tarea"""
     TareaService.update_tarea(idtarea, data, user_id)
     
     # Get the updated tarea
     tarea = TareaService.get_tarea_by_id(idtarea)
+
+    if not tarea:
+        raise APIResponse(code=404, detail="No ha sido posible actualizar la tarea", data=None)
     
     return APIResponse(
         code=200,
         detail="Tarea actualizada correctamente",
         data=tarea
+    )
+@app.post("/api/tareas/{idtarea}/hitos/logs/{idhito}")
+async def create_log_hito(
+    idtarea: int,
+    idhito: int,
+    data: LogRequest,
+    user_id: int = Depends(verify_token)
+):
+    try:
+        print("data received for log:", data)
+        """Crea un nuevo log para un hito"""
+        idlog = LogService.create_tarea_log(user_id, idtarea, idhito, data.idaccion, data.comentario)
+
+        # Get the created log
+        log = LogService.get_tarea_log_by_id(idlog)
+
+        if not log:
+            raise APIResponse(code=404, detail="no ha sido posible crear el log", data=None)
+
+        return APIResponse(
+            code=201,
+            detail="Log creado correctamente",
+            data=log
+        )
+    except Exception as e:
+        print("Error creating log:" + str(e))
+        return APIResponse(code=500, detail="Error al crear el log: " + str(e), data=None)
+
+# Personas Naturales endpoints
+@app.get("/api/personas-naturales")
+async def get_personas_naturales(user_id: int = Depends(verify_token)):
+    """Obtiene todas las personas naturales"""
+    personas = PersonasNaturalesService.get_all_personas_naturales()
+    return APIResponse(
+        code=200,
+        detail="Personas naturales obtenidas correctamente",
+        data=personas
+    )
+
+@app.get("/api/personas-naturales/{persona_id}")
+async def get_persona_natural_by_id(
+    persona_id: int,
+    user_id: int = Depends(verify_token)
+):
+    """Obtiene una persona natural por ID"""
+    persona = PersonasNaturalesService.get_persona_by_id(persona_id)
+    
+    if not persona:
+        raise HTTPException(status_code=404, detail="Persona natural no encontrada")
+    
+    return APIResponse(
+        code=200,
+        detail="Persona natural obtenida correctamente",
+        data=persona
+    )
+
+@app.get("/api/catalogos/tipos-documento")
+async def get_tipos_documento(user_id: int = Depends(verify_token)):
+    """Obtiene todos los tipos de documento"""
+    tipos = PersonasNaturalesService.get_tipos_documento()
+    return APIResponse(
+        code=200,
+        detail="Tipos de documento obtenidos correctamente",
+        data=tipos
     )
 
 # for r in app.routes:

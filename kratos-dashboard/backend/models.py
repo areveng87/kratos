@@ -586,6 +586,7 @@ class TareaInmuebleRequest(BaseModel):
     # ext_operador: Optional[int] = None
     # ext_urgente: bool = False
     idcliente: Optional[int] = None
+    idhitoactivo: Optional[int] = None
     tipo_operacion: Optional[int] = None          # ← añadir si lo necesitas
     ext_tipoactivo: Optional[int] = None         # ← int (id del tipo)
     ext_activosotros: Optional[str] = None
@@ -598,6 +599,9 @@ class TareaInmuebleRequest(BaseModel):
     ext_asignador_analistapbc: Optional[int] = None
     ext_operador: Optional[int] = None
     ext_urgente: bool = False
+    ext_importe: Optional[float] = None
+    ext_moneda: Optional[int] = None
+    ext_tributacion: Optional[int] = None
 
 CreateTareaRequest = TareaInmuebleRequest
 UpdateTareaRequest = TareaInmuebleRequest
@@ -644,3 +648,103 @@ class ProvinciaResponse(BaseModel):
 class OperadorResponse(BaseModel):
     id: int
     nombre: str
+
+
+# Models for Importes/Hitos (PLANNER_TAREAS_PLAZOS)
+class MonedaResponse(BaseModel):
+    codigo_iso: str
+    nombre: str
+    simbolo: str
+    pais_referencia: str
+
+class TributacionResponse(BaseModel):
+    id: int
+    descripcion: str
+    valor: float
+
+class TipoPagoResponse(BaseModel):
+    id: int
+    descripcion: str
+
+class HitoResponse(BaseModel):
+    idtareaplazo: int
+    idtarea: int
+    numhito: int
+    descripcion: str
+    importe: float
+    fecha: Optional[date] = None
+    solicitado_pbc: bool
+    idsolicitador_pbc: Optional[int] = None
+    solicitador_nombre: Optional[str] = None
+    fechasolicitud_pbc: Optional[date] = None
+    aprobado: bool
+    fechaaprobacion: Optional[date] = None
+
+class CreateHitoRequest(BaseModel):
+    idtarea: int
+    numhito: Optional[int] = None
+    descripcion: str
+    importe: float
+    fecha: Optional[date] = None
+
+class UpdateHitoRequest(BaseModel):
+    descripcion: Optional[str] = None
+    idtipopago: Optional[int] = None
+    importe: Optional[float] = None
+    fecha: Optional[date] = None
+
+class ReorderHitosRequest(BaseModel):
+    hitos: List[Dict]  # List of {idtareaplazo, numhito} for reordering
+
+class LogRequest(BaseModel):
+    idaccion: int
+    comentario: str
+
+
+class PersonaNaturalResponse(BaseModel):
+    id: int
+    email: Optional[str] = None
+    nombre: Optional[str] = None
+    apellido: Optional[str] = None
+    nif: Optional[str] = None
+    idtipodocumento: Optional[int] = None
+    tipodocumento_nombre: Optional[str] = None
+    telefono: Optional[str] = None
+    telefono2: Optional[str] = None
+    activo: bool
+    fecha_creacion: Optional[datetime] = None
+    fecha_inicio: Optional[datetime] = None
+    fecha_fin: Optional[datetime] = None
+    residencia: Optional[int] = None
+    residencia_nombre: Optional[str] = None
+    nacionalidad: Optional[int] = None
+    nacionalidad_nombre: Optional[str] = None
+    riesgo: bool
+
+class CreatePersonaNaturalRequest(BaseModel):
+    email: Optional[str] = None
+    nombre: Optional[str] = None
+    apellido: Optional[str] = None
+    nif: Optional[str] = None
+    idtipodocumento: Optional[int] = None
+    telefono: Optional[str] = None
+    telefono2: Optional[str] = None
+    activo: bool = True
+    fecha_inicio: Optional[datetime] = None
+    fecha_fin: Optional[datetime] = None
+    residencia: Optional[int] = None
+    nacionalidad: Optional[int] = None
+
+class UpdatePersonaNaturalRequest(BaseModel):
+    email: Optional[str] = None
+    nombre: Optional[str] = None
+    apellido: Optional[str] = None
+    nif: Optional[str] = None
+    idtipodocumento: Optional[int] = None
+    telefono: Optional[str] = None
+    telefono2: Optional[str] = None
+    activo: bool
+    fecha_inicio: Optional[datetime] = None
+    fecha_fin: Optional[datetime] = None
+    residencia: Optional[int] = None
+    nacionalidad: Optional[int] = None

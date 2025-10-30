@@ -4,6 +4,7 @@ from database import db_manager
 from models import *
 from auth import auth_manager
 from fastapi import HTTPException, status
+from utils import *
 
 class UserService:
     @staticmethod
@@ -1979,9 +1980,9 @@ class TareaService:
                 IDCLIENTE, EXT_TIPOACTIVO, EXT_ACTIVOSOTROS,
                 LOCALIDAD, PAIS, PROVINCIA, EXT_ANALISTAPBC,
                 REFERENCIA, EXT_ASIGNADOR_ANALISTAPBC, EXT_OPERADOR,
-                EXT_URGENTE, FECHA_ALTA, IDUSUARIO_ALTA
+                EXT_URGENTE, FECHA_ALTA, FECHA_PREVISTA, IDUSUARIO_ALTA
             )
-            VALUES (?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, GETDATE(), ?);
+            VALUES (?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, GETDATE(), GETDATE(), ?);
             SELECT SCOPE_IDENTITY() as id;
         """
 
@@ -2077,6 +2078,7 @@ class TareaService:
         ,T.[ext_importe]
         ,T.[ext_bloqueo]
         ,T.[ext_tributacion]
+        ,T.[ext_moneda]
         ,T.[ext_activosotros]
         ,T.[ext_analistapbc]
         ,T.[idhitoactivo]
@@ -2091,7 +2093,8 @@ class TareaService:
         ,T.[ext_urgente]
         ,T.[localidad]
         ,T.[provincia]
-        ,
+        ,T.[idtributacion]
+        ,T.[idmoneda],
                 C.NOMCLI as cliente_nombre,
                 TA.DESCRIPCION as tipoactivo_nombre,
 				P.country_code AS pais_codigo,
@@ -2156,6 +2159,8 @@ class TareaService:
             "ext_bloqueo": getattr(tarea, "ext_bloqueo", None),
             "ext_enviado_pbc": getattr(tarea, "ext_enviado_pbc", None),
             "ext_urgente": bool(getattr(tarea, "ext_urgente", False)),
+            "idmoneda": getattr(tarea, "idmoneda", None),
+            "idtributacion": getattr(tarea, "idtributacion", None),
 
             # Vinculaciones
             "idtareaorigen": getattr(tarea, "idtareaorigen", None),
@@ -2231,7 +2236,7 @@ class TareaService:
         }
     
     @staticmethod
-    def update_tarea(idtarea: int, data: Dict, user_id: int) -> None:
+    def update_tarea2(idtarea: int, data: Dict, user_id: int) -> None:
         """Actualiza una tarea existente"""
         # Get current tarea to check if analista is being changed
         current_query = "SELECT EXT_ANALISTAPBC FROM PLANNER_TAREAS WHERE IDTAREA = ?"
@@ -2241,6 +2246,8 @@ class TareaService:
         asignador = data.ext_asignador_analistapbc
         if current and current.EXT_ANALISTAPBC != data.ext_analistapbc:
             asignador = user_id
+
+        print("Updating tarea ID:", idtarea, "with data:", data)
         
         query = """
             UPDATE PLANNER_TAREAS
@@ -2267,6 +2274,714 @@ class TareaService:
             data.ext_urgente if data.ext_urgente else False,
             idtarea
         ))
+
+    @staticmethod
+    def update_tarea(idtarea: int, data: Dict[str, Any], user_id: int) -> None:
+        """Actualiza PLANNER_TAREAS solo con los campos presentes en 'data'."""
+
+        def getv(obj, key, default=None):
+            return obj.get(key, default) if isinstance(obj, dict) else getattr(obj, key, default)
+
+        # Whitelist: python_key -> SQL column
+        COLMAP = {
+            # --- IDENTIFICADORES / META (no tocar IDTAREA) ---
+            "codempresa": "CODEMPRESA",
+            "idproceso": "IDPROCESO",
+            "idestado": "IDESTADO",
+            "idetiqueta": "IDETIQUETA",
+
+            # --- CAMPOS PRINCIPALES ---
+            "visibilidad": "VISIBILIDAD",
+            "titulo": "TITULO",
+            "descripcion": "DESCRIPCION",
+            "orden": "ORDEN",
+
+            # --- FECHAS ---
+            "fecha_alta": "FECHA_ALTA",
+            "fecha_prevista": "FECHA_PREVISTA",
+            "fecha_realizacion": "FECHA_REALIZACION",
+            "fecha_cierre": "FECHA_CIERRE",
+
+            # --- RELACIÓN / USUARIOS ---
+            "idsolicitud": "IDSOLICITUD",
+            "idusuario_alta": "IDUSUARIO_ALTA",
+            "idusuario_realizacion": "IDUSUARIO_REALIZACION",
+            "idcliente": "IDCLIENTE",
+
+            # --- FACTURACIÓN / DOCS ---
+            "facturacion": "FACTURACION",
+            "idcuotalin": "IDCUOTALIN",
+            "numdoc": "NUMDOC",
+            "idserie": "IDSERIE",
+
+            # --- FLAGS / ESTADOS ---
+            "cancelada": "CANCELADA",
+            "archivada": "ARCHIVADA",
+            "idtarea": "IDTAREA",
+            "idcontacto": "IDCONTACTO",
+            "finalizada": "FINALIZADA",
+            "contador": "CONTADOR",
+            "prefijo": "PREFIJO",
+            "seleccionar": "SELECCIONAR",
+            "estado": "ESTADO",
+
+            # --- EXTs / CAMPOS DOMINIO ---
+            "ext_objeto": "EXT_OBJETO",
+            "ext_tipoactivo": "EXT_TIPOACTIVO",
+            "ext_localidadinmueble": "EXT_LOCALIDADINMUEBLE",
+            "ext_codprovi_inmueble": "EXT_CODPROVI_INMUEBLE",
+            "ext_importe": "EXT_IMPORTE",
+            "ext_bloqueo": "EXT_BLOQUEO",
+            "ext_tributacion": "EXT_TRIBUTACION",
+            "ext_activosotros": "EXT_ACTIVOSOTROS",
+            "ext_analistapbc": "EXT_ANALISTAPBC",
+            "idhitoactivo": "IDHITOACTIVO",
+            "riesgo": "RIESGO",
+            "idrepresen": "IDREPRESEN",
+            "ext_asignador_analistapbc": "EXT_ASIGNADOR_ANALISTAPBC",
+            "ext_operador": "EXT_OPERADOR",
+            "referencia": "REFERENCIA",
+            "ext_enviado_pbc": "EXT_ENVIADO_PBC",
+            "ext_urgente": "EXT_URGENTE",
+            "idtributacion": "IDTRIBUTACION",
+            "idmoneda": "IDMONEDA",
+
+            # --- GEO ---
+            "localidad": "LOCALIDAD",
+            "provincia": "PROVINCIA",
+            "pais": "PAIS",
+        }
+
+        # 1) Tomar el analista actual para decidir si cambiamos EXT_ASIGNADOR_ANALISTAPBC
+        current = db_manager.execute_query(
+            "SELECT EXT_ANALISTAPBC FROM PLANNER_TAREAS WHERE IDTAREA = ?",
+            (idtarea,),
+            fetch_one=True
+        )
+        current_analista = getattr(current, "EXT_ANALISTAPBC", None) if current else None
+        incoming_analista = getv(data, "ext_analistapbc", None)
+
+        # 2) Construcción dinámica del SET
+        set_parts = []
+        params = []
+
+        # Conjunto de columnas tipo boolean/bit que quiero normalizar a 0/1 si llegan
+        BOOL_KEYS = {
+            "cancelada", "archivada", "finalizada", "seleccionar",
+            "ext_bloqueo", "ext_enviado_pbc", "ext_urgente"
+        }
+
+        # Si te llegan fechas como strings "YYYY-MM-DD", las convierto a datetime (opcional)
+        DATE_KEYS = {"fecha_alta", "fecha_prevista", "fecha_realizacion", "fecha_cierre"}
+
+        # Detectar claves presentes (soporta dict y Pydantic con __fields_set__)
+        present_keys = set(data.keys()) if isinstance(data, dict) else {
+            k for k in COLMAP.keys() if hasattr(data, k)
+        }
+
+        fields_set = getattr(data, "__fields_set__", None)
+        if fields_set is not None:
+            present_keys = set(fields_set)
+
+        for py_key in COLMAP.keys():
+            if py_key not in present_keys:
+                continue
+            value = getv(data, py_key)
+
+            if py_key in BOOL_KEYS and value is not None:
+                value = 1 if bool(value) else 0
+
+            if py_key in DATE_KEYS and isinstance(value, str) and value.strip():
+                # Acepta "YYYY-MM-DD" o "YYYY-MM-DD HH:MM:SS"
+                try:
+                    # prueba ISO simple
+                    if "T" in value or " " in value or "_" in value:
+                        value = datetime.fromisoformat(value.replace("_", " "))
+                    else:
+                        value = datetime.strptime(value, "%Y-%m-%d")
+                except Exception:
+                    # si falla, lo dejo como string y que SQL lo intente parsear
+                    pass
+
+            set_parts.append(f"{COLMAP[py_key]} = ?")
+            params.append(value)
+
+        # 3) Regla especial: si cambia el analista, forzar asignador = user_id
+        if incoming_analista is not None and incoming_analista != current_analista:
+            set_parts.append("EXT_ASIGNADOR_ANALISTAPBC = ?")
+            params.append(user_id)
+
+        if not set_parts:
+            return  # nada que actualizar
+
+        query = f"""
+            UPDATE PLANNER_TAREAS
+            SET {", ".join(set_parts)}
+            WHERE IDTAREA = ?
+        """
+
+        print("Update Tarea SQL:", query)
+        params.append(idtarea)
+
+        # Debug opcional
+        # print("SQL:", query)
+        # print("PARAMS:", params)
+
+        db_manager.execute_query(query, tuple(params))
+
+class ImportesHitosService:
+    @staticmethod
+    def get_monedas() -> List[Dict]:
+        """Obtiene todas las monedas"""
+        query = """
+            SELECT ID, CODIGO_ISO, NOMBRE, SIMBOLO, PAIS_REFERENCIA
+            FROM MONEDAS
+            ORDER BY NOMBRE
+        """
+        
+        monedas = db_manager.execute_query(query)
+        result = []
+        
+        for moneda in monedas:
+            result.append({
+                "id": moneda.ID,
+                "codigo_iso": moneda.CODIGO_ISO,
+                "nombre": moneda.NOMBRE,
+                "simbolo": moneda.SIMBOLO,
+                "pais_referencia": moneda.PAIS_REFERENCIA
+            })
+        
+        return result
+    
+    @staticmethod
+    def get_tributaciones() -> List[Dict]:
+        """Obtiene todas las tributaciones"""
+        query = """
+            SELECT ID, DESCRIPCION, VALOR
+            FROM TRIBUTACIONES
+            ORDER BY DESCRIPCION
+        """
+        
+        tributaciones = db_manager.execute_query(query)
+        result = []
+        
+        for trib in tributaciones:
+            result.append({
+                "id": trib.ID,
+                "descripcion": trib.DESCRIPCION,
+                "valor": float(trib.VALOR)
+            })
+        
+        return result
+    
+    @staticmethod
+    def get_tipos_pago() -> List[Dict]:
+        """Obtiene todos los tipos de pago (hitos)"""
+        query = """
+            SELECT ID, DESCRIPCION
+            FROM HITOS
+            ORDER BY DESCRIPCION
+        """
+        
+        tipos = db_manager.execute_query(query)
+        result = []
+        
+        for tipo in tipos:
+            result.append({
+                "id": tipo.ID,
+                "descripcion": tipo.DESCRIPCION
+            })
+        
+        return result
+
+class HitoService:
+    @staticmethod
+    def get_hitos_by_tarea(idtarea: int) -> List[Dict]:
+        """Obtiene todos los hitos de una tarea"""
+        query = """
+            SELECT 
+                H.IDTAREAPLAZO, H.IDTAREA, H.NUMHITO, H.IDTIPOPAGO, T.DESCRIPCION,
+                H.IMPORTE, H.FECHA, H.SOLICITADO_PBC, H.IDSOLICITADOR_PBC,
+                H.FECHASOLICITUD_PBC, H.APROBADO, H.FECHAAPROBACION,
+                U.NOMBRE as solicitador_nombre
+            FROM PLANNER_TAREAS_PLAZOS H
+            LEFT JOIN USUARIOS U ON H.IDSOLICITADOR_PBC = U.ID
+            LEFT JOIN HITOS T ON H.IDTIPOPAGO = T.ID
+            WHERE H.IDTAREA = ?
+            ORDER BY H.NUMHITO
+        """
+        
+        hitos = db_manager.execute_query(query, (idtarea,))
+        result = []
+
+        print("Fecha hito test:", hitos[0].FECHA if hitos else "No hitos found")
+        
+        for hito in hitos:
+            result.append({
+                "idtareaplazo": hito.IDTAREAPLAZO,
+                "idtarea": hito.IDTAREA,
+                "numhito": hito.NUMHITO,
+                "descripcion": hito.DESCRIPCION,
+                "idtipopago": hito.IDTIPOPAGO,
+                "importe": float(hito.IMPORTE) if hito.IMPORTE else 0.0,
+                "fecha": to_date_iso(hito.FECHA), #date(hito.FECHA) if hito.FECHA else None,
+                "solicitado_pbc": bool(hito.SOLICITADO_PBC),
+                "idsolicitador_pbc": hito.IDSOLICITADOR_PBC,
+                "solicitador_nombre": hito.solicitador_nombre,
+                "fechasolicitud_pbc": hito.FECHASOLICITUD_PBC,
+                "aprobado": bool(hito.APROBADO),
+                "fechaaprobacion": hito.FECHAAPROBACION
+            })
+        
+        return result
+
+    @staticmethod
+    def get_hito_by_id(idtareaplazo: int) -> List[Dict]:
+        query = """
+            SELECT TOP (1)
+                H.IDTAREAPLAZO, H.IDTAREA, H.NUMHITO, H.IDTIPOPAGO, T.DESCRIPCION,
+                H.IMPORTE, H.FECHA, H.SOLICITADO_PBC, H.IDSOLICITADOR_PBC,
+                H.FECHASOLICITUD_PBC, H.APROBADO, H.FECHAAPROBACION,
+                U.NOMBRE as solicitador_nombre
+            FROM PLANNER_TAREAS_PLAZOS H
+            LEFT JOIN USUARIOS U ON H.IDSOLICITADOR_PBC = U.ID
+            LEFT JOIN HITOS T ON H.IDTIPOPAGO = T.ID
+            WHERE H.IDTAREAPLAZO = ?
+            ORDER BY H.NUMHITO
+        """
+
+        hito = db_manager.execute_query(query, (idtareaplazo,))
+
+        if not hito or len(hito) == 0:
+            return None
+        
+        hito = hito[0]
+
+        result = {
+            "idtareaplazo": hito.IDTAREAPLAZO,
+            "idtarea": hito.IDTAREA,
+            "numhito": hito.NUMHITO,
+            "descripcion": hito.DESCRIPCION,
+            "idtipopago": hito.IDTIPOPAGO,
+            "importe": float(hito.IMPORTE) if hito.IMPORTE else 0.0,
+            "fecha": to_date_iso(hito.FECHA), #date(hito.FECHA) if hito.FECHA else None,
+            "solicitado_pbc": bool(hito.SOLICITADO_PBC),
+            "idsolicitador_pbc": hito.IDSOLICITADOR_PBC,
+            "solicitador_nombre": hito.solicitador_nombre,
+            "fechasolicitud_pbc": hito.FECHASOLICITUD_PBC,
+            "aprobado": bool(hito.APROBADO),
+            "fechaaprobacion": hito.FECHAAPROBACION
+        }
+        
+        return result
+    
+    @staticmethod
+    def create_hito(idtarea: int, numhito: int, descripcion: str, importe: float, fecha: Optional[date]) -> int:
+        """Crea un nuevo hito"""
+        query = """
+            INSERT INTO PLANNER_TAREAS_PLAZOS (
+                IDTAREA, NUMHITO, DESCRIPCION, IMPORTE, FECHA,
+                SOLICITADO_PBC, APROBADO, ELEVADO_OCI, OCI_EXTERNO,
+                APROBADO_OCI, BLOQUEADO_OCI, BLOQUEADO
+            )
+            VALUES (?, ?, ?, ?, ?, 0, 0, 0, 0, 0, 0, 0);
+            SELECT SCOPE_IDENTITY() as id;
+        """
+        
+        print("Creating hito with:", idtarea, numhito, descripcion, importe, fecha)
+
+        query = """
+            SET NOCOUNT ON;
+
+            INSERT INTO PLANNER_TAREAS_PLAZOS (
+                IDTAREA, NUMHITO, DESCRIPCION, IMPORTE, FECHA,
+                SOLICITADO_PBC, APROBADO, ELEVADO_OCI, OCI_EXTERNO,
+                APROBADO_OCI, BLOQUEADO_OCI, BLOQUEADO
+            )
+            SELECT
+                ?,                                            
+                ISNULL(MAX(p.NUMHITO), 0) + 1,                 
+                ?,                                             
+                ?,                                             
+                ?,                                             
+                0, 0, 0, 0, 0, 0, 0
+            FROM PLANNER_TAREAS_PLAZOS AS p WITH (UPDLOCK, HOLDLOCK)
+            WHERE p.IDTAREA = ?;                              
+
+            SELECT CAST(SCOPE_IDENTITY() AS INT) AS id;"""
+        
+        result = db_manager.execute_query(query, (idtarea, descripcion, importe, fecha, idtarea), fetch_one=True)
+        return int(result.id)
+    
+    @staticmethod
+    #def update_hito(idtareaplazo: int, descripcion: str, importe: float, fecha: Optional[datetime]) -> None:
+    def update_hito(idtareaplazo: int, data: dict) -> bool:
+        """Actualiza un hito existente"""
+        query = """
+            UPDATE PLANNER_TAREAS_PLAZOS
+            SET DESCRIPCION = ?, IMPORTE = ?, FECHA = ?
+            WHERE IDTAREAPLAZO = ?
+        """
+
+        query = """
+            UPDATE PLANNER_TAREAS_PLAZOS
+            SET """
+        
+        s = ""
+        params = []
+        if data.descripcion:
+            s += "DESCRIPCION = ?, "
+            params.append(data.descripcion)
+
+        if data.idtipopago:
+            s += "IDTIPOPAGO = ?, "
+            params.append(data.idtipopago)
+
+        if data.importe:
+            s += "IMPORTE = ?, "
+            params.append(data.importe)
+        if data.fecha:
+            s += "FECHA = ?, "
+            params.append(data.fecha)
+
+        if len(s) == 0:
+            return False
+        
+        query += s[:-2]  # remove last comma and space
+        query += " WHERE IDTAREAPLAZO = ?"
+        params.append(idtareaplazo)
+
+        db_manager.execute_query(query, params)
+
+        return True
+
+    @staticmethod
+    def activate_hito(idtarea: int, idhito: int) -> None:
+        """Activa un hito existente"""
+
+        print("Activating hito:", idtarea, idhito)
+
+        query = """
+            SELECT IDPROCESO FROM PLANNER_TAREAS WHERE IDTAREA=?
+        """
+        idproceso = db_manager.execute_query(query, (idtarea,))[0][0]
+
+        print("=========> idproceso:", idproceso)
+
+        query = """
+            SELECT TOP 1 IDESTADO, TITULO AS DESCRIPCIONESTADO FROM PLANNER_PROCESOS_ESTADOS WHERE IDPROCESO=? ORDER BY ORDEN ASC
+        """        
+        row = db_manager.execute_query(query, (idproceso,))
+        idestado_inicial = None
+        descripcionestado = None
+        if row is not None and len(row) > 0:
+            idestado_inicial = row[0][0]  
+            descripcionestado = row[0][1]  
+            print("================> idestado_inicial:", idestado_inicial)
+
+        query = """
+            SELECT TOP 1 IDTAREAPLAZO FROM PLANNER_TAREAS_PLAZOS WHERE IDTAREA=? 
+        """    
+        row = db_manager.execute_query(query, (idtarea,))
+        hito = None
+        if row is not None and len(row) > 0:
+            hito = row[0][0]  
+            print("================> hito:", hito)
+
+        query = """
+            UPDATE PLANNER_TAREAS_PLAZOS
+            SET APROBADO = 0
+            WHERE IDTAREAPLAZO = ?
+        """
+        db_manager.execute_query(query, (hito,))
+
+        HitoService.update_status(idtarea, hito, "", idproceso, idestado_inicial, "")
+
+        return {
+                "idaccion": idestado_inicial,
+                "descripcion_accion": descripcionestado
+            }
+
+    @staticmethod
+    def update_status(idtarea: int, idhito: int, comment:str, idproceso: int, idestado: int, proceso:str) -> None:
+        """Actualiza el estado de la tarea al activar un hito"""
+        query = """
+            SELECT FINALIZA FROM PLANNER_PROCESOS_ESTADOS WHERE IDESTADO=?
+        """
+        finaliza = db_manager.execute_query(query, (idestado,))
+
+        finaliza = db_manager.dlookup("PLANNER_PROCESOS_ESTADOS", "FINALIZA", "IDESTADO = ?", (idestado,))
+
+        if not finaliza:
+            finaliza=0
+        
+        query = """
+            UPDATE PLANNER_TAREAS_PLAZOS
+            SET IDESTADO = ?, APROBADO = ?
+            WHERE IDTAREAPLAZO = ?
+        """
+        db_manager.execute_query(query, (idestado, finaliza, idhito))
+
+        #TODO HACER EL DELETE DE LOS RIESGOS SOLO SI FINALIZA
+        if finaliza or finaliza == 1:
+            query = """
+                DELETE FROM PLANNER_TAREAS_RIESGOS
+                WHERE IDTAREA = ?
+            """
+            db_manager.execute_query(query, (idtarea,))
+
+        #TODO:SI La accion/estado es "Solicitada Documentación" abrir formulario para que introduzcan 
+
+    @staticmethod
+    def crea_log_tarea(idusuario: int, idtarea: int, idhito: Optional[int], idaccion: int, comentario: str) -> int:
+        """
+        Inserta un registro en TAREAS_LOG y devuelve el id insertado.
+        Equivalente a la función VBA CreaLogTarea.
+        """
+        # (Opcional) Limitar tamaños si tus columnas son NVARCHAR con longitud fija
+        # tipo = (tipo or "")[:50]
+        # comentario = (comentario or "")[:1000]
+
+        query = """
+            SET NOCOUNT ON;
+            INSERT INTO TAREAS_LOG (IDUSUARIO, IDTAREA, IDHITO, FECHA, ACCION, COMENTARIO)
+            VALUES (?, ?, ?, GETDATE(), ?, ?);
+            SELECT CAST(SCOPE_IDENTITY() AS INT) AS id;
+        """
+        params = (idusuario, idtarea, idhito, idaccion, comentario)
+
+        try:
+            row = db_manager.execute_query(query, params, fetch_one=True)
+            # pyodbc Row permite acceso por alias o índice
+            new_id = getattr(row, "id", row[0])
+            return int(new_id)
+        except Exception as e:
+            # En VBA mostrabas MsgBox; aquí puedes lanzar HTTPException si estás en FastAPI
+            raise HTTPException(status_code=500, detail=f"Error al crear log de tarea: {e}")
+
+    @staticmethod
+    def delete_hito(idtareaplazo: int) -> None:
+        """Elimina un hito"""
+        query = """
+            DELETE FROM PLANNER_TAREAS_PLAZOS
+            WHERE IDTAREAPLAZO = ?
+        """
+        db_manager.execute_query(query, (idtareaplazo,))
+    
+    @staticmethod
+    def reorder_hitos(hitos: List[Dict]) -> None:
+        """Reordena los hitos actualizando sus números"""
+        query = """
+            UPDATE PLANNER_TAREAS_PLAZOS
+            SET NUMHITO = ?
+            WHERE IDTAREAPLAZO = ?
+        """
+        
+        for hito in hitos:
+            db_manager.execute_query(query, (hito['numhito'], hito['idtareaplazo']))
+    
+    @staticmethod
+    def has_activated_hitos(idtarea: int) -> bool:
+        """Verifica si la tarea tiene hitos activados (aprobados)"""
+        query = """
+            SELECT COUNT(*) as count
+            FROM PLANNER_TAREAS_PLAZOS
+            WHERE IDTAREA = ? AND APROBADO = 1
+        """
+        
+        result = db_manager.execute_query(query, (idtarea,), fetch_one=True)
+        return result.count > 0
+
+class LogService:
+    @staticmethod
+    def create_tarea_log(user_id: int, idtarea: int, idhito: int, idaccion: int, comentario: str) -> int:
+        """Crea un nuevo log para un hito"""
+        query = """
+            INSERT INTO TAREAS_LOG (IDUSUARIO, IDTAREA, IDHITO, FECHA, IDACCION, COMENTARIO)
+            VALUES (?, ?, ?, GETDATE(), ?, ?);
+            SELECT SCOPE_IDENTITY() as id;
+        """
+        params = (user_id, idtarea, idhito, idaccion, comentario)
+
+        try:
+            row = db_manager.execute_query(query, params, fetch_one=True)
+            new_id = getattr(row, "id", row[0])
+            return int(new_id)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Error al crear log de hito: {e}")
+        
+    def get_tarea_log_by_id(idtarea: int) -> List[Dict]:
+        """Obtiene todos los logs de una tarea"""
+        query = """
+            SELECT 
+                L.IDLOG, L.IDUSUARIO, L.IDTAREA, L.IDHITO, L.FECHA,
+                L.IDACCION, L.COMENTARIO,
+                U.NOMBRE as usuario_nombre
+            FROM TAREAS_LOG L
+            LEFT JOIN USUARIOS U ON L.IDUSUARIO = U.ID
+            WHERE L.IDTAREA = ?
+            ORDER BY L.FECHA DESC
+        """
+        
+        logs = db_manager.execute_query(query, (idtarea,))
+        result = []
+        
+        for log in logs:
+            result.append({
+                "idlog": log.IDLOG,
+                "idusuario": log.IDUSUARIO,
+                "idtarea": log.IDTAREA,
+                "idhito": log.IDHITO,
+                "fecha": log.FECHA,
+                "idaccion": log.IDACCION,
+                "comentario": log.COMENTARIO,
+                "usuario_nombre": log.usuario_nombre
+            })
+        
+        return result
+    
+
+
+class PersonasNaturalesService:
+    @staticmethod
+    def get_all_personas_naturales() -> List[Dict]:
+        """Obtiene todas las personas naturales con información relacionada"""
+        query = """
+            SELECT 
+                P.[ID],
+                P.[EMAIL],
+                P.[NOMBRE],
+                P.[APELLIDO],
+                P.[NIF],
+                P.[IDTIPODOCUMENTO],
+                TD.[DESCRIPCION] AS TIPODOCUMENTO_NOMBRE,
+                P.[TELEFONO],
+                P.[TELEFONO2],
+                P.[ACTIVO],
+                P.[FECHA_CREACION],
+                P.[FECHA_INICIO],
+                P.[FECHA_FIN],
+                P.[RESIDENCIA],
+                C1.[NAME] AS RESIDENCIA_NOMBRE,
+                P.[NACIONALIDAD],
+                C2.[NAME] AS NACIONALIDAD_NOMBRE,
+                CASE 
+                    WHEN EXISTS (SELECT 1 FROM dbo.PERSONA_RIESGO PR WHERE PR.IDPERSONA = P.ID)
+                    THEN CAST(1 AS bit) ELSE CAST(0 AS bit)
+                END AS RIESGO
+            FROM dbo.PERSONAS AS P
+            LEFT JOIN dbo.TIPOS_DOCUMENTOS AS TD ON TD.ID = P.IDTIPODOCUMENTO
+            LEFT JOIN dbo.COUNTRIES AS C1 ON C1.COUNTRY_CODE = P.RESIDENCIA
+            LEFT JOIN dbo.COUNTRIES AS C2 ON C2.COUNTRY_CODE = P.NACIONALIDAD
+            WHERE ISNULL(P.JURIDICA, 0) <> 1
+            ORDER BY P.NOMBRE, P.APELLIDO
+        """
+        
+        personas = db_manager.execute_query(query)
+        result = []
+        
+        for persona in personas:
+            result.append({
+                "id": persona.ID,
+                "email": persona.EMAIL,
+                "nombre": persona.NOMBRE,
+                "apellido": persona.APELLIDO,
+                "nif": persona.NIF,
+                "idtipodocumento": persona.IDTIPODOCUMENTO,
+                "tipodocumento_nombre": persona.TIPODOCUMENTO_NOMBRE,
+                "telefono": persona.TELEFONO,
+                "telefono2": persona.TELEFONO2,
+                "activo": bool(persona.ACTIVO),
+                "fecha_creacion": persona.FECHA_CREACION,
+                "fecha_inicio": persona.FECHA_INICIO,
+                "fecha_fin": persona.FECHA_FIN,
+                "residencia": persona.RESIDENCIA,
+                "residencia_nombre": persona.RESIDENCIA_NOMBRE,
+                "nacionalidad": persona.NACIONALIDAD,
+                "nacionalidad_nombre": persona.NACIONALIDAD_NOMBRE,
+                "riesgo": bool(persona.RIESGO)
+            })
+            
+        return result
+    
+    @staticmethod
+    def get_persona_by_id(persona_id: int) -> Optional[Dict]:
+        """Obtiene una persona natural por ID"""
+        query = """
+            SELECT 
+                P.[ID],
+                P.[EMAIL],
+                P.[NOMBRE],
+                P.[APELLIDO],
+                P.[NIF],
+                P.[IDTIPODOCUMENTO],
+                TD.[DESCRIPCION] AS TIPODOCUMENTO_NOMBRE,
+                P.[TELEFONO],
+                P.[TELEFONO2],
+                P.[ACTIVO],
+                P.[FECHA_CREACION],
+                P.[FECHA_INICIO],
+                P.[FECHA_FIN],
+                P.[RESIDENCIA],
+                C1.[NAME] AS RESIDENCIA_NOMBRE,
+                P.[NACIONALIDAD],
+                C2.[NAME] AS NACIONALIDAD_NOMBRE,
+                CASE 
+                    WHEN EXISTS (SELECT 1 FROM dbo.PERSONA_RIESGO PR WHERE PR.IDPERSONA = P.ID)
+                    THEN CAST(1 AS bit) ELSE CAST(0 AS bit)
+                END AS RIESGO
+            FROM dbo.PERSONAS AS P
+            LEFT JOIN dbo.TIPO_DOCUMENTO AS TD ON TD.ID = P.IDTIPODOCUMENTO
+            LEFT JOIN dbo.COUNTRIES AS C1 ON C1.COUNTRY_CODE = P.RESIDENCIA
+            LEFT JOIN dbo.COUNTRIES AS C2 ON C2.COUNTRY_CODE = P.NACIONALIDAD
+            WHERE P.ID = ? AND ISNULL(P.JURIDICA, 0) <> 1
+        """
+        
+        persona = db_manager.execute_query(query, (persona_id,), fetch_one=True)
+        
+        if not persona:
+            return None
+        
+        return {
+            "id": persona.ID,
+            "email": persona.EMAIL,
+            "nombre": persona.NOMBRE,
+            "apellido": persona.APELLIDO,
+            "nif": persona.NIF,
+            "idtipodocumento": persona.IDTIPODOCUMENTO,
+            "tipodocumento_nombre": persona.TIPODOCUMENTO_NOMBRE,
+            "telefono": persona.TELEFONO,
+            "telefono2": persona.TELEFONO2,
+            "activo": bool(persona.ACTIVO),
+            "fecha_creacion": persona.FECHA_CREACION,
+            "fecha_inicio": persona.FECHA_INICIO,
+            "fecha_fin": persona.FECHA_FIN,
+            "residencia": persona.RESIDENCIA,
+            "residencia_nombre": persona.RESIDENCIA_NOMBRE,
+            "nacionalidad": persona.NACIONALIDAD,
+            "nacionalidad_nombre": persona.NACIONALIDAD_NOMBRE,
+            "riesgo": bool(persona.RIESGO)
+        }
+    
+    @staticmethod
+    def get_tipos_documento() -> List[Dict]:
+        """Obtiene todos los tipos de documento"""
+        query = """
+            SELECT ID, DESCRIPCION
+            FROM TIPO_DOCUMENTO
+            ORDER BY DESCRIPCION
+        """
+        
+        tipos = db_manager.execute_query(query)
+        result = []
+        
+        for tipo in tipos:
+            result.append({
+                "id": tipo.ID,
+                "descripcion": tipo.DESCRIPCION
+            })
+        
+        return result
 
 # class ProcesoEstadoRolService:
 #     @staticmethod

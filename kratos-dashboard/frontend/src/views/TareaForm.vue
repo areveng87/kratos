@@ -256,6 +256,19 @@
           </div>
         </div>
 
+        <!-- Tab 2: Importe / Hitos -->
+        <div v-else-if="activeTab === 'importe-hitos'">
+          <ImportesHitos
+            v-if="isEdit && route.params.id"
+            ref="importesHitosRef"
+            :idtarea="parseInt(route.params.id)"
+            :importeTotal="form.ext_importe"
+            :moneda="form.ext_moneda"
+            :tributacion="form.ext_tributacion"
+            @update="onImportesUpdate"
+          />
+        </div>
+
         <!-- Otros tabs (placeholder) -->
         <div v-else class="text-center py-12">
           <p class="theme-text-secondary">Tab "{{ activeTab }}" en desarrollo</p>
@@ -272,12 +285,14 @@ import { useRouter, useRoute } from 'vue-router'
 import api from '../api'
 import { useAuthStore } from '../stores/auth'
 import Sidebar from '../components/Sidebar.vue'
+import ImportesHitos from '../components/ImportesHitos.vue'
 
 const router = useRouter()
 const route = useRoute()
 const authStore = useAuthStore()
 
 const activeTab = ref('inmueble')
+const importesHitosRef = ref(null)
 
 const tabs = [
   { id: 'inmueble', label: 'Inmueble' },
@@ -303,6 +318,9 @@ const form = ref({
   ext_asignador_analistapbc: null,
   ext_operador: '',
   ext_urgente: false,
+  ext_importe: null,
+  ext_moneda: 0,
+  ext_tributacion: null,
 })
 
 // Catálogos
@@ -427,11 +445,19 @@ const guardar = async () => {
   try {
     console.log('Guardando tarea con datos:', form.value)
 
+    if (isEdit.value && importesHitosRef.value) {
+      const datosImportes = importesHitosRef.value.getDatosActuales()
+      form.value.ext_importe = datosImportes.ext_importe
+      form.value.ext_moneda = datosImportes.ext_moneda
+      form.value.ext_tributacion = datosImportes.ext_tributacion
+    }
+
     if (isEdit.value) {
 
       console.log('Actualizando tarea con datos:', form.value)
 
       await api.tareas.update(route.params.id, form.value)
+
     } else {
       await api.tareas.create(form.value)
     }
@@ -456,11 +482,22 @@ const selectTab = (id) => {
   activeTab.value = id
 }
 
+const onImportesUpdate = (data) => {
+  if(data == null) return;
+
+  console.log("Importes actualizados:", data)
+  
+  form.value.ext_importe = data.importeTotal
+  form.value.ext_moneda = data.moneda
+  form.value.ext_tributacion = data.tributacion
+}
+
 onMounted(async () => {
+
+  await cargarCatalogos()
 
   if (!isEdit.value) activeTab.value = 'inmueble'
 
-  await cargarCatalogos()
   await cargarTarea()
 })
 </script>

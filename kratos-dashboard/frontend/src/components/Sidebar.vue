@@ -58,7 +58,42 @@
         >
           <Building class="h-5 w-5 flex-shrink-0" :class="{ 'mr-3': !isCollapsed }" />
           <span v-if="!isCollapsed" class="font-medium">Sociedades</span>
-        </router-link>
+        </router-link>    
+        
+        <!-- Personas menu with submenus -->
+        <div v-if="!isCollapsed" class="space-y-1">
+          <button
+            @click="togglePersonasMenu"
+            class="sidebar-item w-full justify-between"
+          >
+            <div class="flex items-center">
+              <UserCircle class="h-5 w-5 flex-shrink-0 mr-3" />
+              <span class="font-medium">Personas</span>
+            </div>
+            <ChevronDown 
+              class="h-4 w-4 transition-transform" 
+              :class="{ 'rotate-180': isPersonasMenuOpen }"
+            />
+          </button>
+          
+          <div v-if="isPersonasMenuOpen" class="ml-8 space-y-1">
+            <router-link
+              to="/personas-naturales"
+              class="sidebar-item text-sm"
+            >
+              <UserCircle class="h-4 w-4 flex-shrink-0 mr-2" />
+              <span>Personas Naturales</span>
+            </router-link>
+            
+            <router-link
+              to="/personas-juridicas"
+              class="sidebar-item text-sm"
+            >
+              <Building class="h-4 w-4 flex-shrink-0 mr-2" />
+              <span>Personas Jurídicas</span>
+            </router-link>
+          </div>
+        </div>
 
         <!-- v-if="canAccessAdmin && !isCollapsed-->
 
@@ -250,7 +285,8 @@ import {
   Briefcase,
   AlertTriangle,
   GitBranch,
-  ShieldHalf 
+  ShieldHalf,
+  UserCircle 
 } from 'lucide-vue-next'
 
 const router = useRouter()
@@ -258,6 +294,7 @@ const authStore = useAuthStore()
 const isCollapsed = ref(false)
 const isAdminMenuOpen = ref(false)
 const isAuxiliaresMenuOpen = ref(false)
+const isPersonasMenuOpen = ref(false)
 
 const sidebarClasses = computed(() => [
   'sidebar-bg border-r sidebar-border transition-all duration-300 flex flex-col',
@@ -293,6 +330,10 @@ function toggleAdminMenu() {
 
 function toggleAuxiliaresMenu() {
   isAuxiliaresMenuOpen.value = !isAuxiliaresMenuOpen.value
+}
+
+function togglePersonasMenu() {
+  isPersonasMenuOpen.value = !isPersonasMenuOpen.value
 }
 
 function handleLogout() {

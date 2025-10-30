@@ -23,6 +23,7 @@ import DefinicionProcesos from "../views/admin/DefinicionProcesos.vue"
 import EstructuraEditor from "../views/admin/EstructuraEditor.vue"
 import ProcesoForm from "../views/admin/ProcesoForm.vue"
 import TareaForm from "../views/TareaForm.vue"
+import PersonasNaturales from "../views/PersonasNaturales.vue"
 
 const routes = [
   {
@@ -71,6 +72,12 @@ const routes = [
     path: "/sociedades",
     name: "Sociedades",
     component: Sociedades,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/personas-naturales",
+    name: "PersonasNaturales",
+    component: PersonasNaturales,
     meta: { requiresAuth: true },
   },
   {

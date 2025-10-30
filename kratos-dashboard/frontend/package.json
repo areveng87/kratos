@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.16",
+    "@vuepic/vue-datepicker": "^11.0.3",
     "axios": "^1.6.2",
     "lucide-vue-next": "^0.294.0",
     "pinia": "^2.1.7",

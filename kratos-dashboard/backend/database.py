@@ -71,6 +71,25 @@ class DatabaseManager:
             finally:
                 conn.close()
     
+    def dlookup(self, table, field, where_sql, params=()):
+        """
+        Devuelve el primer valor de `field` en `table` que cumpla `where_sql`.
+        Ej: dlookup(conn, "PLANNER_PROCESOS_ESTADOS", "FINALIZA", "Idestado = ?", (nIdestado,))
+        """
+        try:
+            conn = self.get_connection()
+            cursor = conn.cursor()
+            sql = f"SELECT TOP (1) {field} FROM {table} WHERE {where_sql}"
+            with conn.cursor() as cur:
+                cur.execute(sql, params)
+                row = cur.fetchone()
+                return None if row is None else row[0]
+        finally:
+            try:
+                cursor.close()
+            finally:
+                conn.close()
+
     def execute_transaction(self, queries: list):
         """Ejecuta múltiples consultas en una transacción"""
         conn = self.get_connection()
